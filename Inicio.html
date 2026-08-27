@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kallpa Solidary</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg border-bottom border-dark bg-info" style="padding: 30px;">
-            <div class="conatiner-fluid px-4 ">
+        <nav class="navbar navbar-expand-lg border-bottom border-info bg-info fixed-top" style="padding: 30px;">
+            <div class="container-fluid px-4">
                 <h1 class="Titulo text-white fw-bold">Kallpa Solidary</h1>
-            </div>
 
-            <ul class="navbar-nav gap-3 d-flex flex-row ">
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold" href="#">Campañas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold" href="#">Eventos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold" href="#">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white fw-semibold" href="#">Reportes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black fw-bold" href="cuenta.html">Iniciar Sesión</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="btn btn-danger text-white" href="CrearCuenta.html">Registrarse</a>
-                    <!-- <button class="btn btn-danger text-white" type="button" href="CrearCuenta.html">Registrarse</button> -->
-                </li>
-            </ul>       
-        </nav>      
+                <ul class="navbar-nav gap-3 d-flex flex-row">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="Inicio.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#">Campañas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
+                    </li>
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conocenos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="SobreNosotros.html">Sobre
+                                    Nosotros</a></li>
+                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="#">Reportes</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-black fw-bold" href="cuenta.html">Iniciar Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-danger text-white" href="CrearCuenta.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
 
     <section class="bg-light border-top py-4 ">
@@ -47,8 +58,13 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-6 fw-bold text-dark mb-4">UNETE A LA KALLPA SOLIDARIA!!!</h1>
-                    <h3 class="display-6 mb-4" style="font-family:Arial, Helvetica, sans-serif;">Lleva esperanza a las personas que necesiten</h3>
-                    <p class="text-secondary fs-6 mb-4" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Kallpa Solidary asegura que tus contribuciones impacten directamente a aquellos en crisis. Proporcionamos transparencia radical en nuestra logística, para que sepas exactamente a dónde va tu ayuda.</p>
+                    <h3 class="display-6 mb-4" style="font-family:Arial, Helvetica, sans-serif;">Lleva esperanza a las
+                        personas que necesiten</h3>
+                    <p class="text-secondary fs-6 mb-4"
+                        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Kallpa
+                        Solidary asegura que tus contribuciones impacten directamente a aquellos en crisis.
+                        Proporcionamos transparencia radical en nuestra logística, para que sepas exactamente a dónde va
+                        tu ayuda.</p>
                     <div>
                         <button class="btn btn-danger text-white" type="button">Donar Ahora</button>
                     </div>
@@ -56,9 +72,9 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="position-relative">
-                        <img 
-                            src="https://policiaamigo.com/wp-content/uploads/2019/03/SML6006.jpg" alt="WE ARE THE WORLDS, WE ARE THE CHILDREN :)" class="img-fluid  rounded-4 shadow w-100" style="max-height: 420px; object-fit: cover;"
-                        >
+                        <img src="https://policiaamigo.com/wp-content/uploads/2019/03/SML6006.jpg"
+                            alt="WE ARE THE WORLDS, WE ARE THE CHILDREN :)" class="img-fluid  rounded-4 shadow w-100"
+                            style="max-height: 420px; object-fit: cover;">
                     </div>
                 </div>
             </div>
@@ -71,114 +87,125 @@
                 <h2 class="fw-bold text-dark display-6 mb-2">Ser parte de Kallpa Solidary significa</h2>
                 <h3 class="fw-bold text-primary fs-3"> que puedes ayudar de estas tres formas:</h3>
             </div>
-            
+
             <div class="row g-4 justify-content-center">
-                
+
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                    <div
+                        class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
                         <div class="card-body p-0 mb-4">
                             <h4 class="card-title text-dark fw-normal mb-1">Quiero ser</h4>
                             <h3 class="fw-bold text-success mb-4">voluntario</h3>
-                            <p class="card-text text-secondary lh-base">Te conectamos con programas de voluntariado en diversas organizaciones sociales. <br><mark><strong class="text-dark mark">¡Elige la causa ideal para ti!</strong></mark></p>
+                            <p class="card-text text-secondary lh-base">Te conectamos con programas de voluntariado en
+                                diversas organizaciones sociales. <br><mark><strong class="text-dark mark">¡Elige la
+                                        causa ideal para ti!</strong></mark></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary text-white"  type="button" href="#">Ver Voluntariados</button>
+                            <button class="btn btn-primary text-white" type="button" href="#">Ver Voluntariados</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                    <div
+                        class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
                         <div class="card-body p-0 mb-4">
                             <h4 class="card-title text-dark fw-normal mb-1">Quiero </h4>
                             <h3 class="fw-bold text-success mb-4">donar bienes</h3>
-                            <p class="card-text text-secondary lh-base">Conoce las campañas de donación de ropa, alimentos y víveres a través de nuestro directorio social. <br><mark><strong class="text-dark mark">Conéctate y dona en simples pasos.</strong></mark></p>
+                            <p class="card-text text-secondary lh-base">Conoce las campañas de donación de ropa,
+                                alimentos y víveres a través de nuestro directorio social. <br><mark><strong
+                                        class="text-dark mark">Conéctate y dona en simples pasos.</strong></mark></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary text-white"  type="button" href="#">Ver Donaciones</button>
+                            <button class="btn btn-primary text-white" type="button" href="#">Ver Donaciones</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                    <div
+                        class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
                         <div class="card-body p-0 mb-4">
                             <h4 class="card-title text-dark fw-normal mb-1">Quiero </h4>
                             <h3 class="fw-bold text-success mb-4">donar dinero</h3>
-                            <p class="card-text text-secondary lh-base">Realiza donaciones monetarias directas y transparentes. Ningún aporte es pequeño, <br><mark><strong class="text-dark mark">ya que la unión hace la fuerza.</strong></mark></p>
+                            <p class="card-text text-secondary lh-base">Realiza donaciones monetarias directas y
+                                transparentes. Ningún aporte es pequeño, <br><mark><strong class="text-dark mark">ya que
+                                        la unión hace la fuerza.</strong></mark></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary text-white"  type="button" href="#">Ver Campañas</button>
+                            <button class="btn btn-primary text-white" type="button" href="#">Ver Campañas</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</section>
+    </section>
 
-<section class="py-5 bg-light">
-    <div class="container py-3">
-        <div class="text-center mp-5">
-            <h3>Testimonios</h3>
-            <p class="text-secondary" style="font-size: 1rem; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Descubre cómo tu generosidad está transformando vidas.</p>
-        </div>
+    <section class="py-5 bg-light">
+        <div class="container py-3">
+            <div class="text-center mp-5">
+                <h3>Testimonios</h3>
+                <p class="text-secondary"
+                    style="font-size: 1rem; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                    Descubre cómo tu generosidad está transformando vidas.</p>
+            </div>
 
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-                    <div class="d-flex align-items-center gap-3 mb-4">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&auto=format&fit=crop&q=80" alt="Carlos M." class="rounded-3 shadow-sm object-fit-cover" width="50" height="50">
-                <div>
-                <h6 class="fw-bold text-dark mb-0">Carlos M.</h6>
-                <small class="text-secondary">Voluntario</small>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&auto=format&fit=crop&q=80"
+                                alt="Carlos M." class="rounded-3 shadow-sm object-fit-cover" width="50" height="50">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0">Carlos M.</h6>
+                                <small class="text-secondary">Voluntario</small>
+                            </div>
+                        </div>
+                        <p class="fst-italic text-secondary lh-base mb-0">"Ser parte de Kallpa Solidary me ha permitido
+                            ver de primera mano cómo la transparencia logística realmente salva vidas."</p>
+                    </div>
                 </div>
-            </div>
-            <p class="fst-italic text-secondary lh-base mb-0">"Ser parte de Kallpa Solidary me ha permitido ver de primera mano cómo la transparencia logística realmente salva vidas."</p>
-            </div>
-        </div>
 
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
-            <div class="d-flex align-items-center gap-3 mb-4">
-                <img 
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80" 
-                alt="Sofía L." 
-                class="rounded-3 shadow-sm object-fit-cover" 
-                width="50" 
-                height="50"
-                >
-                <div>
-                <h6 class="fw-bold text-dark mb-0">Sofía L.</h6>
-                <small class="text-secondary">Donante</small>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=80"
+                                alt="Sofía L." class="rounded-3 shadow-sm object-fit-cover" width="50" height="50">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0">Sofía L.</h6>
+                                <small class="text-secondary">Donante</small>
+                            </div>
+                        </div>
+                        <p class="fst-italic text-secondary lh-base mb-0">"Confío plenamente en esta ONG porque puedo
+                            ver exactamente a dónde va cada donación que aporto a través de sus reportes en vivo."</p>
+                    </div>
                 </div>
-            </div>
-            <p class="fst-italic text-secondary lh-base mb-0">"Confío plenamente en esta ONG porque puedo ver exactamente a dónde va cada donación que aporto a través de sus reportes en vivo."</p>
-            </div>
-        </div>
-</section>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
 
-<footer class="bg-light border-top py-4 mt-5">
+<footer class="bg-dark border-top py-4 mt-5">
     <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
         <div>
             <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
             <p class="small">© 2026 Kallpa Solidary. Todo los derechos de reservados.</p>
         </div>
-        
+
 
         <nav class="d-flex flex-column gap-1">
-            <a class="text-decoration-none text-secondary small" href="#">Términos y Condiciones</a>
-            <a class="text-decoration-none text-secondary small" href="#">Política de Privacidad</a>
+            <a class="text-decoration-none text-secondary text-white small" href="#">Términos y Condiciones</a>
+            <a class="text-decoration-none text-secondary text-white small" href="#">Política de Privacidad</a>
         </nav>
 
         <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
         <nav class="d-flex flex-column gap-1 text-secondary small">
-            <span>Calle las gardeña 179, Independencia</span>
-            <a class="text-decoration-none text-secondary" href="tel:+51904399718">+51 904 399 718</a>
+            <span class="text-white">Calle las gardeña 179, Independencia</span>
+            <a class="text-decoration-none text-secondary text-white small" href="tel:+51904399718">+51 904 399 718</a>
         </nav>
-
-
     </div>
+</footer>
+
 </html>
