@@ -1,6 +1,5 @@
-body#login-body {
-    background-color: rgb(79, 198, 238);
-    background-image: url('assets/img1.jpeg');
+.login-bg {
+    background-image: url('../assets/login.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -9,20 +8,22 @@ body#login-body {
     margin-bottom: 100px;
 }
 
-
-
-.background {
+.login-background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 header, .container {
     position: relative;
     z-index: 1;
+}
+
+.container {
+    margin-top: 50px;
 }
 
 form {
@@ -77,6 +78,7 @@ p{
 nav{
     text-align: center;
 }
+
 nav a{
     text-decoration: none;
     color: black;
@@ -90,7 +92,7 @@ nav a{
 .hero-bg {
     background-image: 
         linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6)),
-        url('imagenes/nosotros1.jpg');
+        url('../assets/about1.jpg');
     background-size: cover;
     background-position: center;
     padding-top: 180px;

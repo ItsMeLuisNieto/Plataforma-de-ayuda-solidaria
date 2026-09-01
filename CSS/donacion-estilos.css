@@ -1,0 +1,27 @@
+body {
+    background: #f8f9fa;
+}
+
+.section-title {
+    letter-spacing: 0.02em;
+}
+
+.campaign-card, .event-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.campaign-card:hover, .event-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.8rem 1.5rem rgba(0,0,0,0.08) !important;
+}
+
+.progress-bar {
+    height: 12px;
+    border-radius: 999px;
+}
+
+.kallpa-badge {
+    background: rgba(13, 110, 253, 0.08);
+    color: #0d6efd;
+    border: 1px solid rgba(13, 110, 253, 0.15);
+}

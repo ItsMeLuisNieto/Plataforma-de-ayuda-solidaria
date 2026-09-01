@@ -1,77 +1,103 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión | Kallpa Solidary</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="estilos.css">
-</head>
-<body id="login-body">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="CSS/responsive.css" />
+    <link rel="stylesheet" href="CSS/login-estilos.css" />
+  </head>
+  <body class="login-bg">
     <header>
-        <nav class="navbar navbar-expand-lg border-bottom border-info bg-info fixed-top" style="padding: 30px;">
-            <div class="container-fluid px-4">
-                <h1 class="Titulo text-white fw-bold">Kallpa Solidary</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info" style="padding: 20px;">
+            <div class="container-fluid px-lg-5">
+                
+                <a href="home.html" class="text-decoration-none">
+                    <h1 class="text-white fw-bold mb-0">Kallpa Solidary</h1>
+                </a>
 
-                <ul class="navbar-nav gap-3 d-flex flex-row">
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="home.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="#">Campañas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="#">Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
-                    </li>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
-                            id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conocenos
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="SobreNosotros.html">Sobre
-                                    Nosotros</a></li>
-                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="#">Reportes</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link text-black fw-bold" href="login.html">Iniciar Sesión</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-danger text-white" href="registro.html">Registrarse</a>
-                    </li>
-                </ul>
+                <div class="collapse navbar-collapse" id="menuNavegacion">
+                    <ul class="navbar-nav gap-3 ms-auto align-items-center mt-3 mt-lg-0 text-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="donate.html#campaigns">Campañas</a>
+                        </li>
+        
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="donate.html#events">Eventos</a>
+                        </li>
+        
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" href="donate.html">Donaciones</a>
+                        </li>
+        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conócenos
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" href="about.html">Sobre Nosotros</a></li>
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" href="#">Reportes</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-secondary text-white fw-bold w-100" href="login.html">Iniciar Sesión</a>
+                        </li>
+        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-primary text-white fw-bold w-100" href="registro.html">Registrarse</a>
+                        </li>
+                    </ul>  
+                </div>     
             </div>
         </nav>
     </header>
 
-    <div class="background"></div>
-    
+    <div class="login-background"></div>
+
     <div class="container">
-        <p class="fs-1 text-white p-3 fw-bold rounded">Iniciar sesión</p>
-    
-        <form action="/login" method="POST">
-            <label for="login-email">Correo electrónico</label>
-            <input type="email" name="email" id="login-email" placeholder="Tu correo electrónico aquí">
+      <p class="fs-1 text-white p-3 fw-bold rounded">Iniciar sesión</p>
 
-            <label for="login-contraseña">Contraseña</label>
-            <input type="password" name="pass" id="login-contraseña" placeholder="Tu contraseña">
+      <form action="/login" method="POST">
+        <label for="login-email">Correo electrónico</label>
+        <input
+          type="email"
+          name="email"
+          id="login-email"
+          placeholder="Tu correo electrónico aquí"
+        />
 
-            <button type="submit" class="btn btn-primary">
-                Iniciar sesión
-            </button>
+        <label for="login-contraseña">Contraseña</label>
+        <input
+          type="password"
+          name="pass"
+          id="login-contraseña"
+          placeholder="Tu contraseña"
+        />
 
-            <p class="text-black mt-3 fs-6">
-                ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
-            </p>
-        </form>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+
+        <p class="text-black mt-3 fs-6">
+          ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
+        </p>
+      </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>    
-</body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

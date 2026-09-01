@@ -68,7 +68,7 @@ El footer incluye información útil para la institución, como:
 - CSS3
 - Bootstrap 5
 - Font Awesome
-- JavaScript (Bootstrap bundle)
+- JavaScript
 
 ## Estructura del proyecto
 
@@ -78,6 +78,7 @@ El proyecto está compuesto por páginas y recursos básicos para la presentaci�
 - login.html: acceso de usuarios
 - registro.html: registro de usuarios
 - donate.html: sección de donaciones
+- about.html: sección sobre nosotros como empresa de campañas solidarias
 
 ## Conclusión
 
