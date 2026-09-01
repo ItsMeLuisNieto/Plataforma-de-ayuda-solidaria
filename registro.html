@@ -9,38 +9,46 @@
 </head>
 <body>
     <header>
-            <nav class="navbar border-bottom border-dark bg-info" style="padding: 20px;">
-                <div class="px-lg-5">
-                    <a href="home.html" class="text-decoration-none"><h1 class="text-white fw-bold">Kallpa Solidary</h1></a>
-                </div>
+        <nav class="navbar navbar-expand-lg border-bottom border-info bg-info fixed-top" style="padding: 30px;">
+            <div class="container-fluid px-4">
+                <h1 class="Titulo text-white fw-bold">Kallpa Solidary</h1>
 
-                <ul class="navbar-nav gap-3 d-flex flex-row me-auto">
+                <ul class="navbar-nav gap-3 d-flex flex-row">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="home.html">Inicio</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="#">Campañas</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="#">Eventos</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="#">Sobre Nosotros</a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-white fw-semibold" href="#">Reportes</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conocenos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="SobreNosotros.html">Sobre
+                                    Nosotros</a></li>
+                            <li><a class="dropdown-item fw-semibold fs-6 py-2" href="#">Reportes</a></li>
+                        </ul>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="btn btn-secondary text-white fw-bold" href="login.html">Iniciar Sesión</a>
+                        <a class="nav-link text-black fw-bold" href="login.html">Iniciar Sesión</a>
                     </li>
-                </ul>       
-            </nav>      
-        </header>
+                    <li class="nav-item">
+                        <a class="btn btn-danger text-white" href="registro.html">Registrarse</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
     <div class="background"></div>
     

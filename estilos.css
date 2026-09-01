@@ -1,4 +1,4 @@
-body {
+body#login-body {
     background-color: rgb(79, 198, 238);
     background-image: url('assets/img1.jpeg');
     background-size: cover;
@@ -8,6 +8,8 @@ body {
     width: 100%;
     margin-bottom: 100px;
 }
+
+
 
 .background {
     position: fixed;
@@ -81,10 +83,16 @@ nav a{
     font-size: 10px;
 }
 
+.navbar.fixed-top {
+    z-index: 1030;
+}
+
 .hero-bg {
     background-image: 
         linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6)),
         url('imagenes/nosotros1.jpg');
     background-size: cover;
     background-position: center;
+    padding-top: 180px;
+    padding-bottom: 100px;
 }
