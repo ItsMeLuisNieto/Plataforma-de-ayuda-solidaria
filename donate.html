@@ -1,18 +1,37 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dona ahora | Kallpa Solidary</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dona ahora | Kallpa Solidary</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="CSS/responsive.css" />
+    <link rel="stylesheet" href="CSS/donacion-estilos.css" />
+  </head>
+  <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info" style="padding: 20px;">
+            <div class="container-fluid px-lg-5">
+                
+                <a href="home.html" class="text-decoration-none">
+                    <h1 class="text-white fw-bold mb-0">Kallpa Solidary</h1>
+                </a>
 
-  <link rel="stylesheet" href="CSS/responsive.css" />
-  <link rel="stylesheet" href="CSS/donacion-estilos.css" />
-</head>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
                 <div class="collapse navbar-collapse" id="menuNavegacion">
                     <ul class="navbar-nav gap-3 ms-auto align-items-center mt-3 mt-lg-0 text-center">
@@ -23,7 +42,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-white fw-semibold" href="#events">Eventos</a>
                         </li>
-                        
+                   
                         <!--<li class="nav-item">
                             <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
                         </li>-->
@@ -51,67 +70,39 @@
         </nav>
     </header>
 
-        <a href="home.html" class="text-decoration-none">
-          <h1 class="text-white fw-bold mb-0">Kallpa Solidary</h1>
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion"
-          aria-controls="menuNavegacion" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="menuNavegacion">
-          <ul class="navbar-nav gap-3 ms-auto align-items-center mt-3 mt-lg-0 text-center">
-            <li class="nav-item">
-              <a class="nav-link text-white fw-semibold" href="#campaigns">Campañas</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link text-white fw-semibold" href="#events">Eventos</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link text-white fw-semibold" href="#">Donaciones</a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page" id="navbarDropdown"
-                role="button" data-bs-toggle="dropdown">Conócenos
-              </a>
-              <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item fw-semibold fs-6 py-2" href="about.html">Sobre Nosotros</a></li>
-                <li><a class="dropdown-item fw-semibold fs-6 py-2" href="#">Reportes</a></li>
-              </ul>
-            </li>
-
-            <li class="nav-item w-100 w-lg-auto">
-              <a class="btn btn-secondary text-white fw-bold w-100" href="login.html">Iniciar Sesión</a>
-            </li>
-
-            <li class="nav-item w-100 w-lg-auto">
-              <a class="btn btn-primary text-white fw-bold w-100" href="registro.html">Registrarse</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main style="padding-top: 10px">
-    <section class="container py-5">
-      <div class="row align-items-center g-4">
-        <div class="col-lg-7">
-          <span class="kallpa-badge badge rounded-pill px-3 py-2 fw-semibold mb-3">Donaciones transparentes</span>
-          <h1 class="display-5 fw-bold text-dark mb-3 section-title">
-            Tu apoyo fortalece cada campaña
-          </h1>
-          <p class="text-secondary fs-5 mb-4">
-            Aporta alimentos, artículos de primera necesidad o donaciones
-            monetarias para impulsar proyectos concretos en nuestra comunidad.
-          </p>
-          <div class="d-flex flex-wrap gap-3">
-            <a href="#campaigns" class="btn btn-outline-danger btn-lg px-4">Dona ya en los eventos disponibles</a>
-            <a href="#events" class="btn btn-outline-primary btn-lg px-4">Ver eventos próximos</a>
+    <main style="padding-top: 10px">
+      <section class="container py-5">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <span
+              class="kallpa-badge badge rounded-pill px-3 py-2 fw-semibold mb-3"
+              >Donaciones transparentes</span
+            >
+            <h1 class="display-5 fw-bold text-dark mb-3 section-title">
+              Tu apoyo fortalece cada campaña
+            </h1>
+            <p class="text-secondary fs-5 mb-4">
+              Aporta alimentos, artículos de primera necesidad o donaciones
+              monetarias para impulsar proyectos concretos en nuestra comunidad.
+            </p>
+            <div class="d-flex flex-wrap gap-3">
+              <a href="#campaigns" class="btn btn-outline-danger btn-lg px-4"
+                >Dona ya en los eventos disponibles</a
+              >
+              <a href="#events" class="btn btn-outline-primary btn-lg px-4"
+                >Ver eventos próximos</a
+              >
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=80"
+                alt="Donación"
+                class="img-fluid w-100"
+                style="height: 420px; object-fit: cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -307,581 +298,508 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="campaigns" class="py-5 bg-light">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="display-6 fw-bold text-dark section-title">
-            Campañas activas
-          </h2>
-          <p class="text-secondary mb-0">
-            Cada iniciativa tiene un impacto directo y medible en la
-            comunidad.
+      <section id="events" class="py-5">
+        <div class="container">
+          <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-dark section-title">
+              Eventos próximos
+            </h2>
+            <p class="text-secondary mb-0">
+              Participa en actividades comunitarias con impacto directo.
+            </p>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >12 de septiembre</span
+                  >
+                  <span class="small text-secondary">9:00 AM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Jornada de recolección</h4>
+                <p class="text-secondary mb-3">
+                  Recogida de alimentos, ropa y productos de higiene en la plaza
+                  principal.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Canasta de alimentos
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i
+                    >Parque Kennedy
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Canasta de alimentos"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >15 de septiembre</span
+                  >
+                  <span class="small text-secondary">11:00 AM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Mercado solidario</h4>
+                <p class="text-secondary mb-3">
+                  Intercambio y donación de prendas, calzado y materiales para
+                  invierno.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Ropa y abrigo
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i
+                    >Centro comunitario
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Ropa y abrigo"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >18 de septiembre</span
+                  >
+                  <span class="small text-secondary">3:00 PM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Taller de apoyo escolar</h4>
+                <p class="text-secondary mb-3">
+                  Entrega de cuadernos, lapiceros y material escolar a los
+                  estudiantes.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Material escolar
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i
+                    >Biblioteca municipal
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Material escolar"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >22 de septiembre</span
+                  >
+                  <span class="small text-secondary">10:00 AM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Entrega de paquetes</h4>
+                <p class="text-secondary mb-3">
+                  Distribución de kits con alimentos y productos de aseo para
+                  familias necesitadas.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Canasta de alimentos
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i
+                    >Sector A y B
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Canasta de alimentos"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >24 de septiembre</span
+                  >
+                  <span class="small text-secondary">1:00 PM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Donación de abrigos</h4>
+                <p class="text-secondary mb-3">
+                  Campaña abierta para aportar mantas, chompas y botas para los
+                  más vulnerables.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Ropa y abrigo
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i>Calle
+                    Las Gardenias
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Ropa y abrigo"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-xl-4">
+              <div
+                class="event-card card h-100 border-0 shadow-sm rounded-4 p-4"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <span class="badge bg-primary-subtle text-primary fw-semibold"
+                    >28 de septiembre</span
+                  >
+                  <span class="small text-secondary">4:00 PM</span>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">Mochilas para aprender</h4>
+                <p class="text-secondary mb-3">
+                  Fomentamos la educación con útiles, cuadernos y mochilas para
+                  niños y jóvenes.
+                </p>
+                <ul class="list-unstyled small text-secondary mb-4">
+                  <li>
+                    <i class="fas fa-clipboard-check me-2 text-success"></i
+                    >Campaña: Material escolar
+                  </li>
+                  <li>
+                    <i class="fas fa-map-marker-alt me-2 text-primary"></i
+                    >Escuela N° 202
+                  </li>
+                </ul>
+                <button
+                  class="btn btn-outline-primary w-100"
+                  data-bs-toggle="modal"
+                  data-bs-target="#infoEventModal"
+                  data-campaign="Material escolar"
+                >
+                  Más información
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-dark border-top py-4 mt-5">
+      <div
+        class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4"
+      >
+        <div>
+          <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
+          <p class="small text-white-50 mb-0">
+            © 2026 Kallpa Solidary. Todo los derechos de reservados.
           </p>
         </div>
 
-        <div class="row g-4">
-          <div class="col-lg-4">
-            <div class="campaign-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-warning-subtle text-warning-emphasis fw-semibold px-3 py-2">En curso</span>
-                <span class="small text-secondary">7 días</span>
-              </div>
-              <h3 class="fw-bold text-dark mb-2">Canasta de alimentos</h3>
-              <p class="text-secondary mb-3">
-                Aportamos kits básicos para familias vulnerables con arroz,
-                avena, leche, aceite y productos de higiene.
-              </p>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small text-secondary mb-1">
-                  <span>Recaudado</span>
-                  <span>72%</span>
-                </div>
-                <div class="progress progress-bar">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 72%"></div>
-                </div>
-              </div>
-              <ul class="list-unstyled text-secondary small mb-4">
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>San
-                  Martín de Porres
-                </li>
-                <li>
-                  <i class="fas fa-users me-2 text-primary"></i>240 familias
-                </li>
-                <li>
-                  <i class="fas fa-donate me-2 text-primary"></i>Meta: S/
-                  18,000
-                </li>
-              </ul>
-              <div class="d-flex gap-2 mt-auto">
-                <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal">
-                  Donar
-                </button>
-                <a href="#events" class="btn btn-outline-secondary flex-fill">Más info</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="campaign-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-warning-subtle text-warning-emphasis fw-semibold px-3 py-2">En curso</span>
-                <span class="small text-secondary">14 días</span>
-              </div>
-              <h3 class="fw-bold text-dark mb-2">Ropa y abrigo</h3>
-              <p class="text-secondary mb-3">
-                Recibimos prendas, mochilas, calzado y artículos para niños y
-                adultos mayores que sufren frío en invierno.
-              </p>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small text-secondary mb-1">
-                  <span>Recaudado</span>
-                  <span>58%</span>
-                </div>
-                <div class="progress progress-bar">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 58%"></div>
-                </div>
-              </div>
-              <ul class="list-unstyled text-secondary small mb-4">
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>El
-                  Agustino
-                </li>
-                <li>
-                  <i class="fas fa-users me-2 text-primary"></i>180
-                  beneficiarios
-                </li>
-                <li>
-                  <i class="fas fa-donate me-2 text-primary"></i>Meta: 1,300
-                  prendas
-                </li>
-              </ul>
-              <div class="d-flex gap-2 mt-auto">
-                <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal">
-                  Donar
-                </button>
-                <a href="#events" class="btn btn-outline-secondary flex-fill">Más info</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="campaign-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-warning-subtle text-warning-emphasis fw-semibold px-3 py-2">En curso</span>
-                <span class="small text-secondary">21 días</span>
-              </div>
-              <h3 class="fw-bold text-dark mb-2">Material escolar</h3>
-              <p class="text-secondary mb-3">
-                Apoyamos a estudiantes con cuadernos, útiles escolares,
-                mochilas y uniformes para continuar sus clases.
-              </p>
-              <div class="mb-3">
-                <div class="d-flex justify-content-between small text-secondary mb-1">
-                  <span>Recaudado</span>
-                  <span>81%</span>
-                </div>
-                <div class="progress progress-bar">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 81%"></div>
-                </div>
-              </div>
-              <ul class="list-unstyled text-secondary small mb-4">
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Surco
-                </li>
-                <li>
-                  <i class="fas fa-users me-2 text-primary"></i>310
-                  estudiantes
-                </li>
-                <li>
-                  <i class="fas fa-donate me-2 text-primary"></i>Meta: S/
-                  24,500
-                </li>
-              </ul>
-              <div class="d-flex gap-2 mt-auto">
-                <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal">
-                  Donar
-                </button>
-                <a href="#events" class="btn btn-outline-secondary flex-fill">Más info</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="events" class="py-5">
-      <div class="container">
-        <div class="text-center mb-5">
-          <h2 class="display-6 fw-bold text-dark section-title">
-            Eventos próximos
-          </h2>
-          <p class="text-secondary mb-0">
-            Participa en actividades comunitarias con impacto directo.
-          </p>
-        </div>
-
-        <div class="row g-4">
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">12 de junio</span>
-                <span class="small text-secondary">9:00 AM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Jornada de recolección</h4>
-              <p class="text-secondary mb-3">
-                Recogida de alimentos, ropa y productos de higiene en la plaza
-                principal.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Canasta de alimentos
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Parque Kennedy
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Canasta de alimentos">
-                Más información
-              </button>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">15 de junio</span>
-                <span class="small text-secondary">11:00 AM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Mercado solidario</h4>
-              <p class="text-secondary mb-3">
-                Intercambio y donación de prendas, calzado y materiales para
-                invierno.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Ropa y abrigo
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Centro comunitario
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Ropa y abrigo">
-                Más información
-              </button>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">18 de junio</span>
-                <span class="small text-secondary">3:00 PM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Taller de apoyo escolar</h4>
-              <p class="text-secondary mb-3">
-                Entrega de cuadernos, lapiceros y material escolar a los
-                estudiantes.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Material escolar
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Biblioteca municipal
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Material escolar">
-                Más información
-              </button>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">22 de junio</span>
-                <span class="small text-secondary">10:00 AM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Entrega de paquetes</h4>
-              <p class="text-secondary mb-3">
-                Distribución de kits con alimentos y productos de aseo para
-                familias necesitadas.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Canasta de alimentos
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Sector A y B
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Canasta de alimentos">
-                Más información
-              </button>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">24 de junio</span>
-                <span class="small text-secondary">1:00 PM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Donación de abrigos</h4>
-              <p class="text-secondary mb-3">
-                Campaña abierta para aportar mantas, chompas y botas para los
-                más vulnerables.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Ropa y abrigo
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Calle
-                  Las Gardenias
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Ropa y abrigo">
-                Más información
-              </button>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-xl-4">
-            <div class="event-card card h-100 border-0 shadow-sm rounded-4 p-4">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-semibold">28 de junio</span>
-                <span class="small text-secondary">4:00 PM</span>
-              </div>
-              <h4 class="fw-bold text-dark mb-2">Mochilas para aprender</h4>
-              <p class="text-secondary mb-3">
-                Fomentamos la educación con útiles, cuadernos y mochilas para
-                niños y jóvenes.
-              </p>
-              <ul class="list-unstyled small text-secondary mb-4">
-                <li>
-                  <i class="fas fa-clipboard-check me-2 text-success"></i>Campaña: Material escolar
-                </li>
-                <li>
-                  <i class="fas fa-map-marker-alt me-2 text-primary"></i>Escuela N° 202
-                </li>
-              </ul>
-              <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#infoEventModal"
-                data-campaign="Material escolar">
-                Más información
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="bg-dark border-top py-4 mt-5">
-    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
-      <div>
-        <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
-        <p class="small text-white-50 mb-0">
-          © 2026 Kallpa Solidary. Todo los derechos de reservados.
-        </p>
-      </div>
-
-      <nav class="d-flex flex-column gap-1">
-        <a class="text-decoration-none text-secondary small text-white" href="#">Términos y Condiciones</a>
-        <a class="text-decoration-none text-secondary small text-white" href="#">Política de Privacidad</a>
-      </nav>
-
-      <div>
-        <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
-        <nav class="d-flex flex-column gap-1 text-secondary small">
-          <span class="text-white">Calle Las Gardenias 179, Independencia</span>
-          <a class="text-decoration-none text-secondary small text-white" href="tel:+51904399718">+51 904 399 718</a>
+        <nav class="d-flex flex-column gap-1">
+          <a
+            class="text-decoration-none text-secondary small text-white"
+            href="#"
+            >Términos y Condiciones</a
+          >
+          <a
+            class="text-decoration-none text-secondary small text-white"
+            href="#"
+            >Política de Privacidad</a
+          >
         </nav>
-      </div>
-    </div>
-  </footer>
 
-  <div class="modal fade" id="donationModal" tabindex="-1" aria-labelledby="donationModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 border-0 shadow-lg">
-        <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold" id="donationModalLabel">
-            Selecciona tu tipo de donación
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        <div>
+          <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
+          <nav class="d-flex flex-column gap-1 text-secondary small">
+            <span class="text-white"
+              >Calle Las Gardenias 179, Independencia</span
+            >
+            <a
+              class="text-decoration-none text-secondary small text-white"
+              href="tel:+51904399718"
+              >+51 904 399 718</a
+            >
+          </nav>
         </div>
-        <div class="modal-body pt-3">
-          <div class="row g-3">
-            <div class="col-12 col-sm-6">
-              <button type="button" class="btn btn-danger w-100 h-100 p-4 rounded-4" data-bs-target="#moneyDonation"
-                data-bs-toggle="modal">
-                <i class="fas fa-hand-holding-usd d-block fs-2 mb-2"></i>
-                Donar dinero
-              </button>
-            </div>
-            <div class="col-12 col-sm-6">
-              <button type="button" class="btn btn-success w-100 h-100 p-4 rounded-4" data-bs-target="#objectDonation"
-                data-bs-toggle="modal">
-                <i class="fas fa-box-open d-block fs-2 mb-2"></i>
-                Donar objetos
-              </button>
-            </div>
+      </div>
+    </footer>
+
+    <div
+      class="modal fade"
+      id="donationModal"
+      tabindex="-1"
+      aria-labelledby="donationModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" id="donationModalLabel">
+              Selecciona tu tipo de donación
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="moneyDonation" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content rounded-4 border-0 shadow-lg">
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold" id="infoEventModalLabel">
-            Donacion
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-
-        <div class="modal-body pt-0 pb-4">
-          <div class="container-fluid">
-            <div class="row align-items-center g-4">
-
-
-              <div class="col-lg-5 text-center text-lg-start">
-                <h3 class="fw-bold text-uppercase" style="color: #00b4d8;">DONA A KALLPA</h3>
-                <p class="fw-semibold mb-1">DE SOL A SOL SE PUEDEN LOGRAR GRANDES COSAS</p>
-                <p class="text-secondary small mb-3">Con tu apoyo varias familias estarán agradecidas.</p>
-                <p class="fs-6 text-muted">Selecciona tu método preferido y realiza tu donación solidaria.</p>
+          <div class="modal-body pt-3">
+            <div class="row g-3">
+              <div class="col-12 col-sm-6">
+                <button
+                  type="button"
+                  class="btn btn-danger w-100 h-100 p-4 rounded-4"
+                  data-bs-target="#moneyDonation"
+                  data-bs-toggle="modal"
+                >
+                  <i class="fas fa-hand-holding-usd d-block fs-2 mb-2"></i>
+                  Donar dinero
+                </button>
               </div>
-
-
-              <div class="col-lg-7">
-                <div class="card border-0 text-white mx-auto shadow"
-                  style="max-width: 410px; background: linear-gradient(135deg, #68b0d7, #1072a8); border-radius: 25px; padding: 25px;">
-
-
-                  <div class="d-flex gap-2 mb-3">
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #7b2cbf;"
-                      onclick="mostrarYape()">Yape</button>
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #333;"
-                      onclick="mostrarTarjeta()">Tarjeta</button>
-                  </div>
-
-                  <div id="contenidoYape" class="text-center">
-                    <div class="mb-3">
-                      <small class="fw-bold d-block text-white-50">PAGA CON YAPE</small>
-                      <h2 class="fw-bold mb-1">929 612 926</h2>
-                      <p class="fw-semibold mb-0">Grupo Kallpa Solidary</p>
-                    </div>
-
-                    <div class="bg-white rounded-4 p-3 mx-auto shadow-sm" style="width: 200px;">
-                      <img src="YAPE.png" alt="QR Yape" class="img-fluid">
-                    </div>
-
-                    <button type="button" class="btn btn-outline-light w-100 mt-3 fw-bold" style="border-radius: 10px;"
-                      onclick="copiarNumero()">
-                      <i class="fas fa-copy me-2"></i>Copiar número
-                    </button>
-                  </div>
-
-
-                  <div id="contenidoTarjeta" style="display: none;">
-                    <h5 class="fw-bold mb-3 text-center">PAGO CON TARJETA</h5>
-
-                    <div class="mb-2">
-                      <label class="form-label small mb-1">Número de tarjeta</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="1234 5678 9012 3456">
-                    </div>
-
-                    <div class="mb-2">
-                      <label class="form-label small mb-1">Nombre del titular</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Nombre completo">
-                    </div>
-
-                    <div class="row g-2 mb-3">
-                      <div class="col-6">
-                        <label class="form-label small mb-1">Vencimiento</label>
-                        <input type="text" class="form-control form-control-sm" placeholder="MM/AA">
-                      </div>
-                      <div class="col-6">
-                        <label class="form-label small mb-1">CVV</label>
-                        <input type="password" class="form-control form-control-sm" placeholder="123">
-                      </div>
-                    </div>
-
-                    <button type="button" class="btn btn-light w-100 fw-bold text-dark">
-                      Realizar donación
-                    </button>
-                  </div>
-
-                </div>
+              <div class="col-12 col-sm-6">
+                <button
+                  type="button"
+                  class="btn btn-success w-100 h-100 p-4 rounded-4"
+                  data-bs-target="#objectDonation"
+                  data-bs-toggle="modal"
+                >
+                  <i class="fas fa-box-open d-block fs-2 mb-2"></i>
+                  Donar objetos
+                </button>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-
-  <div class="modal fade" id="modalCopiado" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-      <div class="modal-content text-center p-3 rounded-4 border-0 shadow">
-        <div class="modal-body">
-          <i class="fas fa-check-circle text-success fs-1 mb-2"></i>
-          <h6 class="fw-bold mb-1">¡Número copiado!</h6>
-          <p class="small text-muted mb-3">929 612 926</p>
-          <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill"
-            data-bs-dismiss="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="objectDonation" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 border-0 shadow-lg">
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold">Donación de objetos</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Tipo de donación</label>
-              <input type="text" class="form-control form-control-lg" placeholder="Ej: Ropa, alimentos, juguetes" />
-            </div>
-            <div class="mb-3">
-              <label class="form-label fw-semibold">Cantidad o detalle</label>
-              <textarea class="form-control" rows="4" placeholder="Describe los objetos y la cantidad"></textarea>
-            </div>
-            <button type="submit" class="btn btn-success w-100">
-              Enviar donación
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="infoEventModal" tabindex="-1" aria-labelledby="infoEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4 border-0 shadow-lg">
-        <div class="modal-header border-0">
-          <h5 class="modal-title fw-bold" id="infoEventModalLabel">
-            Más información
-          </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <span class="badge rounded-pill bg-primary-subtle text-primary px-3 py-2"
-              id="eventCampaignBadge">Campaña</span>
+    <div class="modal fade" id="moneyDonation" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-bold">Donación monetaria</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
           </div>
-          <p class="text-secondary mb-3">
-            Este evento forma parte de una iniciativa solidaria enfocada en
-            apoyar a la comunidad con acciones concretas, servicio directo y
-            seguimiento cercano.
-          </p>
-          <ul class="list-unstyled small text-secondary mb-0">
-            <li>
-              <i class="fas fa-clock me-2 text-primary"></i>Horario: 9:00 AM -
-              1:00 PM
-            </li>
-            <li>
-              <i class="fas fa-user-friends me-2 text-primary"></i>Voluntariado disponible
-            </li>
-            <li>
-              <i class="fas fa-hand-holding-heart me-2 text-primary"></i>Necesidades prioritarias: alimentos, ropa y
-              materiales
-              educativos
-            </li>
-          </ul>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Monto</label>
+                <input
+                  type="number"
+                  class="form-control form-control-lg"
+                  placeholder="Ej: 50"
+                  min="10"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Campaña</label>
+                <select class="form-select form-select-lg">
+                  <option>Canasta de alimentos</option>
+                  <option>Ropa y abrigo</option>
+                  <option>Material escolar</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Método de pago</label>
+                <select class="form-select form-select-lg">
+                  <option>Yape / Plin</option>
+                  <option>Tarjeta</option>
+                  <option>Transferencia bancaria</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-danger w-100">
+                Confirmar donación
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-  <script>
-    const infoEventModal = document.getElementById("infoEventModal");
-    infoEventModal.addEventListener("show.bs.modal", function (event) {
-      const button = event.relatedTarget;
-      const campaign = button.getAttribute("data-campaign");
-      const badge = document.getElementById("eventCampaignBadge");
-      badge.textContent = "Campaña: " + campaign;
-    });
-  </script>
+    <div
+      class="modal fade"
+      id="objectDonation"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-bold">Donación de objetos</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Tipo de donación</label>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Ej: Ropa, alimentos, juguetes"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Cantidad o detalle</label>
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  placeholder="Describe los objetos y la cantidad"
+                ></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Campaña</label>
+                <select class="form-select form-select-lg">
+                  <option>Canasta de alimentos</option>
+                  <option>Ropa y abrigo</option>
+                  <option>Material escolar</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-success w-100">
+                Enviar donación
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <script>
-    function mostrarYape() {
-      document.getElementById("contenidoYape").style.display = "block";
-      document.getElementById("contenidoTarjeta").style.display = "none";
-    }
+    <div
+      class="modal fade"
+      id="infoEventModal"
+      tabindex="-1"
+      aria-labelledby="infoEventModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow-lg">
+          <div class="modal-header border-0">
+            <h5 class="modal-title fw-bold" id="infoEventModalLabel">
+              Más información
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Cerrar"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <span
+                class="badge rounded-pill bg-primary-subtle text-primary px-3 py-2"
+                id="eventCampaignBadge"
+                >Campaña</span
+              >
+            </div>
+            <p class="text-secondary mb-3">
+              Este evento forma parte de una iniciativa solidaria enfocada en
+              apoyar a la comunidad con acciones concretas, servicio directo y
+              seguimiento cercano.
+            </p>
+            <ul class="list-unstyled small text-secondary mb-0">
+              <li>
+                <i class="fas fa-clock me-2 text-primary"></i>Horario: 9:00 AM -
+                1:00 PM
+              </li>
+              <li>
+                <i class="fas fa-user-friends me-2 text-primary"></i
+                >Voluntariado disponible
+              </li>
+              <li>
+                <i class="fas fa-hand-holding-heart me-2 text-primary"></i
+                >Necesidades prioritarias: alimentos, ropa y materiales
+                educativos
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    function mostrarTarjeta() {
-      document.getElementById("contenidoYape").style.display = "none";
-      document.getElementById("contenidoTarjeta").style.display = "block";
-    }
-
-    function copiarNumero() {
-      navigator.clipboard.writeText("929 612 926");
-      const modalAviso = new bootstrap.Modal(document.getElementById("modalCopiado"));
-      modalAviso.show();
-    }
-  </script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const infoEventModal = document.getElementById("infoEventModal");
+      infoEventModal.addEventListener("show.bs.modal", function (event) {
+        const button = event.relatedTarget;
+        const campaign = button.getAttribute("data-campaign");
+        const badge = document.getElementById("eventCampaignBadge");
+        badge.textContent = "Campaña: " + campaign;
+      });
+    </script>
+  </body>
 </html>
