@@ -634,53 +634,112 @@
       </div>
     </div>
 
-    <div class="modal fade" id="moneyDonation" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
-          <div class="modal-header border-0">
-            <h5 class="modal-title fw-bold">Donación monetaria</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Cerrar"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label class="form-label fw-semibold">Monto</label>
-                <input
-                  type="number"
-                  class="form-control form-control-lg"
-                  placeholder="Ej: 50"
-                  min="10"
-                />
+  <div class="modal fade" id="moneyDonation" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold" id="infoEventModalLabel">
+            Donacion
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body pt-0 pb-4">
+          <div class="container-fluid">
+            <div class="row align-items-center g-4">
+
+
+              <div class="col-lg-5 text-center text-lg-start">
+                <h3 class="fw-bold text-uppercase" style="color: #00b4d8;">DONA A KALLPA</h3>
+                <p class="fw-semibold mb-1">DE SOL A SOL SE PUEDEN LOGRAR GRANDES COSAS</p>
+                <p class="text-secondary small mb-3">Con tu apoyo varias familias estarán agradecidas.</p>
+                <p class="fs-6 text-muted">Selecciona tu método preferido y realiza tu donación solidaria.</p>
               </div>
-              <div class="mb-3">
-                <label class="form-label fw-semibold">Campaña</label>
-                <select class="form-select form-select-lg">
-                  <option>Canasta de alimentos</option>
-                  <option>Ropa y abrigo</option>
-                  <option>Material escolar</option>
-                </select>
+
+
+              <div class="col-lg-7">
+                <div class="card border-0 text-white mx-auto shadow"
+                  style="max-width: 410px; background: linear-gradient(135deg, #68b0d7, #1072a8); border-radius: 25px; padding: 25px;">
+
+
+                  <div class="d-flex gap-2 mb-3">
+                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #7b2cbf;"
+                      onclick="mostrarYape()">Yape</button>
+                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #333;"
+                      onclick="mostrarTarjeta()">Tarjeta</button>
+                  </div>
+
+                  <div id="contenidoYape" class="text-center">
+                    <div class="mb-3">
+                      <small class="fw-bold d-block text-white-50">PAGA CON YAPE</small>
+                      <h2 class="fw-bold mb-1">929 612 926</h2>
+                      <p class="fw-semibold mb-0">Grupo Kallpa Solidary</p>
+                    </div>
+
+                    <div class="bg-white rounded-4 p-3 mx-auto shadow-sm" style="width: 200px;">
+                      <img src="YAPE.png" alt="QR Yape" class="img-fluid">
+                    </div>
+
+                    <button type="button" class="btn btn-outline-light w-100 mt-3 fw-bold" style="border-radius: 10px;"
+                      onclick="copiarNumero()">
+                      <i class="fas fa-copy me-2"></i>Copiar número
+                    </button>
+                  </div>
+
+
+                  <div id="contenidoTarjeta" style="display: none;">
+                    <h5 class="fw-bold mb-3 text-center">PAGO CON TARJETA</h5>
+
+                    <div class="mb-2">
+                      <label class="form-label small mb-1">Número de tarjeta</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="1234 5678 9012 3456">
+                    </div>
+
+                    <div class="mb-2">
+                      <label class="form-label small mb-1">Nombre del titular</label>
+                      <input type="text" class="form-control form-control-sm" placeholder="Nombre completo">
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                      <div class="col-6">
+                        <label class="form-label small mb-1">Vencimiento</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="MM/AA">
+                      </div>
+                      <div class="col-6">
+                        <label class="form-label small mb-1">CVV</label>
+                        <input type="password" class="form-control form-control-sm" placeholder="123">
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-light w-100 fw-bold text-dark">
+                      Realizar donación
+                    </button>
+                  </div>
+
+                </div>
               </div>
-              <div class="mb-3">
-                <label class="form-label fw-semibold">Método de pago</label>
-                <select class="form-select form-select-lg">
-                  <option>Yape / Plin</option>
-                  <option>Tarjeta</option>
-                  <option>Transferencia bancaria</option>
-                </select>
-              </div>
-              <button type="submit" class="btn btn-danger w-100">
-                Confirmar donación
-              </button>
-            </form>
+
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+
+  <div class="modal fade" id="modalCopiado" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content text-center p-3 rounded-4 border-0 shadow">
+        <div class="modal-body">
+          <i class="fas fa-check-circle text-success fs-1 mb-2"></i>
+          <h6 class="fw-bold mb-1">¡Número copiado!</h6>
+          <p class="small text-muted mb-3">929 612 926</p>
+          <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill"
+            data-bs-dismiss="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <div
       class="modal fade"
@@ -801,5 +860,23 @@
         badge.textContent = "Campaña: " + campaign;
       });
     </script>
+
+    <script>
+    function mostrarYape() {
+      document.getElementById("contenidoYape").style.display = "block";
+      document.getElementById("contenidoTarjeta").style.display = "none";
+    }
+
+    function mostrarTarjeta() {
+      document.getElementById("contenidoYape").style.display = "none";
+      document.getElementById("contenidoTarjeta").style.display = "block";
+    }
+
+    function copiarNumero() {
+      navigator.clipboard.writeText("929 612 926");
+      const modalAviso = new bootstrap.Modal(document.getElementById("modalCopiado"));
+      modalAviso.show();
+    }
+  </script>
   </body>
 </html>
