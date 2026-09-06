@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../CSS/responsive.css" />
     <link rel="stylesheet" href="../CSS/login-estilos.css" />
 
-    <script src="https://google.com" hl=es onload=InicializarGoogle() async defer></script>
+    <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
   </head>
   <body class="login-bg">
     <header>
@@ -69,7 +69,8 @@
     <div class="login-background"></div>
 
     <div class="container">
-      <p class="fs-1 text-white p-3 fw-bold rounded">Iniciar sesión</p>
+      <h1 class="fw-bold">¡Hola de nuevo!</h1>
+      <p>Inicia sesión para continuar</p>
 
       <form action="/login" method="POST">
         <label for="login-email">Correo electrónico</label>
@@ -90,7 +91,7 @@
 
         <button type="submit" class="btn btn-primary">Iniciar sesión</button>
 
-        <div id="buttonDiv"></div>
+        <div id="googleButtonDiv"></div>
 
         <script>
             function handleCredentialResponse(response) {
@@ -122,6 +123,28 @@
         </p>
       </form>
     </div>
+
+    <footer class="bg-dark border-top py-4 mt-5">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
+            <div>
+                <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
+                <p class="small fw-bold fs-6">© 2026 Kallpa Solidary. Todos los derechos reservados.</p>
+            </div>
+
+
+            <nav class="d-flex flex-column gap-1">
+                <a class="text-decoration-none text-secondary text-white small" href="#">Términos y Condiciones</a>
+                <a class="text-decoration-none text-secondary text-white small" href="#">Política de Privacidad</a>
+            </nav>
+
+            <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
+            <nav class="d-flex flex-column gap-1 text-secondary small">
+                <span class="text-white">Calle Las Gardenias 179, Independencia</span>
+                <a class="text-decoration-none text-secondary text-white small" href="tel:+51904399718">+51 904 399
+                    718</a>
+            </nav>
+        </div>
+    </footer>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
