@@ -103,6 +103,9 @@
                     client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
                     callback: handleCredentialResponse
                 });
+
+                const buttonContainer = document.getElementById("googleButtonDiv");
+                const containerWidth = buttonContainer.offsetWidth || 300;
                 
                 google.accounts.id.renderButton(
                     document.getElementById("googleButtonDiv"),
@@ -110,7 +113,8 @@
                         theme: "outline", 
                         size: "large",
                         text: "signin_with",
-                        shape: "rectangular"
+                        shape: "rectangular",
+                        width: containerWidth
                     }
                 );
 
