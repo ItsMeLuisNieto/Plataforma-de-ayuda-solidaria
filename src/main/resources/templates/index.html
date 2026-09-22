@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página principal | Kallpa Solidary</title>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+        <link rel="stylesheet" th:href="@{/CSS/responsive.css}" />
+        <link rel="stylesheet" th:href="@{/CSS/home-estilos.css}">
+    </head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info" style="padding: 20px;">
+            <div class="container-fluid px-lg-5">
+                
+                <a th:href="@{/kallpa-solidary}" class="text-decoration-none">
+                    <h1 class="text-white fw-bold mb-0">Kallpa Solidary</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuNavegacion">
+                    <ul class="navbar-nav gap-3 ms-auto align-items-center mt-3 mt-lg-0 text-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/campanas#campaigns}">Campañas</a>
+                        </li>
+        
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/campanas#events}">Eventos</a>
+                        </li>
+        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conócenos
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/reportes}">Reportes</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-secondary text-white fw-bold w-100" th:href="@{/login}">Iniciar Sesión</a>
+                        </li>
+        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-primary text-white fw-bold w-100" th:href="@{/registro}">Registrarse</a>
+                        </li>
+                    </ul>  
+                </div>     
+            </div>
+        </nav>
+    </header>
+
+    <section class="bg-light border-top py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-6 fw-bold text-dark mb-4">¡¡¡ÚNETE A LA KALLPA SOLIDARIA!!!</h1>
+                    <h3 class="display-6 mb-4" style="font-family:Arial, Helvetica, sans-serif;">Lleva esperanza a las personas que necesiten</h3>
+                    <p class="text-secondary fs-6 mb-4" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Kallpa Solidary asegura que tus contribuciones impacten directamente a aquellos en crisis. Proporcionamos transparencia radical en nuestra logística, para que sepas exactamente a dónde va tu ayuda.</p>
+                    <div>
+                        <a th:href="@{/campanas}" class="btn btn-outline-danger btn-lg px-4">Donar ahora</a>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="position-relative">
+                        <img 
+                            src="https://policiaamigo.com/wp-content/uploads/2019/03/SML6006.jpg" alt="WE ARE THE WORLD, WE ARE THE CHILDREN :)" class="img-fluid  rounded-4 shadow w-100" style="max-height: 420px; object-fit: cover;"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light border-top py-4 mt-2">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-dark display-6 mb-2">Ser parte de Kallpa Solidary significa</h2>
+                <h3 class="fw-bold text-primary fs-3"> que puedes ayudar de estas tres formas:</h3>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                        <div class="card-body p-0 mb-4">
+                            <h4 class="card-title text-dark fw-normal mb-1">Quiero ser</h4>
+                            <h3 class="fw-bold text-success mb-4">voluntario</h3>
+                            <p class="card-text text-secondary lh-base">Te conectamos con programas de voluntariado en diversas organizaciones sociales. <br><mark><strong class="text-dark mark">¡Elige la causa ideal para ti!</strong></mark></p>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary text-white" th:href="@{/campanas}">Ver Voluntariados</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                        <div class="card-body p-0 mb-4">
+                            <h4 class="card-title text-dark fw-normal mb-1">Quiero </h4>
+                            <h3 class="fw-bold text-success mb-4">donar bienes</h3>
+                            <p class="card-text text-secondary lh-base">Conoce las campañas de donación de ropa, alimentos y víveres a través de nuestro directorio social. <br><mark><strong class="text-dark mark">Conéctate y dona en simples pasos.</strong></mark></p>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary text-white" th:href="@{/campanas#events}">Ver Donaciones</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-5 shadow-sm rounded-5 text-center p-4 d-flex flex-column justify-content-between">
+                        <div class="card-body p-0 mb-4">
+                            <h4 class="card-title text-dark fw-normal mb-1">Quiero </h4>
+                            <h3 class="fw-bold text-success mb-4">donar dinero</h3>
+                            <p class="card-text text-secondary lh-base">Realiza donaciones monetarias directas y transparentes. Ningún aporte es pequeño, <br><mark><strong class="text-dark mark">ya que la unión hace la fuerza.</strong></mark></p>
+                        </div>
+                        <div>
+                            <a class="btn btn-primary text-white" th:href="@{/campanas#campaigns}">Ver Campañas</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGREGANDO TESTIMONIOS -->
+
+    <section id="testimonios" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="fw-bold mb-4">Voces de Nuestra Comunidad</h2>
+            <!-- Carrusel -->
+            <div id="carruselTestimonios" class="carousel slide shadow rounded p-4 bg-white" data-bs-ride="carousel"
+                data-bs-interval="4000">
+                <div class="carousel-inner" id="contenedor-testimonios">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando testimonios...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carruselTestimonios"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carruselTestimonios"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="mb-2 text-dark font-weight-bold">¿Has participado como donante o voluntario?</p>
+                <button class="btn btn-info text-white fw-bold shadow-sm" data-bs-toggle="modal"
+                    data-bs-target="#modalTestimonio">
+                    <i class="bi bi-chat-square-quote-fill me-1"></i> Comparte tu Experiencia
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREANDO MODAL CON FORMULARIO -->
+    <div class="modal fade" id="modalTestimonio" tabindex="-1" aria-labelledby="modalTestimonioLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title fw-bold" id="modalTestimonioLabel">Déjanos tu Testimonio</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formTestimonio">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label fw-semibold text-dark">Nombre completo</label>
+                            <input type="text" class="form-control" id="nombre" required placeholder="Ej: Jimin Gómez">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label fw-semibold text-dark">¿Cómo has apoyado?</label>
+                            <select class="form-select" id="rol" required>
+                                <option value="Donante">Donante</option>
+                                <option value="Voluntario">Voluntario</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comentario" class="form-label fw-semibold text-dark">Tu Comentario</label>
+                            <textarea class="form-control" id="comentario" rows="3" required
+                                placeholder="Escribe aquí tu experiencia..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold"
+                            onclick="guardarTestimonio(event)">Enviar Testimonio</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODAL EDITAR TESTIMONIO -->
+    <div class="modal fade" id="modalEditarTestimonio" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold" id="modalEditarLabel">
+                        <i class="bi bi-pencil-square me-1"></i> Editar Testimonio
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarTestimonio" onsubmit="guardarEdicionTestimonio(event)">
+                        <!-- Campo oculto que guarda el ID -->
+                        <input type="hidden" id="edit-id">
+
+                        <div class="mb-3">
+                            <label for="edit-nombre" class="form-label fw-semibold text-dark">Nombre completo</label>
+                            <input type="text" class="form-control" id="edit-nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-rol" class="form-label fw-semibold text-dark">¿Cómo has apoyado?</label>
+                            <select class="form-select" id="edit-rol" required>
+                                <option value="Donante">Donante</option>
+                                <option value="Voluntario">Voluntario</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-comentario" class="form-label fw-semibold text-dark">Tu Comentario</label>
+                            <textarea class="form-control" id="edit-comentario" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark border-top py-4 mt-5">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
+            <div>
+                <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
+                <p class="small fw-bold fs-6">© 2026 Kallpa Solidary. Todos los derechos reservados.</p>
+            </div>
+
+
+            <nav class="d-flex flex-column gap-1">
+                <a class="text-decoration-none text-secondary text-white small" href="#">Términos y Condiciones</a>
+                <a class="text-decoration-none text-secondary text-white small" href="#">Política de Privacidad</a>
+            </nav>
+
+            <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
+            <nav class="d-flex flex-column gap-1 text-secondary small">
+                <span class="text-white">Calle Las Gardenias 179, Independencia</span>
+                <a class="text-decoration-none text-secondary text-white small" href="tel:+51904399718">+51 904 399
+                    718</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="JS/Testimonios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro | Kallpa Solidary</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="../CSS/responsive.css" />
+    <link rel="stylesheet" href="../CSS/login-estilos.css" />
+
+    <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
+  </head>
+  <body class="login-bg">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info" style="padding: 20px;">
+            <div class="container-fluid px-lg-5">
+                
+                <a th:href="@{/kallpa-solidary}" class="text-decoration-none">
+                    <h1 class="text-white fw-bold mb-0">Kallpa Solidary</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion" aria-controls="menuNavegacion" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="menuNavegacion">
+                    <ul class="navbar-nav gap-3 ms-auto align-items-center mt-3 mt-lg-0 text-center">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/campanas#campaigns}">Campañas</a>
+                        </li>
+        
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/campanas#events}">Eventos</a>
+                        </li>
+        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
+                                id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conócenos
+                            </a>
+                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
+                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/reportes}">Reportes</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-secondary text-white fw-bold w-100" th:href="@{/login}">Iniciar Sesión</a>
+                        </li>
+        
+                        <li class="nav-item w-100 w-lg-auto">
+                            <a class="btn btn-primary text-white fw-bold w-100" th:href="@{/registro}">Registrarse</a>
+                        </li>
+                    </ul>  
+                </div>     
+            </div>
+        </nav>
+    </header>
+
+    <div class="login-background"></div>
+
+    <div class="container">
+      <h1 class="fw-bold">¡Bienvenido a Kallpa Solidary!</h1>
+      <p>Tu granito de arena puede marcar la diferencia el día de hoy</p>
+
+      <form action="/login" method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" placeholder="Ingrese su nombre" />
+
+        <label for="reg-email">Correo</label>
+        <input type="email" id="reg-email" placeholder="Ingrese su correo" />
+
+        <label for="reg-pass">Contraseña</label>
+        <input
+          type="password"
+          id="reg-pass"
+          placeholder="Ingrese su contraseña"
+        />
+
+        <label for="confirmar-pass">Confirmar contraseña</label>
+        <input
+          type="password"
+          id="confirmar-pass"
+          placeholder="Repita su contraseña"
+        />
+
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+
+        <div id="googleButtonDiv"></div>
+
+        <script>
+            function handleCredentialResponse(response) {
+                console.log("Token de Google recibido:", response.credential);
+            }
+
+            function inicializarGoogle() {
+                google.accounts.id.initialize({
+                    client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
+                    callback: handleCredentialResponse
+                });
+                
+                google.accounts.id.renderButton(
+                    document.getElementById("googleButtonDiv"),
+                    { 
+                        theme: "outline", 
+                        size: "large",
+                        text: "signup_with",
+                        shape: "rectangular"
+                    }
+                );
+                
+                google.accounts.id.prompt();
+            }
+        </script>
+
+        <p class="text-black mt-3 fs-6">
+          ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
+        </p>
+      </form>
+    </div>
+
+    <footer class="bg-dark border-top py-4 mt-5">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-start gap-4">
+            <div>
+                <h6 class="text-info fw-bold mb-1">Kallpa Solidary</h6>
+                <p class="small fw-bold fs-6">© 2026 Kallpa Solidary. Todos los derechos reservados.</p>
+            </div>
+
+
+            <nav class="d-flex flex-column gap-1">
+                <a class="text-decoration-none text-secondary text-white small" href="#">Términos y Condiciones</a>
+                <a class="text-decoration-none text-secondary text-white small" href="#">Política de Privacidad</a>
+            </nav>
+
+            <h6 class="fw-bold text-info mb-2">Contáctanos:</h6>
+            <nav class="d-flex flex-column gap-1 text-secondary small">
+                <span class="text-white">Calle Las Gardenias 179, Independencia</span>
+                <a class="text-decoration-none text-secondary text-white small" href="tel:+51904399718">+51 904 399
+                    718</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
