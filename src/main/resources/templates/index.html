@@ -44,12 +44,12 @@
                         </li>
                         
                         <!-- Se muestra SOLO si el usuario NO ha iniciado sesión -->
-                        <li class="nav-item w-100 w-lg-auto" sec:authorize="isAnonymous()">
-                            <a class="btn btn-secondary text-white fw-bold w-100" th:href="@{/login}">Iniciar Sesión</a>
+                        <li class="nav-item w-100 w-lg-auto me-lg-2 mb-2 mb-lg-0" sec:authorize="isAnonymous()">
+                            <a class="btn btn-outline-light text-nowrap rounded-pill px-4 fw-semibold shadow-sm w-100" th:href="@{/login}">Iniciar Sesión</a>
                         </li>
 
                         <li class="nav-item w-100 w-lg-auto" sec:authorize="isAnonymous()">
-                            <a class="btn btn-primary text-white fw-bold w-100" th:href="@{/registro}">Registrarse</a>
+                            <a class="btn btn-dark text-white text-nowrap rounded-pill px-4 fw-bold shadow w-100" th:href="@{/registro}">Registrarse</a>
                         </li>
 
                         <!-- Se muestra SOLO si el usuario SÍ ha iniciado sesión -->
