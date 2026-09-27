@@ -29,9 +29,7 @@ public class CampanaController {
     @GetMapping("/campanas")
     public String verDonaciones(Model model) {
         model.addAttribute("campanas", listaCampanas);
-        
-        // Cambiar esto porque no todos pueden ser admins
-        model.addAttribute("esAdmin", false);
+        model.addAttribute("esAdmin", true);
         return "donate";
     }
 
