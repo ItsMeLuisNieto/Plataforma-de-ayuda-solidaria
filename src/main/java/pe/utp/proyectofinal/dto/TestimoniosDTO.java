@@ -1,7 +1,7 @@
 package pe.utp.proyectofinal.dto;
 
 public class TestimoniosDTO {
-    private Long id; //Se generará automaticamente por el backend
+    private Long id; // Se generará automaticamente por el backend
     private String nombre, rol, comentario;
 
     public TestimoniosDTO(){}

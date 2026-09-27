@@ -1,6 +1,6 @@
 console.log("Probando 1 2 3 :D")
 
-const API_URL = "http://localhost:8081/api/testimonios";
+const API_URL = "http://localhost:8090/api/testimonios";
 
 // Variable para guardar la lista en memoria 
 let listaGlobalTestimonios = [];
