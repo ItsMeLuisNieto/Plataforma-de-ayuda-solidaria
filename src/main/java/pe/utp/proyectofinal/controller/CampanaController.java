@@ -1,4 +1,4 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.controller;
+package pe.utp.proyectofinal.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
-import com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.dto.CampDTO;
+import pe.utp.proyectofinal.dto.CampDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +29,9 @@ public class CampanaController {
     @GetMapping("/campanas")
     public String verDonaciones(Model model) {
         model.addAttribute("campanas", listaCampanas);
-        model.addAttribute("esAdmin", true);
+        
+        // Cambiar esto porque no todos pueden ser admins
+        model.addAttribute("esAdmin", false);
         return "donate";
     }
 

@@ -1,4 +1,4 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.controller;
+package pe.utp.proyectofinal.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

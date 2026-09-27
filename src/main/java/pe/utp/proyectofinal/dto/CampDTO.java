@@ -1,4 +1,4 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.dto;
+package pe.utp.proyectofinal.dto;
 
 public class CampDTO {
     private Long id;

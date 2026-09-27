@@ -122,6 +122,19 @@ footer .container {
     padding: 20px 0;
 }
 
+.msg-error {
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    text-align: center;
+
+    background: #FCEBEB;
+    color: #9B0C23;
+    border: 0.5px solid #F7C1C1;
+}
+
+
+
 @media (max-width: 767px) {
     .container {
         margin-top: 20px;

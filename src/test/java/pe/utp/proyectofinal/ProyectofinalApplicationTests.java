@@ -1,10 +1,10 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_;
+package pe.utp.proyectofinal;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PlataformaAyudaSolidariaApplicationTests {
+class ProyectofinalApplicationTests {
 
 	@Test
 	void contextLoads() {

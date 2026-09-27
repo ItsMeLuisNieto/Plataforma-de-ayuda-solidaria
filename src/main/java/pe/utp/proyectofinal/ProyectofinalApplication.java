@@ -1,13 +1,13 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_;
+package pe.utp.proyectofinal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PlataformaAyudaSolidariaApplication {
+public class ProyectofinalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PlataformaAyudaSolidariaApplication.class, args);
+		SpringApplication.run(ProyectofinalApplication.class, args);
 	}
 
 }

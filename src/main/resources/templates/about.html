@@ -53,12 +53,23 @@
                             </ul>
                         </li>
                         
-                        <li class="nav-item w-100 w-lg-auto">
+                        <!-- Se muestra SOLO si el usuario NO ha iniciado sesión -->
+                        <li class="nav-item w-100 w-lg-auto" sec:authorize="isAnonymous()">
                             <a class="btn btn-secondary text-white fw-bold w-100" th:href="@{/login}">Iniciar Sesión</a>
                         </li>
-        
-                        <li class="nav-item w-100 w-lg-auto">
+
+                        <li class="nav-item w-100 w-lg-auto" sec:authorize="isAnonymous()">
                             <a class="btn btn-primary text-white fw-bold w-100" th:href="@{/registro}">Registrarse</a>
+                        </li>
+
+                        <!-- Se muestra SOLO si el usuario SÍ ha iniciado sesión -->
+                        <li class="nav-item w-100 w-lg-auto d-flex align-items-center gap-3" sec:authorize="isAuthenticated()">
+                            <span class="text-dark fw-bold">¡Hola, <span th:text="${nombreUsuario}">Usuario</span>!</span>
+                            
+                            <!-- Botón de cerrar sesión (Spring Security intercepta el POST a /logout por defecto) -->
+                            <form th:action="@{/logout}" method="post" class="m-0">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Cerrar Sesión</button>
+                            </form>
                         </li>
                     </ul>  
                 </div>     

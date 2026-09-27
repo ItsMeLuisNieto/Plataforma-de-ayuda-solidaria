@@ -64,20 +64,30 @@
     <div class="login-background"></div>
 
     <div class="container">
-      <h1 class="fw-bold">¡Bienvenido a Kallpa Solidary!</h1>
+      <h1 class="fw-bold" th:text="${param.on != null} ? 'Registrarse con Google' : '¡Bienvenido a Kallpa Solidary!'">¡Bienvenido a Kallpa Solidary!</h1>
       <p>Tu granito de arena puede marcar la diferencia el día de hoy</p>
 
-      <form action="/login" method="POST">
+      <form action="/registrar" method="POST">
+
+        <div class="msg-error" th:if="${param.error != null and param.error[0] == 'pass_mismatch'}">Las contraseñas no coinciden o son inválidas</div>
+
+        <div class="msg-error" th:if="${param.error != null and param.error[0] == 'email_exists'}">El correo electrónico ya existe</div>
+
+        <div class="msg-error" th:if="${param.error != null and param.error[0] == 'null_email'}">El email no es válido</div>
+
+        <div class="msg-error" th:if="${param.error != null and param.error[0] == 'invalid_name'}">No se puede ingresar un nombre así</div>
+
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" placeholder="Ingrese su nombre" />
+        <input type="text" id="nombre" name="nombre" th:value="${param.nombre != null ? param.nombre[0] : ''}"  placeholder="Ingrese su nombre" />
 
         <label for="reg-email">Correo</label>
-        <input type="email" id="reg-email" placeholder="Ingrese su correo" />
+        <input type="email" id="reg-email" name="email" th:value="${param.email != null ? param.email[0] : ''}" th:readonly="${param.email != null}" placeholder="Ingrese su correo" />
 
         <label for="reg-pass">Contraseña</label>
         <input
           type="password"
           id="reg-pass"
+          name="pass"
           placeholder="Ingrese su contraseña"
         />
 
@@ -85,6 +95,7 @@
         <input
           type="password"
           id="confirmar-pass"
+          name="confirm_pass"
           placeholder="Repita su contraseña"
         />
 
@@ -93,28 +104,46 @@
         <div id="googleButtonDiv"></div>
 
         <script>
-            function handleCredentialResponse(response) {
-                console.log("Token de Google recibido:", response.credential);
-            }
+        function handleCredentialResponse(response) {
+            fetch('/login/google', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json()) // Importante: ahora esperamos un JSON de respuesta
+            .then(data => {
+                if (data.accion === "completar_registro") {
+                    // Redirigimos a la nueva página inyectando los datos en la URL de forma segura
+                    const emailCodificado = encodeURIComponent(data.email);
+                    const nombreCodificado = encodeURIComponent(data.nombre);
+                    window.location.href = `/registro?on=Google&email=${emailCodificado}&nombre=${nombreCodificado}`;
+                } else if (data.accion === "login_exitoso") {
+                    window.location.href = "/donar-ahora";
+                } else {
+                    alert("Hubo un problema con la autenticación.");
+                }
+            })
+            .catch(error => console.error("Error en la petición:", error));
+        }
 
-            function inicializarGoogle() {
-                google.accounts.id.initialize({
-                    client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
-                    callback: handleCredentialResponse
-                });
-                
-                google.accounts.id.renderButton(
-                    document.getElementById("googleButtonDiv"),
-                    { 
-                        theme: "outline", 
-                        size: "large",
-                        text: "signup_with",
-                        shape: "rectangular"
-                    }
-                );
-                
-                google.accounts.id.prompt();
-            }
+        function inicializarGoogle() {
+            google.accounts.id.initialize({
+                client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            
+            google.accounts.id.renderButton(
+                document.getElementById("googleButtonDiv"),
+                { 
+                    theme: "outline", 
+                    size: "large",
+                    text: "signup_with",
+                    shape: "rectangular"
+                }
+            );
+            
+            google.accounts.id.prompt();
+        }
         </script>
 
         <p class="text-black mt-3 fs-6">

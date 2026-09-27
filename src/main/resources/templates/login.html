@@ -68,6 +68,9 @@
       <p>Inicia sesión para continuar</p>
 
       <form action="/login" method="POST">
+
+        <div class="msg-error" th:if="${param.error != null and param.error[0] == 'incorrect_credentials'}">Las credenciales no son correctas</div>
+
         <label for="login-email">Correo electrónico</label>
         <input
           type="email"
@@ -90,27 +93,45 @@
 
         <script>
             function handleCredentialResponse(response) {
-                console.log("Token de Google recibido:", response.credential);
-            }
+            fetch('/login/google', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json()) // Importante: ahora esperamos un JSON de respuesta
+            .then(data => {
+                if (data.accion === "completar_registro") {
+                    // Redirigimos a la nueva página inyectando los datos en la URL de forma segura
+                    const emailCodificado = encodeURIComponent(data.email);
+                    const nombreCodificado = encodeURIComponent(data.nombre);
+                    window.location.href = `/registro?on=Google&email=${emailCodificado}&nombre=${nombreCodificado}`;
+                } else if (data.accion === "login_exitoso") {
+                    window.location.href = "/donar-ahora";
+                } else {
+                    alert("Hubo un problema con la autenticación.");
+                }
+            })
+            .catch(error => console.error("Error en la petición:", error));
+        }
 
-            function inicializarGoogle() {
-                google.accounts.id.initialize({
-                    client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
-                    callback: handleCredentialResponse
-                });
-                
-                google.accounts.id.renderButton(
-                    document.getElementById("googleButtonDiv"),
-                    { 
-                        theme: "outline", 
-                        size: "large",
-                        text: "signin_with",
-                        shape: "rectangular"
-                    }
-                );
-
-                google.accounts.id.prompt();
-            }
+        function inicializarGoogle() {
+            google.accounts.id.initialize({
+                client_id: "122831283261-9gc5ojcgeetnllp6dcj15b3vbiosshbt.apps.googleusercontent.com",
+                callback: handleCredentialResponse
+            });
+            
+            google.accounts.id.renderButton(
+                document.getElementById("googleButtonDiv"),
+                { 
+                    theme: "outline", 
+                    size: "large",
+                    text: "signin_with",
+                    shape: "rectangular"
+                }
+            );
+            
+            google.accounts.id.prompt();
+        }
         </script>
 
         <p class="text-black mt-3 fs-6">

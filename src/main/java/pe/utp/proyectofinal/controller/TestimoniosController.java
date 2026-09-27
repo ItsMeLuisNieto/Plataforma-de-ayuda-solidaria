@@ -1,4 +1,4 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.controller;
+package pe.utp.proyectofinal.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.dto.TestimoniosDto;
+import pe.utp.proyectofinal.dto.TestimoniosDTO;
 
 @RestController
 @RequestMapping("/api/testimonios")
 @CrossOrigin(origins = "*")
 public class TestimoniosController {
-    private static List<TestimoniosDto> listaTestimonio = new ArrayList<>();
+    private static List<TestimoniosDTO> listaTestimonio = new ArrayList<>();
     static {
-        listaTestimonio.add(new TestimoniosDto(1L, "Luna Torres", "Donante",
+        listaTestimonio.add(new TestimoniosDTO(1L, "Luna Torres", "Donante",
                 "Increíble la transparencia con la que entregan la ayuda humanitaria en cada campaña."));
-        listaTestimonio.add(new TestimoniosDto(2L, "Enrique Lee", "Voluntario",
+        listaTestimonio.add(new TestimoniosDTO(2L, "Enrique Lee", "Voluntario",
                 "Ser parte de los voluntariados me ha permitido ver el impacto real en las comunidades."));
     }
 
     @GetMapping
-    public List<TestimoniosDto> obtenerTestimonio() {
+    public List<TestimoniosDTO> obtenerTestimonio() {
         return listaTestimonio;
     }
 
     @PostMapping
-    public TestimoniosDto agregarTestimonio(@RequestBody TestimoniosDto nuevoTestimonio) {
+    public TestimoniosDTO agregarTestimonio(@RequestBody TestimoniosDTO nuevoTestimonio) {
         nuevoTestimonio.setId((long) (listaTestimonio.size() + 1));
         listaTestimonio.add(nuevoTestimonio);
         return nuevoTestimonio;
@@ -40,8 +40,8 @@ public class TestimoniosController {
     }
 
     @PutMapping("/{id}")
-    public TestimoniosDto actualizarTestimonio(@PathVariable Long id, @RequestBody TestimoniosDto testimonioActualizado) {
-        for (TestimoniosDto t : listaTestimonio) {
+    public TestimoniosDTO actualizarTestimonio(@PathVariable Long id, @RequestBody TestimoniosDTO testimonioActualizado) {
+        for (TestimoniosDTO t : listaTestimonio) {
             if (t.getId().equals(id)) {
                 t.setNombre(testimonioActualizado.getNombre());
                 t.setRol(testimonioActualizado.getRol());

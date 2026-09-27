@@ -1,12 +1,12 @@
-package com.kallpa_solidary.Plataforma_Ayuda_Solidaria_.dto;
+package pe.utp.proyectofinal.dto;
 
-public class TestimoniosDto {
+public class TestimoniosDTO {
     private Long id; //Se generará automaticamente por el backend
     private String nombre, rol, comentario;
 
-    public TestimoniosDto(){}
+    public TestimoniosDTO(){}
 
-    public TestimoniosDto(Long id, String nombre, String rol, String comentario) {
+    public TestimoniosDTO(Long id, String nombre, String rol, String comentario) {
         this.id = id;
         this.nombre = nombre;
         this.rol = rol;
