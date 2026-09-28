@@ -12,9 +12,9 @@
     />
 
     <link rel="stylesheet" th:href="@{/CSS/responsive.css}" />
-<link rel="stylesheet" th:href="@{/CSS/login-estilos.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/login-estilos.css}" />
 
-    <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
+    <script th:src="@{/js/script.js}"></script>
   </head>
   <body class="login-bg">
     <header>
@@ -133,6 +133,8 @@
             google.accounts.id.prompt();
         }
         </script>
+
+        <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
 
         <p class="text-black mt-3 fs-6">
           ¿No tienes cuenta? <a th:href="@{/registro}">Regístrate aquí</a>

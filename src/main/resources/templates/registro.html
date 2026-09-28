@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../CSS/responsive.css" />
     <link rel="stylesheet" href="../CSS/login-estilos.css" />
 
-    <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
+    <script th:src="@{/js/script.js}"></script>
   </head>
   <body class="login-bg">
     <header>
@@ -145,6 +145,8 @@
             google.accounts.id.prompt();
         }
         </script>
+        
+        <script src="https://accounts.google.com/gsi/client" hl="es" onload="inicializarGoogle()" async defer></script>
 
         <p class="text-black mt-3 fs-6">
           ¿Ya tienes cuenta? <a th:href="@{/login}">Inicia sesión aquí</a>
