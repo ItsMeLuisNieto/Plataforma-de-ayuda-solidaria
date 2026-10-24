@@ -55,4 +55,9 @@ public class VistaController {
     public String solicitudes() {
         return "solicitudes"; 
     }
+
+    @GetMapping("/donaciones")
+    public String irDonaciones() {
+        return "donaciones"; 
+    }
 }
