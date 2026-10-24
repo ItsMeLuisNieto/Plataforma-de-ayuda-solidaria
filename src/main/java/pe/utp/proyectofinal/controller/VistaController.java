@@ -50,4 +50,9 @@ public class VistaController {
     public String verCampanas() {
         return "redirect:/campanas#campaigns";
     }
+
+    @GetMapping("/solicitudes")
+    public String solicitudes() {
+        return "solicitudes"; 
+    }
 }
