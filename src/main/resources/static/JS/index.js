@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <ul class="list-unstyled text-secondary small mb-4">
                                 <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>${campana.ubicacion}</li>
                                 <li><i class="fas fa-users me-2 text-primary"></i>${campana.beneficiarios}</li>
-                                <li><i class="fas fa-donate me-2 text-primary"></i>${campana.meta || 'Meta por definir'}</li>
+                                <li><i class="fas fa-donate me-2 text-primary"></i>${campana.meta != null ? 'Meta: S/ ' + campana.meta.toLocaleString('es-PE') : 'Meta por definir'}</li>
                             </ul>
                             <div class="d-flex gap-2 mt-auto">
                                 <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal">

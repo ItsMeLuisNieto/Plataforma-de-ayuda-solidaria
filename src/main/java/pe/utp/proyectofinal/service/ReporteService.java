@@ -41,7 +41,7 @@ public class ReporteService {
         kpis.setTotalMontoRecaudado(BigDecimal.ZERO);
         kpis.setTotalCampanasActivas(campanas.size());
         kpis.setTotalBeneficiariosAtendidos(campanas.stream()
-                .mapToInt(campana -> extraerEntero(campana.getBeneficiarios()))
+                .mapToInt(Campana::getBeneficiarios)
                 .sum());
         kpis.setTotalBienesStock(donacionRepository.findAll().stream()
                 .mapToInt(Donacion::getCantidad)
@@ -87,13 +87,5 @@ public class ReporteService {
         dto.setValorMonto(solicitud.getDescripcion());
         dto.setEstado(solicitud.getEstado());
         return dto;
-    }
-
-    private int extraerEntero(String texto) {
-        if (texto == null) {
-            return 0;
-        }
-        String digitos = texto.replaceAll("\\D+", "");
-        return digitos.isBlank() ? 0 : Integer.parseInt(digitos);
     }
 }

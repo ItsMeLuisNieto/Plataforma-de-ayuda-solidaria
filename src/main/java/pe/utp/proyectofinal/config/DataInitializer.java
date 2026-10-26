@@ -20,15 +20,15 @@ public class DataInitializer {
                 campanaRepository.save(crearCampana(
                         "Canasta de alimentos",
                         "Aportamos kits básicos para familias vulnerables.",
-                        "7 días", 12, "San Martín de Porres", "240 familias", "Meta: S/ 18,000"));
+                        7, 12, "San Martín de Porres", 240, 18000));
                 campanaRepository.save(crearCampana(
                         "Ropa y abrigo",
                         "Recibimos prendas, mochilas y calzado para niños.",
-                        "14 días", 58, "El Agustino", "180 beneficiarios", "Meta: 1,300 prendas"));
+                        14, 58, "El Agustino", 180, 1300));
                 campanaRepository.save(crearCampana(
                         "Material escolar",
                         "Apoyamos a estudiantes con cuadernos y uniformes.",
-                        "21 días", 81, "Surco", "310 estudiantes", "Meta: S/ 24,500"));
+                        21, 81, "Surco", 310, 24500));
             }
 
             if (testimonioRepository.count() == 0) {
@@ -42,8 +42,8 @@ public class DataInitializer {
         };
     }
 
-    private Campana crearCampana(String titulo, String descripcion, String metaDias, int porcentaje,
-                                 String ubicacion, String beneficiarios, String meta) {
+    private Campana crearCampana(String titulo, String descripcion, int metaDias, int porcentaje,
+                                 String ubicacion, int beneficiarios, int meta) {
         Campana campana = new Campana();
         campana.setTitulo(titulo);
         campana.setDescripcion(descripcion);

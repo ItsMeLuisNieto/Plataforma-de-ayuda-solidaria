@@ -24,8 +24,8 @@ public class Campana {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String descripcion;
 
-    @Column(nullable = false, length = 30)
-    private String metaDias;
+    @Column(nullable = false)
+    private int metaDias;
 
     @Column(nullable = false)
     private int porcentaje;
@@ -33,11 +33,11 @@ public class Campana {
     @Column(nullable = false, length = 100)
     private String ubicacion;
 
-    @Column(nullable = false, length = 100)
-    private String beneficiarios;
+    @Column(nullable = false)
+    private int beneficiarios;
 
-    @Column(nullable = false, length = 100)
-    private String meta;
+    @Column(nullable = false)
+    private int meta;
 
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
@@ -53,16 +53,16 @@ public class Campana {
     public void setTitulo(String titulo) { this.titulo = titulo; }
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public String getMetaDias() { return metaDias; }
-    public void setMetaDias(String metaDias) { this.metaDias = metaDias; }
+    public int getMetaDias() { return metaDias; }
+    public void setMetaDias(int metaDias) { this.metaDias = metaDias; }
     public int getPorcentaje() { return porcentaje; }
     public void setPorcentaje(int porcentaje) { this.porcentaje = porcentaje; }
     public String getUbicacion() { return ubicacion; }
     public void setUbicacion(String ubicacion) { this.ubicacion = ubicacion; }
-    public String getBeneficiarios() { return beneficiarios; }
-    public void setBeneficiarios(String beneficiarios) { this.beneficiarios = beneficiarios; }
-    public String getMeta() { return meta; }
-    public void setMeta(String meta) { this.meta = meta; }
+    public int getBeneficiarios() { return beneficiarios; }
+    public void setBeneficiarios(int beneficiarios) { this.beneficiarios = beneficiarios; }
+    public int getMeta() { return meta; }
+    public void setMeta(int meta) { this.meta = meta; }
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
 }

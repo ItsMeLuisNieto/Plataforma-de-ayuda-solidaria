@@ -24,7 +24,7 @@ class CampanaServiceTest {
     private CampanaService campanaService;
 
     @Test
-    void normalizaDiasYMetaAlCrear() {
+    void normalizaDiasYGuardaMetaNumericaAlCrear() {
         when(campanaRepository.save(any(Campana.class))).thenAnswer(invocation -> {
             Campana campana = invocation.getArgument(0);
             campana.setId(1L);
@@ -34,16 +34,16 @@ class CampanaServiceTest {
         CampanaRequest request = new CampanaRequest();
         request.setTitulo("Abrigo para todos");
         request.setDescripcion("Campaña de invierno");
-        request.setMetaDias("15");
+        request.setMetaDias(15);
         request.setPorcentaje(20);
         request.setUbicacion("Los Olivos");
-        request.setBeneficiarios("120 familias");
-        request.setMeta("500 abrigos");
+        request.setBeneficiarios(120);
+        request.setMeta(500);
 
         Campana campana = campanaService.crear(request);
 
         assertEquals(1L, campana.getId());
-        assertEquals("15 días", campana.getMetaDias());
-        assertEquals("Meta: 500 abrigos", campana.getMeta());
+        assertEquals(15, campana.getMetaDias());
+        assertEquals(500, campana.getMeta());
     }
 }
