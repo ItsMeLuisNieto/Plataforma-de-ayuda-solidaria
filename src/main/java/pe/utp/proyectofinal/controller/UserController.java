@@ -1,36 +1,33 @@
 package pe.utp.proyectofinal.controller;
 
-import pe.utp.proyectofinal.model.Usuario;
-import pe.utp.proyectofinal.repository.UsuarioRepository;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.Map;
+
+import pe.utp.proyectofinal.service.UsuarioService;
 
 @RestController
 public class UserController {
 
-    @Autowired 
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+
+    public UserController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping("/api/usuario/actual")
-    public Map<String, String> obtenerUsuarioActual(Authentication authentication) {
-        Map<String, String> datos = new HashMap<>();
-        
-        // Verifica si hay un usuario logueado
-        if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
-            datos.put("email", authentication.getName()); 
-            
-            Usuario actual = usuarioRepository.findByEmail(authentication.getName());
-
-            datos.put("nombre", actual.getNombre());
-        } else {
-            datos.put("error", "No autenticado");
+    public ResponseEntity<?> obtenerUsuarioActual(Authentication authentication) {
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getName())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "No autenticado"));
         }
-        
-        return datos;
+
+        return ResponseEntity.ok(usuarioService.obtenerActual(authentication.getName()));
     }
 }

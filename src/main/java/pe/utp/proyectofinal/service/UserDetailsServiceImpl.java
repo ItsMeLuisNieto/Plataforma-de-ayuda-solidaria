@@ -1,32 +1,33 @@
 package pe.utp.proyectofinal.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pe.utp.proyectofinal.model.Usuario;
+import org.springframework.transaction.annotation.Transactional;
+
+import pe.utp.proyectofinal.entity.Usuario;
 import pe.utp.proyectofinal.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public UserDetailsServiceImpl(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        
-        Usuario usuario = usuarioRepository.findByEmail(email);
-        
-        if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado");
-        }
-        
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
         return User.withUsername(usuario.getEmail())
-                .password(usuario.getPassword()) // Spring comparará esto automáticamente con lo que tecleó el usuario
-                .roles(usuario.getRol()) // Asigna el rol (ej. "USER")
+                .password(usuario.getPassword())
+                .roles(usuario.getRol())
                 .build();
     }
 }

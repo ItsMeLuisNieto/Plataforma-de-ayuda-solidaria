@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
     <title>Reportes | Kallpa Solidary</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous" />
@@ -117,7 +119,8 @@
                                 Total</span>
                             <i class="fas fa-wallet text-success fs-5"></i>
                         </div>
-                        <h3 class="fw-bold text-dark mb-1">S/ 12,450.00</h3>
+                        <h3 class="fw-bold text-dark mb-1"
+                            th:text="'S/ ' + ${#numbers.formatDecimal(kpis.totalMontoRecaudado, 1, 2)}">S/ 0.00</h3>
                         <p class="text-secondary small mb-3">Ingresos acumulados por Yape y tarjetas.</p>
                         <div class="progress mb-2" style="height: 8px; background-color: #e9ecef; border-radius: 4px;">
                             <div class="progress-bar bg-success" role="progressbar" style="width: 75%;"
@@ -135,7 +138,8 @@
                                 Social</span>
                             <i class="fas fa-users text-primary fs-5"></i>
                         </div>
-                        <h3 class="fw-bold text-dark mb-1">120 Familias</h3>
+                        <h3 class="fw-bold text-dark mb-1"
+                            th:text="${kpis.totalBeneficiariosAtendidos} + ' Familias'">0 Familias</h3>
                         <p class="text-secondary small mb-3">Beneficiados directos en campañas activas.</p>
                         <ul class="list-unstyled text-secondary small mb-0">
                             <li><i class="fas fa-map-marker-alt me-2 text-primary"></i>San Martín de Porres</li>
@@ -152,7 +156,8 @@
                                 Especies</span>
                             <i class="fas fa-boxes text-warning fs-5"></i>
                         </div>
-                        <h3 class="fw-bold text-dark mb-1">350 Artículos</h3>
+                        <h3 class="fw-bold text-dark mb-1"
+                            th:text="${kpis.totalBienesStock} + ' Artículos'">0 Artículos</h3>
                         <p class="text-secondary small mb-3">Bienes físicos recibidos en almacén.</p>
                         <span class="badge bg-light text-dark border">Prendas, mochilas, víveres</span>
                     </div>
@@ -190,45 +195,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Filas de prueba para simular-->
-                            <tr>
-                                <td class="fw-bold text-dark">#TRX-101</td>
-                                <td class="text-secondary">20/09/2026</td>
-                                <td class="fw-semibold text-dark">Canasta de Alimentos</td>
+                            <tr th:each="m : ${movimientos}">
+                                <td class="fw-bold text-dark" th:text="'#TRX-' + ${m.idTransaccion}">#TRX-000</td>
+                                <td class="text-secondary" th:text="${m.fecha}">--/--/----</td>
+                                <td class="fw-semibold text-dark" th:text="${m.campanaTitulo}">Campaña</td>
                                 <td class="text-secondary">
-                                    <i class="fas fa-map-marker-alt me-1 text-primary small"></i>San Martín de Porres
+                                    <i class="fas fa-map-marker-alt me-1 text-primary small"></i><span
+                                        th:text="${m.distrito}">-</span>
                                 </td>
-                                <td class="text-secondary">Monetaria</td>
-                                <td class="fw-bold text-dark">S/ 150.00</td>
+                                <td class="text-secondary" th:text="${m.tipoDonacion}">Bienes</td>
+                                <td class="fw-bold text-dark" th:text="${m.valorMonto}">0</td>
                                 <td><span
-                                        class="badge bg-success-subtle text-success-emphasis px-3 py-2 fw-semibold">Completado</span>
+                                        class="badge bg-success-subtle text-success-emphasis px-3 py-2 fw-semibold"
+                                        th:text="${m.estado}">Registrado</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="fw-bold text-dark">#TRX-102</td>
-                                <td class="text-secondary">22/09/2026</td>
-                                <td class="fw-semibold text-dark">Ropa y Abrigo</td>
-                                <td class="text-secondary">
-                                    <i class="fas fa-map-marker-alt me-1 text-primary small"></i>El Agustino
-                                </td>
-                                <td class="text-secondary">Bienes</td>
-                                <td class="fw-bold text-dark">15 Casacas</td>
-                                <td><span
-                                        class="badge bg-success-subtle text-success-emphasis px-3 py-2 fw-semibold">Completado</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold text-dark">#TRX-103</td>
-                                <td class="text-secondary">23/09/2026</td>
-                                <td class="fw-semibold text-dark">Material Escolar</td>
-                                <td class="text-secondary">
-                                    <i class="fas fa-map-marker-alt me-1 text-primary small"></i>Surco
-                                </td>
-                                <td class="text-secondary">Monetaria</td>
-                                <td class="fw-bold text-dark">S/ 80.00</td>
-                                <td><span
-                                        class="badge bg-warning-subtle text-warning-emphasis px-3 py-2 fw-semibold">Pendiente</span>
-                                </td>
+                            <tr th:if="${#lists.isEmpty(movimientos)}">
+                                <td colspan="7" class="text-center text-muted py-4">No hay movimientos registrados todavía.</td>
                             </tr>
                         </tbody>
                     </table>
