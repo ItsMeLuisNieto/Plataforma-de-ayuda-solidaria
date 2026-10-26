@@ -26,7 +26,7 @@ public class CampanaController {
     public String verDonaciones(Model model, Authentication authentication) {
         model.addAttribute("campanas", campanaService.listar());
         model.addAttribute("esAdmin", esUsuarioAutenticado(authentication));
-        return "donate";
+        return "campanas";
     }
 
     @PostMapping("/campanas")
