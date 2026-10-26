@@ -13,7 +13,7 @@
     
     <!-- Barra de Navegación -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info shadow-sm" style="padding: 15px 20px;">
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-primary shadow-sm" style="padding: 15px 20px;">
             <div class="container-fluid px-lg-5">
                 <a th:href="@{/kallpa-solidary}" class="text-decoration-none">
                     <h1 class="text-white fw-bold mb-0 fs-3">Kallpa Solidary</h1>
@@ -30,14 +30,8 @@
                             <a class="nav-link text-white fw-semibold" th:href="@{/campanas#events}">Eventos</a>
                         </li>
                         
-                        <!-- Menú Conócenos -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-white dropdown-toggle fw-semibold" id="navbarDropdownConocenos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Conócenos
-                            </a>
-                            <ul class="dropdown-menu text-center shadow border-0" aria-labelledby="navbarDropdownConocenos">
-                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/sobre-nosotros}">Sobre Nosotros</a>
                         </li>
                         
                         <!-- Menú Gestión (Con IDs independientes para evitar conflictos) -->
@@ -62,12 +56,12 @@
                         </li>
 
                         <!-- Se muestra SOLO si el usuario SÍ ha iniciado sesión -->
-                        <li class="nav-item w-100 w-lg-auto d-flex align-items-center gap-3" sec:authorize="isAuthenticated()">
-                            <span class="text-dark fw-bold">¡Hola, <span th:text="${nombreUsuario}">Usuario</span>!</span>
+                        <li class="nav-item text-white w-100 w-lg-auto d-flex align-items-center gap-3" sec:authorize="isAuthenticated()">
+                            <span class="text-white fw-bold">¡Hola, <span th:text="${nombreUsuario}">Usuario</span>!</span>
                             
                             <!-- Botón de cerrar sesión (Spring Security intercepta el POST a /logout por defecto) -->
                             <form th:action="@{/logout}" method="post" class="m-0">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Cerrar Sesión</button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm bg-opacity-50 text-white fw-semibold border-3">Cerrar Sesión</button>
                             </form>
                         </li>
                     </ul>  
