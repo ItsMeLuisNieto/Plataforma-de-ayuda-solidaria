@@ -1,44 +1,50 @@
 package pe.utp.proyectofinal.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import pe.utp.proyectofinal.service.ReporteService;
 
 @Controller
 public class VistaController {
 
-    // 1. Página de inicio 
+    private final ReporteService reporteService;
+
+    public VistaController(ReporteService reporteService) {
+        this.reporteService = reporteService;
+    }
+
     @GetMapping("/kallpa-solidary")
     public String inicio() {
-        return "index"; // Carga src/main/resources/templates/index.html
+        return "index";
     }
 
-    // 2. Sobre Nosotros
     @GetMapping("/sobre-nosotros")
     public String sobreNosotros() {
-        return "about"; // Carga src/main/resources/templates/about.html
-    }
-    // 3. Resportes
-    @GetMapping("/reportes")
-    public String reportes() {
-        return "reportes"; // Carga src/main/resources/templates/reportes.html
+        return "about";
     }
 
-    // 4. Login
+    @GetMapping("/reportes")
+    public String reportes(Model model) {
+        model.addAttribute("kpis", reporteService.obtenerKpis());
+        model.addAttribute("movimientos", reporteService.obtenerMovimientos());
+        return "reportes";
+    }
+
     @GetMapping("/login")
     public String irLogin() {
-        return "login"; // Carga src/main/resources/templates/login.html
+        return "login";
     }
 
-    // 5. Registro
     @GetMapping("/registro")
     public String irRegistro() {
-        return "registro"; // Carga src/main/resources/templates/registro.html
+        return "registro";
     }
 
-    // 6. Redirecciones hacia el controlador dinámico de Campañas (CampanaController)
     @GetMapping({"/donar-ahora", "/ver-voluntario", "/donar-bienes"})
     public String redirigirDonar() {
-        return "redirect:/campanas"; // Lleva al método que inyecta la lista dinámica
+        return "redirect:/campanas";
     }
 
     @GetMapping("/eventos")
@@ -53,11 +59,11 @@ public class VistaController {
 
     @GetMapping("/solicitudes")
     public String solicitudes() {
-        return "solicitudes"; 
+        return "solicitudes";
     }
 
     @GetMapping("/donaciones")
     public String irDonaciones() {
-        return "donaciones"; 
+        return "donaciones";
     }
 }

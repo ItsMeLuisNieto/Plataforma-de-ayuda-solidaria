@@ -111,7 +111,8 @@ async function guardarEdicionTestimonio(event) {
         const respuesta = await fetch(`${API_URL}/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...csrfHeaders()
             },
             body: JSON.stringify(datosActualizados)
         });
@@ -159,7 +160,8 @@ async function guardarTestimonio(event) {
         const respuesta = await fetch(API_URL, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                ...csrfHeaders()
             },
             body: JSON.stringify(nuevoTestimonio)
         });
