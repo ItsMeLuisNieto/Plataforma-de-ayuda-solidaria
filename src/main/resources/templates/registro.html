@@ -20,7 +20,7 @@
   </head>
   <body class="login-bg">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-info" style="padding: 20px;">
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom border-dark bg-primary" style="padding: 20px;">
             <div class="container-fluid px-lg-5">
                 
                 <a th:href="@{/kallpa-solidary}" class="text-decoration-none">
@@ -40,13 +40,8 @@
                             <a class="nav-link text-white fw-semibold" th:href="@{/campanas#events}">Eventos</a>
                         </li>
         
-                        <li class="nav-item dropdown">
-                            <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page"
-                                id="navbarDropdown" role="button" data-bs-toggle="dropdown">Conócenos
-                            </a>
-                            <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item fw-semibold fs-6 py-2" th:href="@{/sobre-nosotros}">Sobre Nosotros</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" th:href="@{/sobre-nosotros}">Sobre Nosotros</a>
                         </li>
                         
                         <li class="nav-item dropdown">
