@@ -89,16 +89,14 @@
                     Monitoreo en tiempo real de donaciones recaudadas, entregas y rendimiento de campañas.
                 </p>
 
-                <!-- Acciones principales de exportación (Con trigger para el modal) -->
+                <!-- Acciones principales de exportación -->
                 <div class="d-flex justify-content-center gap-2">
-                    <button type="button" class="btn btn-success px-4 py-2 fw-semibold"
-                        onclick="prepararModalExportacion('Excel', 'xlsx', 'fas fa-file-excel', 'text-success')">
+                    <a th:href="@{/reportes/exportar/excel}" class="btn btn-success px-4 py-2 fw-semibold">
                         <i class="fas fa-file-excel me-2"></i>Exportar Excel
-                    </button>
-                    <button type="button" class="btn btn-danger px-4 py-2 fw-semibold"
-                        onclick="prepararModalExportacion('PDF', 'pdf', 'fas fa-file-pdf', 'text-danger')">
+                    </a>
+                    <a th:href="@{/reportes/exportar/pdf}" class="btn btn-danger px-4 py-2 fw-semibold">
                         <i class="fas fa-file-pdf me-2"></i>Descargar PDF
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -216,13 +214,13 @@
         </div>
     </section>
 
-    <!-- Modal Notificación de Descarga / Simulación -->
+    <!-- Modal Notificación de Descarga -->
     <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4 border-0 shadow">
 
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-dark" id="exportModalLabel">Notificación de Exportación</h5>
+                    <h5 class="modal-title fw-bold text-dark" id="exportModalLabel">Exportación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -231,24 +229,17 @@
                         <i id="modalIcon" class="fas fa-file-excel text-success display-3"></i>
                     </div>
 
-                    <h4 class="fw-bold text-dark mb-2" id="modalTituloFormato">Generando Reporte</h4>
+                    <h4 class="fw-bold text-dark mb-2" id="modalTituloFormato">Exportando Reporte</h4>
 
                     <p class="text-secondary small mb-3">
-                        se descargará historial de transacciones e indicadores clave en formato <strong
+                        Se descargará el historial de transacciones e indicadores clave en formato <strong
                             id="modalExtension">.xlsx</strong>.
                     </p>
-
-                    <div class="alert alert-info border-0 rounded-3 small text-start mb-0">
-                        <i class="fas fa-info-circle me-2"></i>
-                        <strong>Modo Avance:</strong> Los archivos que se generarán esta en proceso gracias xd.
-                    </div>
                 </div>
 
                 <div class="modal-footer border-0 pt-0 justify-content-center">
                     <button type="button" class="btn btn-secondary rounded-3 px-4"
-                        data-bs-dismiss="modal">Entendido</button>
-                    <button type="button" class="btn btn-primary rounded-3 px-4" onclick="simularDescarga()">Simular
-                        Descarga</button>
+                        data-bs-dismiss="modal">Cerrar</button>
                 </div>
 
             </div>
@@ -279,26 +270,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        console.log("Bienvenido a Reportes :D")
-
-        function prepararModalExportacion(formato, extension, iconoClase, colorTexto) {
-            document.getElementById('modalTituloFormato').textContent = 'Exportar a ' + formato;
-            document.getElementById('modalExtension').textContent = '.' + extension;
-
-            const icono = document.getElementById('modalIcon');
-            icono.className = iconoClase + ' display-3 ' + colorTexto;
-
-            const modalElement = document.getElementById('exportModal');
-            const modalInstance = new bootstrap.Modal(modalElement);
-            modalInstance.show();
-        }
-
-        function simularDescarga() {
-            const modalElement = document.getElementById('exportModal');
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            modalInstance.hide();
-            alert('Esto es una simulación exitosa ;D');
-        }
+        console.log("Bienvenido a Reportes")
     </script>
 </body>
 
