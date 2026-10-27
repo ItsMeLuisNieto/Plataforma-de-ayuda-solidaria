@@ -158,7 +158,7 @@
               </ul>
 
               <div class="d-flex gap-2 mt-auto">
-                <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal">
+                <button class="btn btn-primary flex-fill" data-bs-toggle="modal" data-bs-target="#donationModal" th:attr="data-campana-id=${campana.id}, data-campana-titulo=${campana.titulo}">
                   Donar
                 </button>
 
@@ -610,17 +610,10 @@
                   style="max-width: 410px; background: linear-gradient(135deg, #68b0d7, #1072a8); border-radius: 25px; padding: 25px;">
 
 
-                  <div class="d-flex gap-2 mb-3">
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #7b2cbf;"
-                      onclick="mostrarYape()">Yape</button>
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #333;"
-                      onclick="mostrarTarjeta()">Tarjeta</button>
-                  </div>
-
-                  <div id="contenidoYape" class="text-center">
+                        <div id="contenidoYape" class="text-center">
                     <div class="mb-3">
                       <small class="fw-bold d-block text-white-50">PAGA CON YAPE</small>
-                      <h2 class="fw-bold mb-1">929 612 926</h2>
+                      <h2 class="fw-bold mb-1">928 717 676</h2>
                       <p class="fw-semibold mb-0">Grupo Kallpa Solidary</p>
                     </div>
 
@@ -632,35 +625,11 @@
                       onclick="copiarNumero()">
                       <i class="fas fa-copy me-2"></i>Copiar número
                     </button>
-                  </div>
 
-
-                  <div id="contenidoTarjeta" style="display: none;">
-                    <h5 class="fw-bold mb-3 text-center">PAGO CON TARJETA</h5>
-
-                    <div class="mb-2">
-                      <label class="form-label small mb-1">Número de tarjeta</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="1234 5678 9012 3456">
-                    </div>
-
-                    <div class="mb-2">
-                      <label class="form-label small mb-1">Nombre del titular</label>
-                      <input type="text" class="form-control form-control-sm" placeholder="Nombre completo">
-                    </div>
-
-                    <div class="row g-2 mb-3">
-                      <div class="col-6">
-                        <label class="form-label small mb-1">Vencimiento</label>
-                        <input type="text" class="form-control form-control-sm" placeholder="MM/AA">
-                      </div>
-                      <div class="col-6">
-                        <label class="form-label small mb-1">CVV</label>
-                        <input type="password" class="form-control form-control-sm" placeholder="123">
-                      </div>
-                    </div>
-
-                    <button type="button" class="btn btn-light w-100 fw-bold text-dark">
-                      Realizar donación
+                    <hr class="border-light my-3">
+                    <p class="small mb-2 fw-semibold">¿Ya realizaste tu transferencia?</p>
+                    <button type="button" class="btn btn-light w-100 fw-bold text-dark" onclick="abrirFormularioYape()" data-bs-dismiss="modal">
+                      Registrar mi donación por Yape
                     </button>
                   </div>
 
@@ -681,7 +650,7 @@
         <div class="modal-body">
           <i class="fas fa-check-circle text-success fs-1 mb-2"></i>
           <h6 class="fw-bold mb-1">¡Número copiado!</h6>
-          <p class="small text-muted mb-3">929 612 926</p>
+          <p class="small text-muted mb-3">928 717 676</p>
           <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill"
             data-bs-dismiss="modal">Aceptar</button>
         </div>
@@ -823,19 +792,157 @@
 
     function mostrarYape() {
       document.getElementById("contenidoYape").style.display = "block";
-      document.getElementById("contenidoTarjeta").style.display = "none";
-    }
-
-    function mostrarTarjeta() {
-      document.getElementById("contenidoYape").style.display = "none";
-      document.getElementById("contenidoTarjeta").style.display = "block";
     }
 
     function copiarNumero() {
-      navigator.clipboard.writeText("929 612 926");
+      navigator.clipboard.writeText("928 717 676");
       const modalAviso = new bootstrap.Modal(document.getElementById("modalCopiado"));
       modalAviso.show();
     }
+
+    let campanaSeleccionada = null;
+
+    const moneyDonationModal = document.getElementById('moneyDonation');
+    if (moneyDonationModal) {
+      moneyDonationModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        if (button && button.getAttribute('data-campana-id')) {
+          campanaSeleccionada = {
+            id: button.getAttribute('data-campana-id'),
+            titulo: button.getAttribute('data-campana-titulo')
+          };
+        } else {
+          campanaSeleccionada = null;
+        }
+      });
+    }
+  </script>
+
+  <!-- Modal Formulario Donación Yape -->
+  <div class="modal fade" id="formDonacionYape" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow-lg">
+        <div class="modal-header border-0">
+          <h5 class="modal-title fw-bold">Registrar donación por Yape</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body pt-0 pb-4">
+          <p class="text-secondary small">Ingresa los datos de tu transferencia. Tu donación quedará pendiente de verificación por el administrador.</p>
+          <form id="formYapeDonacion">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre completo *</label>
+                <input type="text" class="form-control" id="yapeNombre" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono / Correo</label>
+                <input type="text" class="form-control" id="yapeContacto" placeholder="Opcional">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Monto transferido (S/) *</label>
+                <input type="number" step="0.01" min="1" class="form-control" id="yapeMonto" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">N° de operación / Código *</label>
+                <input type="text" class="form-control" id="yapeNroOperacion" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha y hora de transferencia *</label>
+                <input type="datetime-local" class="form-control" id="yapeFecha" required>
+              </div>
+              <div class="col-12">
+                <div id="yapeCampanaInfo" class="alert alert-info mb-0" style="display:none;"></div>
+                <input type="hidden" id="yapeCampanaHidden">
+                <div id="yapeCampanaSelectDiv">
+                  <label class="form-label">Campaña *</label>
+                  <select class="form-select" id="yapeCampana" required>
+                    <option value="">Seleccionar campaña</option>
+                    <option th:each="campana : ${campanas}" th:value="${campana.id}" th:text="${campana.titulo}"></option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3 fw-bold">Enviar registro</button>
+          </form>
+          <div id="yapeMsg" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const csrfTokenYape = document.querySelector('meta[name="_csrf"]')?.getAttribute('content');
+    const csrfHeaderYape = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content');
+
+    function abrirFormularioYape() {
+      const modalForm = new bootstrap.Modal(document.getElementById('formDonacionYape'));
+      const infoDiv = document.getElementById('yapeCampanaInfo');
+      const hiddenInput = document.getElementById('yapeCampanaHidden');
+      const selectDiv = document.getElementById('yapeCampanaSelectDiv');
+      const select = document.getElementById('yapeCampana');
+      
+      if (campanaSeleccionada && campanaSeleccionada.id) {
+        infoDiv.innerHTML = '<strong>Donando a:</strong> ' + campanaSeleccionada.titulo;
+        infoDiv.style.display = 'block';
+        hiddenInput.value = campanaSeleccionada.id;
+        selectDiv.style.display = 'none';
+        select.required = false;
+      } else {
+        infoDiv.style.display = 'none';
+        hiddenInput.value = '';
+        selectDiv.style.display = 'block';
+        select.required = true;
+      }
+      
+      document.getElementById('yapeMsg').innerHTML = '';
+      document.getElementById('formYapeDonacion').reset();
+      if (campanaSeleccionada && campanaSeleccionada.id) {
+        document.getElementById('yapeCampanaHidden').value = campanaSeleccionada.id;
+      }
+      
+      modalForm.show();
+    }
+
+    document.getElementById('formYapeDonacion')?.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const campanaIdVal = document.getElementById('yapeCampanaHidden').value || document.getElementById('yapeCampana').value;
+      const data = {
+        nombreDonante: document.getElementById('yapeNombre').value,
+        telefono: document.getElementById('yapeContacto').value,
+        monto: parseFloat(document.getElementById('yapeMonto').value),
+        nroOperacion: document.getElementById('yapeNroOperacion').value,
+        fechaTransferencia: document.getElementById('yapeFecha').value + ':00',
+        campanaId: campanaIdVal ? parseInt(campanaIdVal) : null
+      };
+      const headers = {'Content-Type': 'application/json'};
+      if (csrfTokenYape && csrfHeaderYape) {
+        headers[csrfHeaderYape] = csrfTokenYape;
+      }
+      fetch('/api/donaciones/yape', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data)
+      })
+      .then(r => {
+        if (!r.ok) {
+          return r.json().catch(() => ({exito: false, mensaje: 'Error ' + r.status}));
+        }
+        return r.json();
+      })
+      .then(res => {
+        const msg = document.getElementById('yapeMsg');
+        if(res.exito) {
+          msg.innerHTML = '<div class="alert alert-success">' + res.mensaje + '</div>';
+          document.getElementById('formYapeDonacion').reset();
+          document.getElementById('yapeCampanaHidden').value = campanaSeleccionada?.id || '';
+        } else {
+          msg.innerHTML = '<div class="alert alert-danger">' + (res.mensaje || 'Error al registrar la donación') + '</div>';
+        }
+      })
+      .catch(() => {
+        document.getElementById('yapeMsg').innerHTML = '<div class="alert alert-danger">Error al registrar la donación</div>';
+      });
+    });
   </script>
 </body>
 

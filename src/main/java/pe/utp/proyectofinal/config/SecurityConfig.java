@@ -24,6 +24,8 @@ public class SecurityConfig {
                         "/eventos", "/ver-campanas").authenticated()
                 .requestMatchers(HttpMethod.POST, "/campanas/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/donaciones", "/api/solicitudes").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/donaciones/yape").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/donaciones/admin/**").authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin(form -> form

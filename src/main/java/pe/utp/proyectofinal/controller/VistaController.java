@@ -5,15 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import pe.utp.proyectofinal.repository.CampanaRepository;
+import pe.utp.proyectofinal.service.DonacionService;
 import pe.utp.proyectofinal.service.ReporteService;
 
 @Controller
 public class VistaController {
 
     private final ReporteService reporteService;
+    private final DonacionService donacionService;
+    private final CampanaRepository campanaRepository;
 
-    public VistaController(ReporteService reporteService) {
+    public VistaController(ReporteService reporteService, DonacionService donacionService, CampanaRepository campanaRepository) {
         this.reporteService = reporteService;
+        this.donacionService = donacionService;
+        this.campanaRepository = campanaRepository;
     }
 
     @GetMapping("/kallpa-solidary")
@@ -77,6 +83,8 @@ public class VistaController {
             return "redirect:/kallpa-solidary";
         }
         model.addAttribute("esAdmin", true);
+        model.addAttribute("donaciones", donacionService.listar());
+        model.addAttribute("campanas", campanaRepository.findAll());
         return "donaciones";
     }
 

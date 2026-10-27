@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import pe.utp.proyectofinal.dto.ReporteDTO;
 import pe.utp.proyectofinal.entity.Campana;
 import pe.utp.proyectofinal.entity.Donacion;
 import pe.utp.proyectofinal.entity.SolicitudAyuda;
+import pe.utp.proyectofinal.enums.TipoDonacion;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
 import pe.utp.proyectofinal.repository.SolicitudAyudaRepository;
@@ -38,12 +40,22 @@ public class ReporteService {
     public ReporteDTO obtenerKpis() {
         List<Campana> campanas = campanaRepository.findAll();
         ReporteDTO kpis = new ReporteDTO();
-        kpis.setTotalMontoRecaudado(BigDecimal.ZERO);
+        
+        BigDecimal totalMonetario = donacionRepository.findAll().stream()
+                .filter(d -> d.getTipoDonacion() == TipoDonacion.MONETARIA)
+                .filter(d -> "CONFIRMADO".equals(d.getEstado()))
+                .filter(d -> d.getMonto() != null)
+                .map(Donacion::getMonto)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        kpis.setTotalMontoRecaudado(totalMonetario);
         kpis.setTotalCampanasActivas(campanas.size());
         kpis.setTotalBeneficiariosAtendidos(campanas.stream()
                 .mapToInt(Campana::getBeneficiarios)
                 .sum());
         kpis.setTotalBienesStock(donacionRepository.findAll().stream()
+                .filter(d -> d.getTipoDonacion() == null || d.getTipoDonacion() == pe.utp.proyectofinal.enums.TipoDonacion.BIENES)
                 .mapToInt(Donacion::getCantidad)
                 .sum());
         return kpis;
