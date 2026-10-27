@@ -45,8 +45,13 @@ public class CampanaController {
     }
 
     private boolean esUsuarioAutenticado(Authentication authentication) {
-        return authentication != null
-                && authentication.isAuthenticated()
-                && !"anonymousUser".equals(authentication.getName());
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+        if ("anonymousUser".equals(authentication.getName())) {
+            return false;
+        }
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
     }
 }

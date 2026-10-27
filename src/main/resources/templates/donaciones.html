@@ -35,7 +35,7 @@
                         </li>
                         
                         <!-- Menú Gestión (Con IDs independientes para evitar conflictos) -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" th:if="${esAdmin}">
                             <a class="nav-link active text-white dropdown-toggle fw-semibold" id="navbarDropdownGestion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Gestión
                             </a>
@@ -61,7 +61,7 @@
                             
                             <!-- Botón de cerrar sesión (Spring Security intercepta el POST a /logout por defecto) -->
                             <form th:action="@{/logout}" method="post" class="m-0">
-                                <button type="submit" class="btn btn-outline-danger btn-sm bg-opacity-50 text-white fw-semibold border-3">Cerrar Sesión</button>
+                                <button type="submit" class="btn btn-danger text-white fw-semibold px-3">Cerrar Sesión</button>
                             </form>
                         </li>
                     </ul>  

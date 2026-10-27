@@ -1,5 +1,6 @@
 package pe.utp.proyectofinal.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,13 @@ public class VistaController {
     }
 
     @GetMapping("/reportes")
-    public String reportes(Model model) {
+    public String reportes(Model model, Authentication authentication) {
+        if (!esAdmin(authentication)) {
+            return "redirect:/kallpa-solidary";
+        }
         model.addAttribute("kpis", reporteService.obtenerKpis());
         model.addAttribute("movimientos", reporteService.obtenerMovimientos());
+        model.addAttribute("esAdmin", true);
         return "reportes";
     }
 
@@ -58,12 +63,31 @@ public class VistaController {
     }
 
     @GetMapping("/solicitudes")
-    public String solicitudes() {
+    public String solicitudes(Model model, Authentication authentication) {
+        if (!esAdmin(authentication)) {
+            return "redirect:/kallpa-solidary";
+        }
+        model.addAttribute("esAdmin", true);
         return "solicitudes";
     }
 
     @GetMapping("/donaciones")
-    public String irDonaciones() {
+    public String irDonaciones(Model model, Authentication authentication) {
+        if (!esAdmin(authentication)) {
+            return "redirect:/kallpa-solidary";
+        }
+        model.addAttribute("esAdmin", true);
         return "donaciones";
+    }
+
+    private boolean esAdmin(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+        if ("anonymousUser".equals(authentication.getName())) {
+            return false;
+        }
+        return authentication.getAuthorities().stream()
+                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
     }
 }
