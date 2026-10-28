@@ -41,7 +41,7 @@ public class Donacion {
     @Column(nullable = false)
     private LocalDateTime fechaIngreso;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "campana_id", nullable = false)
     @JsonIgnoreProperties({"donaciones", "hibernateLazyInitializer", "handler"})
     private Campana campana;
@@ -71,14 +71,29 @@ public class Donacion {
     public void setCampana(Campana campana) { this.campana = campana; }
 
     public Long getCampanaId() {
-        return campana != null ? campana.getId() : null;
+        if (campana == null) return null;
+        try {
+            return campana.getId();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getCampanaTitulo() {
-        return campana != null ? (campana.getNombre() != null ? campana.getNombre() : campana.getTitulo()) : null;
+        if (campana == null) return null;
+        try {
+            return campana.getNombre() != null ? campana.getNombre() : campana.getTitulo();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getCampanaNombre() {
-        return campana != null ? (campana.getNombre() != null ? campana.getNombre() : campana.getTitulo()) : null;
+        if (campana == null) return null;
+        try {
+            return campana.getNombre() != null ? campana.getNombre() : campana.getTitulo();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

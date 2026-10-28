@@ -1,0 +1,287 @@
+{
+  "info": {
+    "name": "Kallpa Solidary - Donaciones y Testimonios",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "description": "Colección completa para probar endpoints GET, POST (push), PUT y DELETE en Postman y Thunder Client.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Donaciones",
+      "item": [
+        {
+          "name": "1. GET - Listar todas las donaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones"]
+            }
+          }
+        },
+        {
+          "name": "2. GET - Filtrar donaciones (Query Params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones?estado=CONFIRMADO&buscar=Arroz",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones"],
+              "query": [
+                { "key": "estado", "value": "CONFIRMADO" },
+                { "key": "buscar", "value": "Arroz" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "3. GET - Obtener donación por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones", "1"]
+            }
+          }
+        },
+        {
+          "name": "4. POST - Registrar donación (Push)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"campanaId\": 1,\n  \"nombreDonante\": \"Carlos Mendoza\",\n  \"producto\": \"Frazadas térmicas\",\n  \"cantidad\": 15,\n  \"estado\": \"PENDIENTE\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones"]
+            }
+          }
+        },
+        {
+          "name": "5. PUT - Actualizar donación por ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"producto\": \"Frazadas térmicas polares (Actualizado)\",\n  \"cantidad\": 20,\n  \"estado\": \"CONFIRMADO\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones", "1"]
+            }
+          }
+        },
+        {
+          "name": "6. DELETE - Eliminar donación por ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/donaciones/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "donaciones", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Testimonios",
+      "item": [
+        {
+          "name": "1. GET - Listar todos los testimonios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios"]
+            }
+          }
+        },
+        {
+          "name": "2. GET - Filtrar testimonios (Query Params)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios?rol=Donante&buscar=apoyo",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios"],
+              "query": [
+                { "key": "rol", "value": "Donante" },
+                { "key": "buscar", "value": "apoyo" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "3. GET - Obtener testimonio por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios", "1"]
+            }
+          }
+        },
+        {
+          "name": "4. POST - Registrar testimonio (Push)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Mariana Gómez\",\n  \"rol\": \"Donante\",\n  \"comentario\": \"Una experiencia hermosa poder colaborar con Kallpa Solidary. Toda la ayuda llega a quienes realmente lo necesitan.\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios"]
+            }
+          }
+        },
+        {
+          "name": "5. PUT - Actualizar testimonio por ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Mariana Gómez (Actualizado)\",\n  \"rol\": \"Voluntario\",\n  \"comentario\": \"Testimonio actualizado correctamente desde Postman/Thunder Client.\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios", "1"]
+            }
+          }
+        },
+        {
+          "name": "6. DELETE - Eliminar testimonio por ID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/testimonios/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "testimonios", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recepcion Donaciones (Flujo Completo)",
+      "item": [
+        {
+          "name": "1. GET - Listar recepciones de donaciones",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/recepcion-donaciones",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "recepcion-donaciones"]
+            }
+          }
+        },
+        {
+          "name": "2. GET - Listar recepciones pendientes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/recepcion-donaciones/pendientes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "recepcion-donaciones", "pendientes"]
+            }
+          }
+        },
+        {
+          "name": "3. POST - Confirmar recepción",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8090/api/recepcion-donaciones/1/confirmar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "recepcion-donaciones", "1", "confirmar"]
+            }
+          }
+        },
+        {
+          "name": "4. POST - Rechazar recepción",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"motivo\": \"Artículos no cumplen las condiciones mínimas requeridas\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8090/api/recepcion-donaciones/1/rechazar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8090",
+              "path": ["api", "recepcion-donaciones", "1", "rechazar"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

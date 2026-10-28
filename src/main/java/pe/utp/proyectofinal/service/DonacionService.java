@@ -157,6 +157,10 @@ public class DonacionService {
         });
     }
 
+    private String generarCodigoLote() {
+        return "LOTE-" + (System.currentTimeMillis() % 1000000) + "-" + java.util.UUID.randomUUID().toString().substring(0, 4).toUpperCase();
+    }
+
     private void aplicarDatos(Donacion donacion, DonacionRequest request, boolean esCreacion) {
         if (request == null) {
             if (esCreacion) {
@@ -164,7 +168,7 @@ public class DonacionService {
                 donacion.setProducto("Víveres y bienes generales");
                 donacion.setCantidad(1);
                 donacion.setEstado("PENDIENTE");
-                donacion.setCodigoLote("LOTE-" + System.currentTimeMillis());
+                donacion.setCodigoLote(generarCodigoLote());
             }
             return;
         }
@@ -196,7 +200,7 @@ public class DonacionService {
         if (request.getCodigoLote() != null && !request.getCodigoLote().isBlank()) {
             donacion.setCodigoLote(request.getCodigoLote().trim());
         } else if (esCreacion && (donacion.getCodigoLote() == null || donacion.getCodigoLote().isBlank())) {
-            donacion.setCodigoLote("LOTE-" + System.currentTimeMillis());
+            donacion.setCodigoLote(generarCodigoLote());
         }
     }
 }

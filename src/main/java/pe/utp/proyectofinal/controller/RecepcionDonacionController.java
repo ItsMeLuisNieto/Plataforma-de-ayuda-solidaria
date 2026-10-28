@@ -1,12 +1,12 @@
 package pe.utp.proyectofinal.controller;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +19,7 @@ import pe.utp.proyectofinal.service.RecepcionDonacionService;
 
 @RestController
 @RequestMapping("/api/recepcion-donaciones")
+@CrossOrigin(origins = "*")
 public class RecepcionDonacionController {
 
     private final RecepcionDonacionService recepcionDonacionService;
@@ -40,7 +41,7 @@ public class RecepcionDonacionController {
     @PostMapping("/{id}/confirmar")
     public ResponseEntity<Map<String, Object>> confirmar(@PathVariable Long id, Authentication authentication) {
         RecepcionDonacion recepcion = recepcionDonacionService.confirmar(id, authentication);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         response.put("exito", true);
         response.put("mensaje", "Donación confirmada correctamente");
         response.put("data", recepcion);
@@ -53,7 +54,7 @@ public class RecepcionDonacionController {
                                                         Authentication authentication) {
         String motivo = body != null ? body.get("motivo") : null;
         RecepcionDonacion recepcion = recepcionDonacionService.rechazar(id, motivo, authentication);
-        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> response = new LinkedHashMap<>();
         response.put("exito", true);
         response.put("mensaje", "Donación rechazada");
         response.put("data", recepcion);

@@ -185,3 +185,30 @@ async function guardarTestimonio(event) {
         alert("Ocurrió un error al conectar con el servidor.");
     }
 }
+
+
+async function eliminarTestimonio(id) {
+    if (!id) return;
+    if (!confirm("¿Estás seguro de que deseas eliminar este testimonio?")) return;
+
+    try {
+        const headers = typeof csrfHeaders === 'function' ? csrfHeaders() : {};
+        const respuesta = await fetch(`${API_URL}/${id}`, {
+            method: 'DELETE',
+            headers: headers
+        });
+
+        if (respuesta.ok) {
+            const modalEl = document.getElementById("modalEditarTestimonio");
+            const modalBS = bootstrap.Modal.getInstance(modalEl);
+            if (modalBS) modalBS.hide();
+
+            await cargarTestimonios();
+        } else {
+            alert("No se pudo eliminar el testimonio.");
+        }
+    } catch (error) {
+        console.error("Error al eliminar el testimonio:", error);
+        alert("Ocurrió un error al conectar con el servidor.");
+    }
+}
