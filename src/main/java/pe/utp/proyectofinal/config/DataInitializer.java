@@ -1,16 +1,18 @@
 package pe.utp.proyectofinal.config;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import pe.utp.proyectofinal.entity.Campana;
 import pe.utp.proyectofinal.entity.Donacion;
-import pe.utp.proyectofinal.entity.SolicitudAyuda;
+import pe.utp.proyectofinal.entity.RecepcionDonacion;
 import pe.utp.proyectofinal.entity.Testimonio;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
-import pe.utp.proyectofinal.repository.SolicitudAyudaRepository;
+import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 import pe.utp.proyectofinal.repository.TestimonioRepository;
 
 @Configuration
@@ -20,7 +22,7 @@ public class DataInitializer {
     public CommandLineRunner cargarDatosIniciales(CampanaRepository campanaRepository,
                                                   TestimonioRepository testimonioRepository,
                                                   DonacionRepository donacionRepository,
-                                                  SolicitudAyudaRepository solicitudAyudaRepository) {
+                                                  RecepcionDonacionRepository recepcionDonacionRepository) {
         return args -> {
             if (campanaRepository.count() == 0) {
                 campanaRepository.save(crearCampana(
@@ -47,21 +49,43 @@ public class DataInitializer {
             }
 
             if (donacionRepository.count() == 0) {
-                donacionRepository.save(crearDonacion("LOTE-1001", "Supermercado MegaPerú", "Arroz", 150, "Recibido"));
-                donacionRepository.save(crearDonacion("LOTE-1002", "Textiles Andinos SAC", "Ropa infantil", 80, "Recibido"));
-                donacionRepository.save(crearDonacion("LOTE-1003", "Panadería Dulce Vida", "Pan", 60, "En proceso"));
-                donacionRepository.save(crearDonacion("LOTE-1004", "Farmacia Salud Total", "Productos de higiene", 45, "Recibido"));
-                donacionRepository.save(crearDonacion("LOTE-1005", "Librería El Saber", "Cuadernos y útiles escolares", 120, "En proceso"));
-                donacionRepository.save(crearDonacion("LOTE-1006", "Comunidad Vecinal Los Olivos", "Leche en polvo", 90, "Entregado"));
-                donacionRepository.save(crearDonacion("LOTE-1007", "Calzados Norte SAC", "Calzado escolar", 65, "Entregado"));
-            }
+                List<Campana> campanas = campanaRepository.findAll();
+                Campana cAlimentos = campanas.stream()
+                        .filter(c -> {
+                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
+                            return nombre != null && nombre.toLowerCase().contains("alimento");
+                        })
+                        .findFirst().orElse(!campanas.isEmpty() ? campanas.get(0) : null);
+                Campana cRopa = campanas.stream()
+                        .filter(c -> {
+                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
+                            return nombre != null && nombre.toLowerCase().contains("ropa");
+                        })
+                        .findFirst().orElse(cAlimentos);
+                Campana cEscolar = campanas.stream()
+                        .filter(c -> {
+                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
+                            return nombre != null && nombre.toLowerCase().contains("escolar");
+                        })
+                        .findFirst().orElse(cAlimentos);
 
-            if (solicitudAyudaRepository.count() == 0) {
-                solicitudAyudaRepository.save(crearSolicitudAyuda("Familia Pérez", "Alimentos", "Necesitan canasta básica para 5 personas."));
-                solicitudAyudaRepository.save(crearSolicitudAyuda("Comedor Comunitario Luz", "Ropa y abrigo", "Requieren mantas y prendas para adultos mayores."));
-                solicitudAyudaRepository.save(crearSolicitudAyuda("Asociación Sembrando Esperanza", "Material escolar", "Solicitan útiles escolares para 30 niños."));
-                solicitudAyudaRepository.save(crearSolicitudAyuda("Hogar San José", "Productos de higiene", "Necesitan jabón, papel higiénico y productos de limpieza."));
-                solicitudAyudaRepository.save(crearSolicitudAyuda("Centro Infantil Rayito", "Calzado", "Solicitan zapatos escolares para niños de primaria."));
+                Donacion d1 = donacionRepository.save(crearDonacion("LOTE-1001", "Supermercado MegaPerú", "Arroz", 150, "CONFIRMADO", cAlimentos));
+                Donacion d2 = donacionRepository.save(crearDonacion("LOTE-1002", "Textiles Andinos SAC", "Ropa infantil", 80, "CONFIRMADO", cRopa));
+                Donacion d3 = donacionRepository.save(crearDonacion("LOTE-1003", "Panadería Dulce Vida", "Pan", 60, "CONFIRMADO", cAlimentos));
+                Donacion d4 = donacionRepository.save(crearDonacion("LOTE-1004", "Farmacia Salud Total", "Productos de higiene", 45, "CONFIRMADO", cAlimentos));
+                Donacion d5 = donacionRepository.save(crearDonacion("LOTE-1005", "Librería El Saber", "Cuadernos y útiles escolares", 120, "CONFIRMADO", cEscolar));
+                Donacion d6 = donacionRepository.save(crearDonacion("LOTE-1006", "Comunidad Vecinal Los Olivos", "Leche en polvo", 90, "CONFIRMADO", cAlimentos));
+                Donacion d7 = donacionRepository.save(crearDonacion("LOTE-1007", "Calzados Norte SAC", "Calzado escolar", 65, "CONFIRMADO", cRopa));
+
+                if (recepcionDonacionRepository.count() == 0) {
+                    crearRecepcion(d1, cAlimentos, recepcionDonacionRepository);
+                    crearRecepcion(d2, cRopa, recepcionDonacionRepository);
+                    crearRecepcion(d3, cAlimentos, recepcionDonacionRepository);
+                    crearRecepcion(d4, cAlimentos, recepcionDonacionRepository);
+                    crearRecepcion(d5, cEscolar, recepcionDonacionRepository);
+                    crearRecepcion(d6, cAlimentos, recepcionDonacionRepository);
+                    crearRecepcion(d7, cRopa, recepcionDonacionRepository);
+                }
             }
         };
     }
@@ -69,7 +93,7 @@ public class DataInitializer {
     private Campana crearCampana(String titulo, String descripcion, int metaDias, int porcentaje,
                                  String ubicacion, int beneficiarios, int meta) {
         Campana campana = new Campana();
-        campana.setTitulo(titulo);
+        campana.setNombre(titulo);
         campana.setDescripcion(descripcion);
         campana.setMetaDias(metaDias);
         campana.setPorcentaje(porcentaje);
@@ -87,22 +111,26 @@ public class DataInitializer {
         return testimonio;
     }
 
-    private Donacion crearDonacion(String codigoLote, String nombreDonante, String producto, int cantidad, String estado) {
+    private Donacion crearDonacion(String codigoLote, String nombreDonante, String producto, int cantidad, String estado, Campana campana) {
         Donacion donacion = new Donacion();
         donacion.setCodigoLote(codigoLote);
         donacion.setNombreDonante(nombreDonante);
         donacion.setProducto(producto);
         donacion.setCantidad(cantidad);
         donacion.setEstado(estado);
+        donacion.setCampana(campana);
         return donacion;
     }
 
-    private SolicitudAyuda crearSolicitudAyuda(String nombreDonantes, String tipoAyuda, String descripcion) {
-        SolicitudAyuda solicitud = new SolicitudAyuda();
-        solicitud.setNombreDonantes(nombreDonantes);
-        solicitud.setTipoAyuda(tipoAyuda);
-        solicitud.setDescripcion(descripcion);
-        solicitud.setEstado("Registrado");
-        return solicitud;
+    private void crearRecepcion(Donacion donacion, Campana campana, RecepcionDonacionRepository recepcionDonacionRepository) {
+        RecepcionDonacion recepcion = new RecepcionDonacion();
+        recepcion.setDonacion(donacion);
+        recepcion.setCampana(campana);
+        recepcion.setEstado("CONFIRMADO");
+        recepcion.setFechaRevision(java.time.LocalDateTime.now());
+        recepcion.setRevisadoPor("Sistema");
+        recepcionDonacionRepository.save(recepcion);
     }
+
 }
+

@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .requestMatchers("/donar-ahora", "/ver-voluntario", "/donar-bienes",
                         "/eventos", "/ver-campanas").authenticated()
                 .requestMatchers(HttpMethod.POST, "/campanas/**").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/donaciones", "/api/solicitudes").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/donaciones", "/api/recepcion-donaciones/**").authenticated()
                 .anyRequest().permitAll()
             )
             .formLogin(form -> form

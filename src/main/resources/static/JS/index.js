@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <span class="badge bg-warning-subtle text-warning-emphasis fw-semibold px-3 py-2">En curso</span>
                                 <span class="small text-secondary">${campana.metaDias || 'Por definir'}</span>
                             </div>
-                            <h3 class="fw-bold text-dark mb-2">${campana.titulo}</h3>
+                            <h3 class="fw-bold text-dark mb-2">${campana.nombre != null ? campana.nombre : (campana.titulo || '')}</h3>
                             <p class="text-secondary mb-3">${campana.descripcion}</p>
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between small text-secondary mb-1">

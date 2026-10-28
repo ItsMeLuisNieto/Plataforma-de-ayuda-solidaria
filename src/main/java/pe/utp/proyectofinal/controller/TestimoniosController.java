@@ -33,6 +33,11 @@ public class TestimoniosController {
         return testimonioService.listar();
     }
 
+    @GetMapping("/{id}")
+    public Testimonio obtenerTestimonio(@PathVariable Long id) {
+        return testimonioService.buscar(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Testimonio agregarTestimonio(@Valid @RequestBody TestimonioRequest request) {

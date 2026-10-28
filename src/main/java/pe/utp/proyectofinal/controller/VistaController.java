@@ -62,14 +62,7 @@ public class VistaController {
         return "redirect:/campanas#campaigns";
     }
 
-    @GetMapping("/solicitudes")
-    public String solicitudes(Model model, Authentication authentication) {
-        if (!esAdmin(authentication)) {
-            return "redirect:/kallpa-solidary";
-        }
-        model.addAttribute("esAdmin", true);
-        return "solicitudes";
-    }
+
 
     @GetMapping("/donaciones")
     public String irDonaciones(Model model, Authentication authentication) {

@@ -6,17 +6,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.utp.proyectofinal.dto.DonacionRequest;
+import pe.utp.proyectofinal.entity.Campana;
 import pe.utp.proyectofinal.entity.Donacion;
 import pe.utp.proyectofinal.exception.NotFoundException;
+import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
 
 @Service
 public class DonacionService {
 
     private final DonacionRepository donacionRepository;
+    private final CampanaRepository campanaRepository;
+    private final RecepcionDonacionService recepcionDonacionService;
 
-    public DonacionService(DonacionRepository donacionRepository) {
+    public DonacionService(DonacionRepository donacionRepository,
+                           CampanaRepository campanaRepository,
+                           RecepcionDonacionService recepcionDonacionService) {
         this.donacionRepository = donacionRepository;
+        this.campanaRepository = campanaRepository;
+        this.recepcionDonacionService = recepcionDonacionService;
     }
 
     @Transactional(readOnly = true)
@@ -31,15 +39,34 @@ public class DonacionService {
 
     @Transactional
     public Donacion registrar(DonacionRequest request) {
+        Campana campana = null;
+        if (request.getCampanaId() != null) {
+            campana = campanaRepository.findById(request.getCampanaId())
+                    .orElseThrow(() -> new NotFoundException("Campaña no encontrada con id " + request.getCampanaId()));
+        }
         Donacion donacion = new Donacion();
+        if (campana != null) {
+            donacion.setCampana(campana);
+        }
         aplicarDatos(donacion, request);
-        donacion.setEstado(esBlanco(request.getEstado()) ? "Registrado" : request.getEstado().trim());
-        return donacionRepository.save(donacion);
+        if (!esBlanco(request.getEstado())) {
+            donacion.setEstado(request.getEstado().trim());
+        } else {
+            donacion.setEstado("PENDIENTE");
+        }
+        Donacion guardada = donacionRepository.save(donacion);
+        recepcionDonacionService.crearDesdeDonacion(guardada);
+        return guardada;
     }
 
     @Transactional
     public Donacion actualizar(Long id, DonacionRequest request) {
         Donacion donacion = obtenerEntidad(id);
+        if (request.getCampanaId() != null) {
+            Campana campana = campanaRepository.findById(request.getCampanaId())
+                    .orElseThrow(() -> new NotFoundException("Campaña no encontrada con id " + request.getCampanaId()));
+            donacion.setCampana(campana);
+        }
         aplicarDatos(donacion, request);
         if (!esBlanco(request.getEstado())) {
             donacion.setEstado(request.getEstado().trim());
