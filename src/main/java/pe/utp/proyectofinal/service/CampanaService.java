@@ -54,12 +54,25 @@ public class CampanaService {
     }
 
     private void aplicarDatos(Campana campana, CampanaRequest request) {
-        campana.setTitulo(request.getTitulo().trim());
-        campana.setDescripcion(request.getDescripcion().trim());
-        campana.setMetaDias(request.getMetaDias());
-        campana.setPorcentaje(request.getPorcentaje());
-        campana.setUbicacion(request.getUbicacion().trim());
-        campana.setBeneficiarios(request.getBeneficiarios());
-        campana.setMeta(request.getMeta());
+        String nombreCampana = request.getNombre() != null ? request.getNombre() : request.getTitulo();
+        campana.setNombre(nombreCampana != null ? nombreCampana.trim() : null);
+        if (request.getDescripcion() != null) {
+            campana.setDescripcion(request.getDescripcion().trim());
+        }
+        if (request.getMetaDias() != null) {
+            campana.setMetaDias(request.getMetaDias());
+        }
+        if (request.getPorcentaje() != null) {
+            campana.setPorcentaje(request.getPorcentaje());
+        }
+        if (request.getUbicacion() != null) {
+            campana.setUbicacion(request.getUbicacion().trim());
+        }
+        if (request.getBeneficiarios() != null) {
+            campana.setBeneficiarios(request.getBeneficiarios());
+        }
+        if (request.getMeta() != null) {
+            campana.setMeta(request.getMeta());
+        }
     }
 }

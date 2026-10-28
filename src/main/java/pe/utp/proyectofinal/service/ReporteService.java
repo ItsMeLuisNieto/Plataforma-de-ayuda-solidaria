@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pe.utp.proyectofinal.dto.ReporteDTO;
 import pe.utp.proyectofinal.entity.Campana;
 import pe.utp.proyectofinal.entity.Donacion;
-import pe.utp.proyectofinal.entity.SolicitudAyuda;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
-import pe.utp.proyectofinal.repository.SolicitudAyudaRepository;
 
 @Service
 public class ReporteService {
@@ -24,14 +22,11 @@ public class ReporteService {
 
     private final CampanaRepository campanaRepository;
     private final DonacionRepository donacionRepository;
-    private final SolicitudAyudaRepository solicitudAyudaRepository;
 
     public ReporteService(CampanaRepository campanaRepository,
-                          DonacionRepository donacionRepository,
-                          SolicitudAyudaRepository solicitudAyudaRepository) {
+                          DonacionRepository donacionRepository) {
         this.campanaRepository = campanaRepository;
         this.donacionRepository = donacionRepository;
-        this.solicitudAyudaRepository = solicitudAyudaRepository;
     }
 
     @Transactional(readOnly = true)
@@ -43,7 +38,7 @@ public class ReporteService {
         kpis.setTotalBeneficiariosAtendidos(campanas.stream()
                 .mapToInt(Campana::getBeneficiarios)
                 .sum());
-        kpis.setTotalBienesStock(donacionRepository.findAll().stream()
+        kpis.setTotalBienesStock(donacionRepository.findByEstado("CONFIRMADO").stream()
                 .mapToInt(Donacion::getCantidad)
                 .sum());
         return kpis;
@@ -53,12 +48,8 @@ public class ReporteService {
     public List<ReporteDTO> obtenerMovimientos() {
         List<ReporteDTO> movimientos = new ArrayList<>();
 
-        donacionRepository.findAll().stream()
+        donacionRepository.findByEstado("CONFIRMADO").stream()
                 .map(this::mapearDonacion)
-                .forEach(movimientos::add);
-
-        solicitudAyudaRepository.findAll().stream()
-                .map(this::mapearSolicitud)
                 .forEach(movimientos::add);
 
         movimientos.sort(Comparator.comparing(ReporteDTO::getFecha).reversed());
@@ -69,23 +60,12 @@ public class ReporteService {
         ReporteDTO dto = new ReporteDTO();
         dto.setIdTransaccion(donacion.getId());
         dto.setFecha(donacion.getFechaIngreso() == null ? "" : donacion.getFechaIngreso().format(FORMATO_FECHA));
-        dto.setCampanaTitulo(donacion.getProducto());
-        dto.setDistrito("-");
+        dto.setCampanaTitulo(donacion.getCampana() != null ? (donacion.getCampana().getNombre() != null ? donacion.getCampana().getNombre() : donacion.getCampana().getTitulo()) : donacion.getProducto());
+        dto.setDistrito(donacion.getCampana() != null ? donacion.getCampana().getUbicacion() : "-");
         dto.setTipoDonacion("Bienes");
-        dto.setValorMonto(donacion.getCantidad() + (donacion.getCantidad() == 1 ? " unidad" : " unidades"));
+        dto.setValorMonto(donacion.getCantidad() + (donacion.getCantidad() == 1 ? " unidad" : " unidades") + " (" + donacion.getProducto() + ")");
         dto.setEstado(donacion.getEstado());
         return dto;
     }
-
-    private ReporteDTO mapearSolicitud(SolicitudAyuda solicitud) {
-        ReporteDTO dto = new ReporteDTO();
-        dto.setIdTransaccion(solicitud.getId());
-        dto.setFecha(solicitud.getFechaRegistro() == null ? "" : solicitud.getFechaRegistro().format(FORMATO_FECHA));
-        dto.setCampanaTitulo(solicitud.getTipoAyuda());
-        dto.setDistrito("-");
-        dto.setTipoDonacion("Solicitud");
-        dto.setValorMonto(solicitud.getDescripcion());
-        dto.setEstado(solicitud.getEstado());
-        return dto;
-    }
 }
+

@@ -1,5 +1,6 @@
 package pe.utp.proyectofinal.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,6 +31,8 @@ public class AuthController {
             return "redirect:/login";
         } catch (BusinessException ex) {
             return "redirect:/registro?error=" + ex.getCode();
+        } catch (DataIntegrityViolationException ex) {
+            return "redirect:/registro?error=nombre_exists";
         }
     }
 

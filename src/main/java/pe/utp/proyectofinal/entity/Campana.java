@@ -1,12 +1,18 @@
 package pe.utp.proyectofinal.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
@@ -18,8 +24,8 @@ public class Campana {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 150)
-    private String titulo;
+    @Column(name = "titulo", nullable = false, length = 150)
+    private String nombre;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String descripcion;
@@ -42,6 +48,10 @@ public class Campana {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "campana", cascade = CascadeType.ALL)
+    private List<Donacion> donaciones = new ArrayList<>();
+
     @PrePersist
     public void prePersist() {
         this.fechaCreacion = LocalDateTime.now();
@@ -49,8 +59,10 @@ public class Campana {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getTitulo() { return nombre; }
+    public void setTitulo(String titulo) { this.nombre = titulo; }
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
     public int getMetaDias() { return metaDias; }
@@ -65,4 +77,6 @@ public class Campana {
     public void setMeta(int meta) { this.meta = meta; }
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+    public List<Donacion> getDonaciones() { return donaciones; }
+    public void setDonaciones(List<Donacion> donaciones) { this.donaciones = donaciones; }
 }

@@ -25,16 +25,31 @@ public class UsuarioService {
 
     @Transactional
     public Usuario registrar(RegistroRequest request) {
-        if (usuarioRepository.existsByEmail(request.getEmail())) {
+        String email = request.getEmail() != null ? request.getEmail().trim().toLowerCase() : null;
+        String nombre = request.getNombre() != null ? request.getNombre().trim() : null;
+
+        if (email == null || email.isBlank()) {
+            throw new BusinessException("null_email", "El correo electrónico es obligatorio");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new BusinessException("invalid_name", "El nombre es obligatorio");
+        }
+        if (usuarioRepository.existsByEmail(email)) {
             throw new BusinessException("email_exists", "El correo electrónico ya está registrado");
+        }
+        if (usuarioRepository.existsByNombre(nombre)) {
+            throw new BusinessException("nombre_exists", "El nombre de usuario ya está registrado");
+        }
+        if (request.getPassword() == null || request.getConfirmPassword() == null) {
+            throw new BusinessException("pass_mismatch", "Las contraseñas no coinciden");
         }
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             throw new BusinessException("pass_mismatch", "Las contraseñas no coinciden");
         }
 
         Usuario usuario = new Usuario();
-        usuario.setEmail(request.getEmail().trim().toLowerCase());
-        usuario.setNombre(request.getNombre().trim());
+        usuario.setEmail(email);
+        usuario.setNombre(nombre);
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
         usuario.setRol("USER");
 
