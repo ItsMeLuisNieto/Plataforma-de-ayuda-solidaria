@@ -35,7 +35,7 @@
                         </li>
                         
                         <!-- Menú Gestión (Con IDs independientes para evitar conflictos) -->
-                        <li class="nav-item dropdown" th:if="${esAdmin}">
+                        <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
                             <a class="nav-link active text-white dropdown-toggle fw-semibold" id="navbarDropdownGestion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Gestión
                             </a>

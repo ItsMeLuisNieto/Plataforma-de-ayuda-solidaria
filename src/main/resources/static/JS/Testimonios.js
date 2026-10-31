@@ -1,6 +1,7 @@
 console.log("Probando 1 2 3 :D")
 
 const API_URL = "/api/testimonios";
+const USUARIO_ACTUAL_URL = "/api/usuario/actual";
 
 // Variable para guardar la lista en memoria 
 let listaGlobalTestimonios = [];
@@ -57,8 +58,8 @@ function renderizarCarrusel(lista) {
         itemDiv.innerHTML = `
             <div class="p-4 text-center">
                 <p class="fs-5 fst-italic text-secondary">"${item.comentario}"</p>
-                <h5 class="fw-bold mb-0 text-dark">${item.nombre}</h5>
-                <small class="text-primary fw-semibold d-block mb-3">${item.rol}</small>
+                <h5 class="fw-bold mb-0 text-dark">${item.nombre ?? ''}</h5>
+                <small class="text-primary fw-semibold d-block mb-3">${item.rol ?? ''}</small>
                 
                 <!-- UN SOLO BOTÓN ABAJO -->
                 <button type="button" class="btn btn-outline-warning btn-sm rounded-pill px-3" onclick="abrirModalEditar(${item.id})">
@@ -80,9 +81,12 @@ function abrirModalEditar(id) {
 
     // Inyecta los valores actuales en los inputs del modal
     document.getElementById("edit-id").value = testimonio.id;
-    document.getElementById("edit-nombre").value = testimonio.nombre;
-    document.getElementById("edit-rol").value = testimonio.rol;
     document.getElementById("edit-comentario").value = testimonio.comentario;
+
+    const autor = document.getElementById("edit-autor");
+    if (autor) {
+        autor.value = [testimonio.nombre, testimonio.rol].filter(Boolean).join(" - ");
+    }
 
     // Muestra el modal con Bootstrap
     const modalEl = document.getElementById("modalEditarTestimonio");
@@ -102,8 +106,6 @@ async function guardarEdicionTestimonio(event) {
 
     const id = document.getElementById("edit-id").value;
     const datosActualizados = {
-        nombre: document.getElementById("edit-nombre").value.trim(),
-        rol: document.getElementById("edit-rol").value,
         comentario: document.getElementById("edit-comentario").value.trim()
     };
 
@@ -134,26 +136,39 @@ async function guardarEdicionTestimonio(event) {
     }
 }
 
+async function obtenerUsuarioActual() {
+    try {
+        const respuesta = await fetch(USUARIO_ACTUAL_URL);
+        if (!respuesta.ok) return null;
+        return await respuesta.json();
+    } catch (error) {
+        console.error("Error al obtener el usuario actual:", error);
+        return null;
+    }
+}
 
 async function guardarTestimonio(event) {
     if (event) event.preventDefault();
 
     const form = document.getElementById("formTestimonio");
 
-
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
     }
 
-    const nombreInput = document.getElementById("nombre").value.trim();
-    const rolInput = document.getElementById("rol").value;
     const comentarioInput = document.getElementById("comentario").value.trim();
 
+    const usuario = await obtenerUsuarioActual();
+    if (!usuario || !usuario.id) {
+        alert("Debes iniciar sesión para publicar un testimonio.");
+        window.location.href = "/login";
+        return;
+    }
+
     const nuevoTestimonio = {
-        nombre: nombreInput,
-        rol: rolInput,
-        comentario: comentarioInput
+        comentario: comentarioInput,
+        usuarioId: usuario.id
     };
 
     try {
@@ -178,7 +193,8 @@ async function guardarTestimonio(event) {
             // Recargar el carrusel
             await cargarTestimonios();
         } else {
-            alert("No se pudo guardar el testimonio. Inténtalo de nuevo.");
+            const error = await respuesta.json().catch(() => ({}));
+            alert(error.message || error.error || "No se pudo guardar el testimonio. Inténtalo de nuevo.");
         }
     } catch (error) {
         console.error("Error al enviar el testimonio:", error);

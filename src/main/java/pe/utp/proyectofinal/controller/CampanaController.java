@@ -1,6 +1,5 @@
 package pe.utp.proyectofinal.controller;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +22,8 @@ public class CampanaController {
     }
 
     @GetMapping("/campanas")
-    public String verDonaciones(Model model, Authentication authentication) {
+    public String verDonaciones(Model model) {
         model.addAttribute("campanas", campanaService.listar());
-        model.addAttribute("esAdmin", esUsuarioAutenticado(authentication));
         return "campanas";
     }
 
@@ -42,16 +40,5 @@ public class CampanaController {
     public String eliminarCampana(@PathVariable Long id) {
         campanaService.eliminar(id);
         return "redirect:/campanas";
-    }
-
-    private boolean esUsuarioAutenticado(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return false;
-        }
-        if ("anonymousUser".equals(authentication.getName())) {
-            return false;
-        }
-        return authentication.getAuthorities().stream()
-                .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
     }
 }

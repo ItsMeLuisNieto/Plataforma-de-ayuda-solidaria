@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -22,9 +26,10 @@ public class Campana {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_campanas")
     private Long id;
 
-    @Column(name = "titulo", nullable = false, length = 150)
+    @Column(name = "nombre", nullable = false, length = 150)
     private String nombre;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -47,6 +52,11 @@ public class Campana {
 
     @Column(nullable = false)
     private LocalDateTime fechaCreacion;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnoreProperties({"password", "hibernateLazyInitializer", "handler"})
+    private Usuario usuario;
 
     @JsonIgnore
     @OneToMany(mappedBy = "campana", cascade = CascadeType.ALL)
@@ -77,6 +87,8 @@ public class Campana {
     public void setMeta(int meta) { this.meta = meta; }
     public LocalDateTime getFechaCreacion() { return fechaCreacion; }
     public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
     public List<Donacion> getDonaciones() { return donaciones; }
     public void setDonaciones(List<Donacion> donaciones) { this.donaciones = donaciones; }
 }

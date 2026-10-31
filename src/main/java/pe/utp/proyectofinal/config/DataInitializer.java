@@ -5,15 +5,18 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import pe.utp.proyectofinal.entity.Campana;
 import pe.utp.proyectofinal.entity.Donacion;
 import pe.utp.proyectofinal.entity.RecepcionDonacion;
 import pe.utp.proyectofinal.entity.Testimonio;
+import pe.utp.proyectofinal.entity.Usuario;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 import pe.utp.proyectofinal.repository.TestimonioRepository;
+import pe.utp.proyectofinal.repository.UsuarioRepository;
 
 @Configuration
 public class DataInitializer {
@@ -22,51 +25,47 @@ public class DataInitializer {
     public CommandLineRunner cargarDatosIniciales(CampanaRepository campanaRepository,
                                                   TestimonioRepository testimonioRepository,
                                                   DonacionRepository donacionRepository,
-                                                  RecepcionDonacionRepository recepcionDonacionRepository) {
+                                                  RecepcionDonacionRepository recepcionDonacionRepository,
+                                                  UsuarioRepository usuarioRepository,
+                                                  PasswordEncoder passwordEncoder) {
         return args -> {
+            Usuario admin = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "admin@kallpa.local", "Administrador", "ADMIN");
+            Usuario usuario = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "usuario@kallpa.local", "Nieto Paz", "USUARIO");
+
             if (campanaRepository.count() == 0) {
-                campanaRepository.save(crearCampana(
+                campanaRepository.save(crearCampana(admin,
                         "Canasta de alimentos",
                         "Aportamos kits básicos para familias vulnerables.",
                         7, 12, "San Martín de Porres", 240, 18000));
-                campanaRepository.save(crearCampana(
+                campanaRepository.save(crearCampana(admin,
                         "Ropa y abrigo",
                         "Recibimos prendas, mochilas y calzado para niños.",
                         14, 58, "El Agustino", 180, 1300));
-                campanaRepository.save(crearCampana(
+                campanaRepository.save(crearCampana(admin,
                         "Material escolar",
                         "Apoyamos a estudiantes con cuadernos y uniformes.",
                         21, 81, "Surco", 310, 24500));
             }
 
             if (testimonioRepository.count() == 0) {
-                testimonioRepository.save(crearTestimonio(
-                        "Luna Torres", "Donante",
+                testimonioRepository.save(crearTestimonio(usuario,
                         "Increíble la transparencia con la que entregan la ayuda humanitaria en cada campaña."));
-                testimonioRepository.save(crearTestimonio(
-                        "Enrique Lee", "Voluntario",
+                testimonioRepository.save(crearTestimonio(usuario,
                         "Ser parte de los voluntariados me ha permitido ver el impacto real en las comunidades."));
             }
 
             if (donacionRepository.count() == 0) {
                 List<Campana> campanas = campanaRepository.findAll();
                 Campana cAlimentos = campanas.stream()
-                        .filter(c -> {
-                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
-                            return nombre != null && nombre.toLowerCase().contains("alimento");
-                        })
+                        .filter(c -> c.getNombre() != null && c.getNombre().toLowerCase().contains("alimento"))
                         .findFirst().orElse(!campanas.isEmpty() ? campanas.get(0) : null);
                 Campana cRopa = campanas.stream()
-                        .filter(c -> {
-                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
-                            return nombre != null && nombre.toLowerCase().contains("ropa");
-                        })
+                        .filter(c -> c.getNombre() != null && c.getNombre().toLowerCase().contains("ropa"))
                         .findFirst().orElse(cAlimentos);
                 Campana cEscolar = campanas.stream()
-                        .filter(c -> {
-                            String nombre = c.getNombre() != null ? c.getNombre() : c.getTitulo();
-                            return nombre != null && nombre.toLowerCase().contains("escolar");
-                        })
+                        .filter(c -> c.getNombre() != null && c.getNombre().toLowerCase().contains("escolar"))
                         .findFirst().orElse(cAlimentos);
 
                 Donacion d1 = donacionRepository.save(crearDonacion("LOTE-1001", "Supermercado MegaPerú", "Arroz", 150, "CONFIRMADO", cAlimentos));
@@ -90,7 +89,20 @@ public class DataInitializer {
         };
     }
 
-    private Campana crearCampana(String titulo, String descripcion, int metaDias, int porcentaje,
+    private Usuario obtenerOCrearUsuario(UsuarioRepository usuarioRepository,
+                                         PasswordEncoder passwordEncoder,
+                                         String email, String nombre, String rol) {
+        return usuarioRepository.findByEmail(email).orElseGet(() -> {
+            Usuario usuario = new Usuario();
+            usuario.setEmail(email);
+            usuario.setNombre(nombre);
+            usuario.setPassword(passwordEncoder.encode("kallpa123"));
+            usuario.setRol(rol);
+            return usuarioRepository.save(usuario);
+        });
+    }
+
+    private Campana crearCampana(Usuario usuario, String titulo, String descripcion, int metaDias, int porcentaje,
                                  String ubicacion, int beneficiarios, int meta) {
         Campana campana = new Campana();
         campana.setNombre(titulo);
@@ -100,13 +112,13 @@ public class DataInitializer {
         campana.setUbicacion(ubicacion);
         campana.setBeneficiarios(beneficiarios);
         campana.setMeta(meta);
+        campana.setUsuario(usuario);
         return campana;
     }
 
-    private Testimonio crearTestimonio(String nombre, String rol, String comentario) {
+    private Testimonio crearTestimonio(Usuario usuario, String comentario) {
         Testimonio testimonio = new Testimonio();
-        testimonio.setNombre(nombre);
-        testimonio.setRol(rol);
+        testimonio.setUsuario(usuario);
         testimonio.setComentario(comentario);
         return testimonio;
     }
@@ -133,4 +145,3 @@ public class DataInitializer {
     }
 
 }
-

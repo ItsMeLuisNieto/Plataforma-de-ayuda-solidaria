@@ -1,27 +1,12 @@
 package pe.utp.proyectofinal.dto;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class DonacionRequest {
 
-    @JsonAlias({"campana_id", "idCampana", "id_campana", "campana"})
     private Long campanaId;
-
-    @JsonAlias({"codigo_lote", "lote", "codigo"})
     private String codigoLote;
-
-    @JsonAlias({"donante", "nombre", "nombre_donante", "donor"})
     private String nombreDonante;
-
-    @JsonAlias({"item", "descripcion", "articulo", "bien", "product"})
     private String producto;
-
-    @JsonAlias({"monto", "unidades", "total", "quantity"})
     private Integer cantidad;
-
-    @JsonAlias({"status"})
     private String estado;
 
     public DonacionRequest() {}

@@ -21,6 +21,7 @@ public class Donacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_donaciones")
     private Long id;
 
     @Column(nullable = false, unique = true, length = 60)
@@ -75,7 +76,7 @@ public class Donacion {
     }
 
     public String getCampanaTitulo() {
-        return campana != null ? (campana.getNombre() != null ? campana.getNombre() : campana.getTitulo()) : null;
+        return campana != null ? campana.getNombre() : null;
     }
 
     public String getCampanaNombre() {

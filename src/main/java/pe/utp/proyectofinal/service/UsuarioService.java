@@ -51,7 +51,7 @@ public class UsuarioService {
         usuario.setEmail(email);
         usuario.setNombre(nombre);
         usuario.setPassword(passwordEncoder.encode(request.getPassword()));
-        usuario.setRol("USER");
+        usuario.setRol("USUARIO");
 
         return usuarioRepository.save(usuario);
     }

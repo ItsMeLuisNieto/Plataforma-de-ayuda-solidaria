@@ -21,6 +21,7 @@ public class RecepcionDonacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_recepcion_donaciones")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -83,9 +84,6 @@ public class RecepcionDonacion {
     }
 
     public String getCampanaNombre() {
-        if (campana == null) {
-            return null;
-        }
-        return campana.getNombre() != null ? campana.getNombre() : campana.getTitulo();
+        return campana != null ? campana.getNombre() : null;
     }
 }

@@ -84,7 +84,7 @@
 
                         
 
-                        <li th:if="${esAdmin}" class="nav-item dropdown">
+                        <li sec:authorize="hasRole('ADMIN')" class="nav-item dropdown">
 
                             <a class="nav-link active text-white dropdown-toggle fw-semibold" aria-current="page" 
 
@@ -225,7 +225,7 @@
 
           </p>
 
-          <button th:if="${esAdmin}" class="btn btn-success px-4 py-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#crearCampanaModal">
+          <button sec:authorize="hasRole('ADMIN')" class="btn btn-success px-4 py-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#crearCampanaModal">
 
             <i class="fas fa-plus me-2"></i>Nueva Campaña
 
@@ -326,7 +326,7 @@
 
 
 
-                <form th:if="${esAdmin}" th:action="@{/campanas/eliminar/{id}(id=${campana.id})}" method="post">
+                <form sec:authorize="hasRole('ADMIN')" th:action="@{/campanas/eliminar/{id}(id=${campana.id})}" method="post">
 
                   <button class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres eliminar esta campaña?')">
 
@@ -1576,7 +1576,7 @@
 
             <label class="form-label small fw-semibold">Título</label>
 
-            <input type="text" name="titulo" class="form-control" required placeholder="Ej: Abrigo para todos">
+            <input type="text" name="nombre" class="form-control" required placeholder="Ej: Abrigo para todos">
 
           </div>
 

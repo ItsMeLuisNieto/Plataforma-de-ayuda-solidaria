@@ -1,5 +1,8 @@
 package pe.utp.proyectofinal.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -7,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,6 +19,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuarios")
     private Long id;
 
     @Column(nullable = false, unique = true, length = 150)
@@ -28,7 +33,15 @@ public class Usuario {
     private String password;
 
     @Column(nullable = false, length = 20)
-    private String rol = "USER";
+    private String rol = "USUARIO";
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario")
+    private List<Campana> campanas = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario")
+    private List<Testimonio> testimonios = new ArrayList<>();
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -40,4 +53,8 @@ public class Usuario {
     public void setRol(String rol) { this.rol = rol; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+    public List<Campana> getCampanas() { return campanas; }
+    public void setCampanas(List<Campana> campanas) { this.campanas = campanas; }
+    public List<Testimonio> getTestimonios() { return testimonios; }
+    public void setTestimonios(List<Testimonio> testimonios) { this.testimonios = testimonios; }
 }

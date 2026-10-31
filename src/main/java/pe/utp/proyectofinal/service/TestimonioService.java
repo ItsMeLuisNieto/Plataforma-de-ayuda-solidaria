@@ -3,21 +3,29 @@ package pe.utp.proyectofinal.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.utp.proyectofinal.dto.TestimonioRequest;
 import pe.utp.proyectofinal.entity.Testimonio;
+import pe.utp.proyectofinal.entity.Usuario;
+import pe.utp.proyectofinal.exception.BusinessException;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.TestimonioRepository;
+import pe.utp.proyectofinal.repository.UsuarioRepository;
 
 @Service
 public class TestimonioService {
 
     private final TestimonioRepository testimonioRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public TestimonioService(TestimonioRepository testimonioRepository) {
+    public TestimonioService(TestimonioRepository testimonioRepository,
+                             UsuarioRepository usuarioRepository) {
         this.testimonioRepository = testimonioRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Transactional(readOnly = true)
@@ -87,29 +95,39 @@ public class TestimonioService {
     private void aplicarDatos(Testimonio testimonio, TestimonioRequest request, boolean esCreacion) {
         if (request == null) {
             if (esCreacion) {
-                testimonio.setNombre("Anónimo");
-                testimonio.setRol("Colaborador");
-                testimonio.setComentario("Gracias por el apoyo brindado.");
+                throw new BusinessException("invalid_request", "Los datos del testimonio son obligatorios");
             }
             return;
         }
 
-        if (request.getNombre() != null && !request.getNombre().isBlank()) {
-            testimonio.setNombre(request.getNombre().trim());
-        } else if (esCreacion && (testimonio.getNombre() == null || testimonio.getNombre().isBlank())) {
-            testimonio.setNombre("Anónimo");
-        }
-
-        if (request.getRol() != null && !request.getRol().isBlank()) {
-            testimonio.setRol(request.getRol().trim());
-        } else if (esCreacion && (testimonio.getRol() == null || testimonio.getRol().isBlank())) {
-            testimonio.setRol("Colaborador");
+        Usuario usuario = resolverUsuario(request, testimonio);
+        if (usuario != null) {
+            testimonio.setUsuario(usuario);
+        } else if (esCreacion) {
+            throw new BusinessException("usuario_required", "El usuarioId es obligatorio");
         }
 
         if (request.getComentario() != null && !request.getComentario().isBlank()) {
             testimonio.setComentario(request.getComentario().trim());
-        } else if (esCreacion && (testimonio.getComentario() == null || testimonio.getComentario().isBlank())) {
+        } else if (esCreacion) {
             testimonio.setComentario("Gracias por todo el apoyo y la solidaridad.");
         }
+    }
+
+    private Usuario resolverUsuario(TestimonioRequest request, Testimonio testimonio) {
+        if (request.getUsuarioId() != null) {
+            return usuarioRepository.findById(request.getUsuarioId())
+                    .orElseThrow(() -> new NotFoundException(
+                            "Usuario no encontrado con id " + request.getUsuarioId()));
+        }
+        if (testimonio.getUsuario() != null) {
+            return testimonio.getUsuario();
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && !"anonymousUser".equals(authentication.getName())) {
+            return usuarioRepository.findByEmail(authentication.getName()).orElse(null);
+        }
+        return usuarioRepository.findAll().stream().findFirst().orElse(null);
     }
 }

@@ -33,7 +33,6 @@ public class VistaController {
         }
         model.addAttribute("kpis", reporteService.obtenerKpis());
         model.addAttribute("movimientos", reporteService.obtenerMovimientos());
-        model.addAttribute("esAdmin", true);
         return "reportes";
     }
 
@@ -65,11 +64,10 @@ public class VistaController {
 
 
     @GetMapping("/donaciones")
-    public String irDonaciones(Model model, Authentication authentication) {
+    public String irDonaciones(Authentication authentication) {
         if (!esAdmin(authentication)) {
             return "redirect:/kallpa-solidary";
         }
-        model.addAttribute("esAdmin", true);
         return "donaciones";
     }
 
