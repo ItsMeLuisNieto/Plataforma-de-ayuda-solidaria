@@ -1,6 +1,7 @@
 HELP.md
 ARQUITECTURA.md
 HISTORIAL.md
+CONTEXTO_PROYECTO.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

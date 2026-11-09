@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,13 @@ public class ApiExceptionHandler {
     public ResponseEntity<Map<String, String>> reglaNegocio(BusinessException ex) {
         return ResponseEntity.badRequest()
                 .body(Map.of("mensaje", ex.getMessage(), "codigo", ex.getCode()));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> sinPermisos(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of("mensaje", ex.getMessage() != null ? ex.getMessage()
+                        : "No tienes permisos para realizar esta acción"));
     }
 
     @ExceptionHandler(Exception.class)

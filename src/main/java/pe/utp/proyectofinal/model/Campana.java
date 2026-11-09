@@ -1,4 +1,4 @@
-package pe.utp.proyectofinal.entity;
+package pe.utp.proyectofinal.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

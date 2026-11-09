@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import pe.utp.proyectofinal.entity.Campana;
-import pe.utp.proyectofinal.entity.Donacion;
-import pe.utp.proyectofinal.entity.RecepcionDonacion;
-import pe.utp.proyectofinal.entity.Testimonio;
-import pe.utp.proyectofinal.entity.Usuario;
+import pe.utp.proyectofinal.model.Campana;
+import pe.utp.proyectofinal.model.Donacion;
+import pe.utp.proyectofinal.model.RecepcionDonacion;
+import pe.utp.proyectofinal.model.Testimonio;
+import pe.utp.proyectofinal.model.Usuario;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;

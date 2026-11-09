@@ -4,16 +4,32 @@
 Por defecto en entorno local: `http://localhost:8090`
 
 ## Autenticación / Seguridad
-- **Login**: `POST /login` (form) con `email` y `pass`. Usa Spring Security form login.
-- **CSRF**: Activado por defecto. Si llamas desde JS/cliente con formularios Thymeleaf, usa los meta tags `_csrf`. Si haces fetch desde JS, envía header `X-CSRF-TOKEN`.
-- **Restricciones importantes**:
-  - `POST /api/donaciones` requiere estar autenticado
-  - `PUT /api/donaciones/{id}`, `DELETE /api/donaciones/{id}` requieren estar autenticado (según configuración actual)
-  - `POST /api/recepcion-donaciones/**` requiere estar autenticado
-  - `POST /campanas/**` requiere estar autenticado (cualquier usuario autenticado puede crear/eliminar campañas según config actual)
-  - `POST /api/campanas`, `PUT /api/campanas/**`, `DELETE /api/campanas/**` - Se recomienda requerir autenticación/rol ADMIN
-  - `GET /api/donaciones`, `GET /api/campanas`, `GET /api/testimonios` son públicos (permitAll)
-  - Endpoints de Testimonio (`POST/PUT/DELETE /api/testimonios/**`) están **públicos** actualmente (sin restricción de auth). Se recomienda restringir a ADMIN.
+
+- **Login web**: `POST /login` (form) con `email` y `pass`. Usa Spring Security form login.
+- **API REST**: para los endpoints que requieren autenticación usa **HTTP Basic Auth** (header `Authorization: Basic <base64(email:contraseña)>`). Thunder Client / Postman lo configuran en la pestaña Auth.
+
+### Usuarios de prueba (creados automáticamente por `DataInitializer`)
+
+| Email | Contraseña | Rol |
+|---|---|---|
+| `admin@kallpa.local` | `kallpa123` | ADMIN |
+| `usuario@kallpa.local` | `kallpa123` | USUARIO |
+
+### Matriz de permisos actual (SecurityConfig)
+
+| Operación | Anónimo | USUARIO (logueado) | ADMIN |
+|---|---|---|---|
+| `GET /api/**` (todos los GET de la API) | ✅ 200 | ✅ 200 | ✅ 200 |
+| `POST /api/testimonios` | ❌ 401 | ✅ 201 (se asigna a sí mismo) | ✅ 201 |
+| `PUT /api/testimonios/{id}` | ❌ 401 | ✅ 200 (solo si es el dueño) | ✅ 200 |
+| `DELETE /api/testimonios/{id}` | ❌ 401 | ❌ 403 | ✅ 204 |
+| `POST/PUT/DELETE /api/**` (resto: campañas, donaciones, recepciones) | ❌ 401 | ❌ 403 | ✅ |
+| `POST /campanas/**` (web MVC, crear/eliminar campañas) | ❌ redirect login | ❌ 403 | ✅ |
+
+- **CSRF**: desactivado para `/api/**` (no necesitas token para probar la API con Thunder Client/Postman). En el sitio web (formularios Thymeleaf) sigue activo y el JS lo envía vía meta tags `_csrf`.
+- **Errores en JSON**: las rutas `/api/**` responden `401` y `403` con body JSON `{"mensaje": "..."}` en lugar de redirigir a la vista de login:
+  - Sin sesión: `401` → `{"mensaje": "Debes iniciar sesión para realizar esta acción"}`
+  - Sin permisos suficientes: `403` → `{"mensaje": "No tienes permisos para realizar esta acción"}`
 
 ---
 
@@ -69,8 +85,9 @@ GET http://localhost:8090/api/campanas/1
 ```http
 POST http://localhost:8090/api/campanas
 Content-Type: application/json
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación (recomendado ADMIN)
+- **Auth**: **ADMIN** (Basic Auth). Sin sesión → `401`; con USUARIO → `403`
 - **Body**: `CampanaRequest`
 
 | Campo | Tipo | Requerido | Validación |
@@ -96,14 +113,15 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta**: `200 OK` - `Campana` creada
+**Respuesta**: `201 CREATED` - `Campana` creada
 
 ### PUT - Actualizar campaña
 ```http
 PUT http://localhost:8090/api/campanas/{id}
 Content-Type: application/json
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación (recomendado ADMIN)
+- **Auth**: **ADMIN** (Basic Auth)
 - **Path param**: `id` (Long)
 - **Body**: `CampanaRequest` (todos los campos)
 - **Respuesta**: `200 OK` - `Campana` actualizada
@@ -127,17 +145,18 @@ Content-Type: application/json
 ### DELETE - Eliminar campaña
 ```http
 DELETE http://localhost:8090/api/campanas/{id}
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación (recomendado ADMIN)
+- **Auth**: **ADMIN** (Basic Auth)
 - **Path param**: `id` (Long)
-- **Respuesta**: `200 OK` (void)
+- **Respuesta**: `204 NO_CONTENT`
 
 **Ejemplo:**
 ```http
 DELETE http://localhost:8090/api/campanas/5
 ```
 
-> **Nota:** También existe la vista MVC en `GET /campanas` (HTML) y `POST /campanas` / `POST /campanas/eliminar/{id}` para el sitio web. Usa `/api/campanas` para consumir JSON.
+> **Nota:** También existe la vista MVC en `GET /campanas` (HTML) y `POST /campanas` / `POST /campanas/eliminar/{id}` para el sitio web (ambos POST requieren ADMIN). Usa `/api/campanas` para consumir JSON.
 
 ---
 
@@ -193,8 +212,9 @@ GET http://localhost:8090/api/donaciones/1
 ```http
 POST http://localhost:8090/api/donaciones
 Content-Type: application/json
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación
+- **Auth**: **ADMIN** (Basic Auth). Sin sesión → `401`; con USUARIO → `403`
 - **Body**: `DonacionRequest`
 
 | Campo | Tipo | Requerido | Validación |
@@ -244,8 +264,9 @@ Content-Type: application/json
 ```http
 PUT http://localhost:8090/api/donaciones/{id}
 Content-Type: application/json
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación (recomendado ADMIN)
+- **Auth**: **ADMIN** (Basic Auth)
 - **Path param**: `id` (Long)
 - **Body**: `DonacionRequest`
 - **Respuesta**: `200 OK` - `Donacion` actualizada
@@ -268,8 +289,9 @@ Content-Type: application/json
 ### DELETE - Eliminar donación
 ```http
 DELETE http://localhost:8090/api/donaciones/{id}
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: Requiere autenticación (recomendado ADMIN)
+- **Auth**: **ADMIN** (Basic Auth)
 - **Path param**: `id` (Long)
 - **Respuesta**: `204 NO_CONTENT`
 
@@ -283,7 +305,7 @@ DELETE http://localhost:8090/api/donaciones/15
 ## 3. TESTIMONIO (REST API)
 
 Base: `/api/testimonios` - `TestimoniosController` (@RestController)  
-**CRUD COMPLETO DISPONIBLE**
+**CRUD COMPLETO DISPONIBLE** · Regla de propiedad: cada usuario solo puede crear/editar **sus propios** testimonios; el ADMIN puede hacer todo.
 
 ### GET - Listar todos los testimonios
 ```http
@@ -323,36 +345,48 @@ GET http://localhost:8090/api/testimonios/1
 ```http
 POST http://localhost:8090/api/testimonios
 Content-Type: application/json
+Authorization: Basic <usuario o admin>
 ```
-- **Auth**: **Público** (sin restricción en SecurityConfig). Se recomienda restringir a usuarios autenticados o ADMIN
+- **Auth**: Autenticado (USUARIO o ADMIN). Sin sesión → `401`
 - **Body**: `TestimonioRequest`
 
-| Campo | Tipo | Requerido | Validación |
+| Campo | Tipo | Requerido | Notas |
 |---|---|---|---|
-| nombre | String | Sí | @NotBlank |
-| rol | String | Sí | @NotBlank |
-| comentario | String | Sí | @NotBlank |
+| comentario | String | Sí | Contenido del testimonio |
+| usuarioId | Long | No | **Solo lo usa el ADMIN** para publicar en nombre de otro usuario. Un USUARIO normal lo ignora (el testimonio se le asigna automáticamente) |
 
-**Ejemplo body:**
+**Ejemplo body (usuario normal):**
 ```json
 {
-  "nombre": "María López",
-  "rol": "Voluntaria",
   "comentario": "Excelente labor solidaria. Me alegra formar parte de este proyecto."
+}
+```
+
+**Ejemplo body (admin publicando en nombre del usuario 2):**
+```json
+{
+  "comentario": "Excelente labor solidaria.",
+  "usuarioId": 2
 }
 ```
 
 **Respuesta**: `201 CREATED` - `Testimonio` creado
 
+**Reglas de propiedad:**
+- Un USUARIO autenticado crea el testimonio **a su nombre** siempre; si envía `usuarioId` de otra persona, se ignora (no puede suplantar a nadie)
+- Solo el ADMIN puede usar `usuarioId` para asignar otro propietario
+
 ### PUT - Actualizar testimonio
 ```http
 PUT http://localhost:8090/api/testimonios/{id}
 Content-Type: application/json
+Authorization: Basic <usuario duenio o admin>
 ```
-- **Auth**: **Público** (sin restricción en SecurityConfig). Se recomienda restringir a ADMIN
+- **Auth**: Autenticado. USUARIO solo puede editar **sus propios** testimonios; ADMIN puede editar cualquiera
 - **Path param**: `id` (Long)
-- **Body**: `TestimonioRequest` (todos los campos requeridos)
+- **Body**: `TestimonioRequest` (comentario; `usuarioId` solo ADMIN para reasignar)
 - **Respuesta**: `200 OK` - `Testimonio` actualizado
+- **Error**: `403` con `{"mensaje": "Solo puedes editar tus propios testimonios"}` si un USUARIO edita un testimonio ajeno
 
 **Ejemplo:**
 ```http
@@ -360,8 +394,6 @@ PUT http://localhost:8090/api/testimonios/1
 Content-Type: application/json
 
 {
-  "nombre": "María López",
-  "rol": "Voluntaria",
   "comentario": "Sigue siendo una experiencia increíble, 100% recomendada."
 }
 ```
@@ -369,8 +401,9 @@ Content-Type: application/json
 ### DELETE - Eliminar testimonio
 ```http
 DELETE http://localhost:8090/api/testimonios/{id}
+Authorization: Basic <admin@kallpa.local:kallpa123>
 ```
-- **Auth**: **Público** (sin restricción en SecurityConfig). Se recomienda restringir a ADMIN
+- **Auth**: **ADMIN** (Basic Auth). Con USUARIO → `403`
 - **Path param**: `id` (Long)
 - **Respuesta**: `204 NO_CONTENT`
 
@@ -383,19 +416,20 @@ DELETE http://localhost:8090/api/testimonios/1
 
 ## Endpoints relacionados con recepción de donaciones (adicionales)
 
-Dado que el flujo ahora va por recepción, puedes usar estos endpoints para gestionar la aprobación/rechazo:
+Dado que el flujo ahora va por recepción, puedes usar estos endpoints para gestionar la aprobación/rechazo. **Confirmar y rechazar requieren rol ADMIN** (Basic Auth):
 
 ```http
-GET http://localhost:8090/api/recepcion-donaciones          # Listar todos (con donación y campaña)
-GET http://localhost:8090/api/recepcion-donaciones/pendientes
-POST http://localhost:8090/api/recepcion-donaciones/{id}/confirmar  # Requiere auth
-POST http://localhost:8090/api/recepcion-donaciones/{id}/rechazar   # Requiere auth, body opcional {"motivo": "..."}
+GET http://localhost:8090/api/recepcion-donaciones          # Público
+GET http://localhost:8090/api/recepcion-donaciones/pendientes   # Público
+POST http://localhost:8090/api/recepcion-donaciones/{id}/confirmar  # ADMIN
+POST http://localhost:8090/api/recepcion-donaciones/{id}/rechazar   # ADMIN, body opcional {"motivo": "..."}
 ```
 
 **Ejemplo rechazar:**
 ```http
 POST http://localhost:8090/api/recepcion-donaciones/5/rechazar
 Content-Type: application/json
+Authorization: Basic <admin@kallpa.local:kallpa123>
 
 {
   "motivo": "Producto en mal estado"
@@ -407,8 +441,8 @@ Content-Type: application/json
 ## Notas importantes
 
 - **MVC vs REST**: `GET /campanas` sigue devolviendo HTML (vista Thymeleaf). Para obtener solo JSON usa `GET /api/campanas`.
-- **GET por ID**: Ahora disponible para `/api/campanas/{id}`, `/api/donaciones/{id}` y `/api/testimonios/{id}`.
-- **CRUD completo**: Campañas, Donaciones y Testimonios cuentan ahora con GET (lista + por id), POST, PUT y DELETE vía REST API.
+- **GET por ID**: Disponible para `/api/campanas/{id}`, `/api/donaciones/{id}` y `/api/testimonios/{id}`.
+- **CRUD completo**: Campañas, Donaciones y Testimonios cuentan con GET (lista + por id), POST, PUT y DELETE vía REST API.
 - **Estado de donaciones**: Al crear via API, llegan con estado `PENDIENTE` y se registran automáticamente en `recepcion_donaciones`. Los reportes solo muestran donaciones con estado `CONFIRMADO`.
-- **CSRF en Postman**: Si pruebas con Postman fuera de sesión, puedes deshabilitarlo temporalmente o enviar el token CSRF. Para APIs REST puras suele usarse JWT o deshabilitar CSRF para ciertas rutas.
-- **Seguridad**: Se recomienda restringir `POST/PUT/DELETE` a roles `ROLE_ADMIN` para mayor control.
+- **CSRF**: está desactivado para todas las rutas `/api/**`, así que puedes probar con Thunder Client/Postman usando solo Basic Auth, sin token. Solo el sitio web (formularios Thymeleaf/fetch de vistas) usa token CSRF vía meta tags `_csrf`.
+- **Seguridad**: usuarios normales solo tienen lectura (GET) y gestión de sus propios testimonios; todo lo demás (crear/editar/eliminar campañas, donaciones, recepciones, testimonios ajenos) requiere rol ADMIN.

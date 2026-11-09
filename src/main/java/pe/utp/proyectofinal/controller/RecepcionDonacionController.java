@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pe.utp.proyectofinal.entity.RecepcionDonacion;
+import pe.utp.proyectofinal.model.RecepcionDonacion;
 import pe.utp.proyectofinal.service.RecepcionDonacionService;
 
 @RestController

@@ -1,4 +1,4 @@
-package pe.utp.proyectofinal.entity;
+package pe.utp.proyectofinal.model;
 
 import java.util.ArrayList;
 import java.util.List;

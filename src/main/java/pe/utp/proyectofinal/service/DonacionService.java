@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.utp.proyectofinal.dto.DonacionRequest;
-import pe.utp.proyectofinal.entity.Campana;
-import pe.utp.proyectofinal.entity.Donacion;
+import pe.utp.proyectofinal.model.Campana;
+import pe.utp.proyectofinal.model.Donacion;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;

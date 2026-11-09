@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import pe.utp.proyectofinal.dto.TestimonioRequest;
-import pe.utp.proyectofinal.entity.Testimonio;
+import pe.utp.proyectofinal.model.Testimonio;
 import pe.utp.proyectofinal.service.TestimonioService;
 
 @RestController

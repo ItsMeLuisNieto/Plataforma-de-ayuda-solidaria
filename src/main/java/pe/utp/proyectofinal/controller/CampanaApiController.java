@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import pe.utp.proyectofinal.dto.CampanaRequest;
-import pe.utp.proyectofinal.entity.Campana;
+import pe.utp.proyectofinal.model.Campana;
 import pe.utp.proyectofinal.service.CampanaService;
 
 @RestController

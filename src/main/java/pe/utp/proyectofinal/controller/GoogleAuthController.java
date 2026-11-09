@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import pe.utp.proyectofinal.dto.GoogleUserDTO;
-import pe.utp.proyectofinal.entity.Usuario;
+import pe.utp.proyectofinal.model.Usuario;
 import pe.utp.proyectofinal.service.GoogleAuthService;
 import pe.utp.proyectofinal.service.UsuarioService;
 

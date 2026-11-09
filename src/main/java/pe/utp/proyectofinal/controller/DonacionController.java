@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import pe.utp.proyectofinal.dto.DonacionRequest;
-import pe.utp.proyectofinal.entity.Donacion;
+import pe.utp.proyectofinal.model.Donacion;
 import pe.utp.proyectofinal.service.DonacionService;
 
 @RestController

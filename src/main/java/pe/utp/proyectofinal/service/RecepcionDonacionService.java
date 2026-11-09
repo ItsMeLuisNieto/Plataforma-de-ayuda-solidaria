@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pe.utp.proyectofinal.entity.Donacion;
-import pe.utp.proyectofinal.entity.RecepcionDonacion;
+import pe.utp.proyectofinal.model.Donacion;
+import pe.utp.proyectofinal.model.RecepcionDonacion;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.DonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;

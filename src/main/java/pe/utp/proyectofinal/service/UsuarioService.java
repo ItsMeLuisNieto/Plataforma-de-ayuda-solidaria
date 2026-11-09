@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.utp.proyectofinal.dto.RegistroRequest;
-import pe.utp.proyectofinal.entity.Usuario;
+import pe.utp.proyectofinal.model.Usuario;
 import pe.utp.proyectofinal.exception.BusinessException;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.UsuarioRepository;

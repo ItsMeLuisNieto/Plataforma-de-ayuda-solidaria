@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import pe.utp.proyectofinal.entity.Donacion;
+import pe.utp.proyectofinal.model.Donacion;
 
 public interface DonacionRepository extends JpaRepository<Donacion, Long> {
 

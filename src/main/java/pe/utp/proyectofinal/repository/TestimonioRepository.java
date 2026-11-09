@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import pe.utp.proyectofinal.entity.Testimonio;
+import pe.utp.proyectofinal.model.Testimonio;
 
 public interface TestimonioRepository extends JpaRepository<Testimonio, Long> {
 

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import pe.utp.proyectofinal.entity.Campana;
+import pe.utp.proyectofinal.model.Campana;
 
 public interface CampanaRepository extends JpaRepository<Campana, Long> {
 

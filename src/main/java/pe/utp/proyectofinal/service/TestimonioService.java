@@ -3,14 +3,15 @@ package pe.utp.proyectofinal.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pe.utp.proyectofinal.dto.TestimonioRequest;
-import pe.utp.proyectofinal.entity.Testimonio;
-import pe.utp.proyectofinal.entity.Usuario;
+import pe.utp.proyectofinal.model.Testimonio;
+import pe.utp.proyectofinal.model.Usuario;
 import pe.utp.proyectofinal.exception.BusinessException;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.TestimonioRepository;
@@ -70,15 +71,50 @@ public class TestimonioService {
 
     @Transactional
     public Testimonio crear(TestimonioRequest request) {
+        if (request == null) {
+            throw new BusinessException("invalid_request", "Los datos del testimonio son obligatorios");
+        }
+
         Testimonio testimonio = new Testimonio();
-        aplicarDatos(testimonio, request, true);
+        Usuario actual = usuarioAutenticado();
+
+        if (actual != null && !esAdmin(actual)) {
+            // Un usuario normal solo puede publicar testimonios en su propio nombre
+            testimonio.setUsuario(actual);
+        } else {
+            // Admin (o contexto sin autenticar): respeta el usuarioId de la petición
+            Usuario objetivo = null;
+            if (request.getUsuarioId() != null) {
+                objetivo = obtenerUsuario(request.getUsuarioId());
+            } else if (actual != null) {
+                objetivo = actual;
+            }
+            if (objetivo == null) {
+                throw new BusinessException("usuario_required", "El usuarioId es obligatorio");
+            }
+            testimonio.setUsuario(objetivo);
+        }
+
+        aplicarComentario(testimonio, request);
         return testimonioRepository.save(testimonio);
     }
 
     @Transactional
     public Testimonio actualizar(Long id, TestimonioRequest request) {
         Testimonio testimonio = obtenerEntidad(id);
-        aplicarDatos(testimonio, request, false);
+        Usuario actual = usuarioAutenticado();
+
+        if (actual != null && !esAdmin(actual)
+                && (testimonio.getUsuario() == null || !actual.getId().equals(testimonio.getUsuario().getId()))) {
+            throw new AccessDeniedException("Solo puedes editar tus propios testimonios");
+        }
+
+        // Solo el admin puede reasignar el propietario del testimonio
+        if (request != null && esAdmin(actual) && request.getUsuarioId() != null) {
+            testimonio.setUsuario(obtenerUsuario(request.getUsuarioId()));
+        }
+
+        aplicarComentario(testimonio, request);
         return testimonioRepository.save(testimonio);
     }
 
@@ -92,42 +128,29 @@ public class TestimonioService {
                 .orElseThrow(() -> new NotFoundException("Testimonio no encontrado con id " + id));
     }
 
-    private void aplicarDatos(Testimonio testimonio, TestimonioRequest request, boolean esCreacion) {
-        if (request == null) {
-            if (esCreacion) {
-                throw new BusinessException("invalid_request", "Los datos del testimonio son obligatorios");
-            }
-            return;
-        }
+    private Usuario obtenerUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado con id " + id));
+    }
 
-        Usuario usuario = resolverUsuario(request, testimonio);
-        if (usuario != null) {
-            testimonio.setUsuario(usuario);
-        } else if (esCreacion) {
-            throw new BusinessException("usuario_required", "El usuarioId es obligatorio");
-        }
-
-        if (request.getComentario() != null && !request.getComentario().isBlank()) {
+    private void aplicarComentario(Testimonio testimonio, TestimonioRequest request) {
+        if (request != null && request.getComentario() != null && !request.getComentario().isBlank()) {
             testimonio.setComentario(request.getComentario().trim());
-        } else if (esCreacion) {
+        } else if (testimonio.getComentario() == null) {
             testimonio.setComentario("Gracias por todo el apoyo y la solidaridad.");
         }
     }
 
-    private Usuario resolverUsuario(TestimonioRequest request, Testimonio testimonio) {
-        if (request.getUsuarioId() != null) {
-            return usuarioRepository.findById(request.getUsuarioId())
-                    .orElseThrow(() -> new NotFoundException(
-                            "Usuario no encontrado con id " + request.getUsuarioId()));
-        }
-        if (testimonio.getUsuario() != null) {
-            return testimonio.getUsuario();
-        }
+    private Usuario usuarioAutenticado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()
-                && !"anonymousUser".equals(authentication.getName())) {
-            return usuarioRepository.findByEmail(authentication.getName()).orElse(null);
+        if (authentication == null || !authentication.isAuthenticated()
+                || "anonymousUser".equals(authentication.getName())) {
+            return null;
         }
-        return usuarioRepository.findAll().stream().findFirst().orElse(null);
+        return usuarioRepository.findByEmail(authentication.getName()).orElse(null);
+    }
+
+    private boolean esAdmin(Usuario usuario) {
+        return usuario != null && "ADMIN".equalsIgnoreCase(usuario.getRol());
     }
 }
