@@ -71,6 +71,14 @@ public class VistaController {
         return "donaciones";
     }
 
+    @GetMapping("/envio-donaciones")
+    public String irEnvioDonaciones(Authentication authentication) {
+        if (!esAdmin(authentication)) {
+            return "redirect:/kallpa-solidary";
+        }
+        return "envio-donaciones";
+    }
+
     private boolean esAdmin(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;

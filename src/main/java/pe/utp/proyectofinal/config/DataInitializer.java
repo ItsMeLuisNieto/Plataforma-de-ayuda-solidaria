@@ -9,11 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import pe.utp.proyectofinal.model.Campana;
 import pe.utp.proyectofinal.model.Donacion;
+import pe.utp.proyectofinal.model.EnvioDonacion;
 import pe.utp.proyectofinal.model.RecepcionDonacion;
 import pe.utp.proyectofinal.model.Testimonio;
 import pe.utp.proyectofinal.model.Usuario;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
+import pe.utp.proyectofinal.repository.EnvioDonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 import pe.utp.proyectofinal.repository.TestimonioRepository;
 import pe.utp.proyectofinal.repository.UsuarioRepository;
@@ -26,13 +28,12 @@ public class DataInitializer {
                                                   TestimonioRepository testimonioRepository,
                                                   DonacionRepository donacionRepository,
                                                   RecepcionDonacionRepository recepcionDonacionRepository,
+                                                  EnvioDonacionRepository envioDonacionRepository,
                                                   UsuarioRepository usuarioRepository,
                                                   PasswordEncoder passwordEncoder) {
         return args -> {
             Usuario admin = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
                     "admin@kallpa.local", "Administrador", "ADMIN");
-            Usuario usuario = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
-                    "usuario@kallpa.local", "Nieto Paz", "USUARIO");
             Usuario maria = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
                     "maria.quispe@kallpa.local", "María Fernanda Quispe Ramos", "USUARIO");
             Usuario carlos = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
@@ -96,6 +97,31 @@ public class DataInitializer {
                     crearRecepcion(d5, cEscolar, recepcionDonacionRepository);
                     crearRecepcion(d6, cAlimentos, recepcionDonacionRepository);
                     crearRecepcion(d7, cRopa, recepcionDonacionRepository);
+                }
+            }
+
+            // Semilla de envíos: registrar envío PENDIENTE por cada recepción confirmada
+            // (cubre la primera ejecución con esquema nuevo y la BD actual, ya que la tabla nace vacía)
+            if (envioDonacionRepository.count() == 0) {
+                java.util.List<RecepcionDonacion> confirmadas = recepcionDonacionRepository.findAll().stream()
+                        .filter(r -> "CONFIRMADO".equalsIgnoreCase(r.getEstado()))
+                        .toList();
+                int marcadosComoEnviado = 0;
+                for (RecepcionDonacion recepcion : confirmadas) {
+                    EnvioDonacion envio = new EnvioDonacion();
+                    envio.setDonacion(recepcion.getDonacion());
+                    envio.setCampana(recepcion.getCampana());
+                    envio.setEstado("PENDIENTE");
+                    envio.setFechaRegistro(java.time.LocalDateTime.now());
+                    envio = envioDonacionRepository.save(envio);
+                    // Los primeros registros se marcan como ENVIADO para tener datos de ejemplo en ambos estados
+                    if (marcadosComoEnviado < 3) {
+                        envio.setEstado("ENVIADO");
+                        envio.setFechaEnvio(java.time.LocalDateTime.now());
+                        envio.setEnviadoPor("admin@kallpa.local");
+                        envioDonacionRepository.save(envio);
+                        marcadosComoEnviado++;
+                    }
                 }
             }
         };

@@ -18,11 +18,14 @@ public class RecepcionDonacionService {
 
     private final RecepcionDonacionRepository recepcionDonacionRepository;
     private final DonacionRepository donacionRepository;
+    private final EnvioDonacionService envioDonacionService;
 
     public RecepcionDonacionService(RecepcionDonacionRepository recepcionDonacionRepository,
-                                    DonacionRepository donacionRepository) {
+                                    DonacionRepository donacionRepository,
+                                    EnvioDonacionService envioDonacionService) {
         this.recepcionDonacionRepository = recepcionDonacionRepository;
         this.donacionRepository = donacionRepository;
+        this.envioDonacionService = envioDonacionService;
     }
 
     @Transactional(readOnly = true)
@@ -50,6 +53,11 @@ public class RecepcionDonacionService {
         if (donacion != null) {
             donacion.setEstado("CONFIRMADO");
             donacionRepository.save(donacion);
+            try {
+                envioDonacionService.crearDesdeDonacion(donacion);
+            } catch (Exception ignored) {
+                // No bloquear la confirmación si el módulo de envío tiene alguna incidencia
+            }
         }
 
         return recepcionDonacionRepository.save(recepcion);

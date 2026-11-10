@@ -12,6 +12,7 @@ import pe.utp.proyectofinal.model.Donacion;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
+import pe.utp.proyectofinal.repository.EnvioDonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 
 @Service
@@ -21,15 +22,18 @@ public class DonacionService {
     private final CampanaRepository campanaRepository;
     private final RecepcionDonacionService recepcionDonacionService;
     private final RecepcionDonacionRepository recepcionDonacionRepository;
+    private final EnvioDonacionRepository envioDonacionRepository;
 
     public DonacionService(DonacionRepository donacionRepository,
                            CampanaRepository campanaRepository,
                            RecepcionDonacionService recepcionDonacionService,
-                           RecepcionDonacionRepository recepcionDonacionRepository) {
+                           RecepcionDonacionRepository recepcionDonacionRepository,
+                           EnvioDonacionRepository envioDonacionRepository) {
         this.donacionRepository = donacionRepository;
         this.campanaRepository = campanaRepository;
         this.recepcionDonacionService = recepcionDonacionService;
         this.recepcionDonacionRepository = recepcionDonacionRepository;
+        this.envioDonacionRepository = envioDonacionRepository;
     }
 
     @Transactional(readOnly = true)
@@ -126,7 +130,8 @@ public class DonacionService {
     @Transactional
     public void eliminar(Long id) {
         Donacion donacion = obtenerEntidad(id);
-        // Limpiar recepciones asociadas primero para evitar error de clave foránea
+        // Limpiar registros asociados primero para evitar error de clave foránea
+        envioDonacionRepository.deleteByDonacionId(id);
         recepcionDonacionRepository.deleteByDonacionId(id);
         donacionRepository.delete(donacion);
     }

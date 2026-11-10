@@ -438,11 +438,55 @@ Authorization: Basic <admin@kallpa.local:kallpa123>
 
 ---
 
+## Endpoints de envío de donaciones a campañas
+
+Cuando el ADMIN **confirma una recepción**, se crea automáticamente un registro en `envio_donaciones` con estado `PENDIENTE` apuntando a la campaña de la donación (campaña destino). Luego el ADMIN presiona **Enviar** para despacharlo. **Enviar y eliminar requieren rol ADMIN** (Basic Auth):
+
+```http
+GET http://localhost:8090/api/envio-donaciones              # Público: lista todos los envíos
+GET http://localhost:8090/api/envio-donaciones/{id}        # Público: un envío por ID
+POST http://localhost:8090/api/envio-donaciones/{id}/enviar # ADMIN: PENDIENTE → ENVIADO
+DELETE http://localhost:8090/api/envio-donaciones/{id}     # ADMIN: elimina el registro (204)
+```
+
+**Campos del envío**: `id`, `donacion` (con su lote, donante, producto y cantidad), `campana` (destino), `estado` (`PENDIENTE`/`ENVIADO`), `fechaRegistro` (cuándo se creó al confirmar la recepción), `fechaEnvio` (solo cuando se envía), `enviadoPor` (usuario que presionó Enviar).
+
+**Ejemplo enviar:**
+```http
+POST http://localhost:8090/api/envio-donaciones/3/enviar
+Authorization: Basic <admin@kallpa.local:kallpa123>
+```
+
+**Respuesta (200):**
+```json
+{
+  "exito": true,
+  "mensaje": "Envío de donación marcado como ENVIADO",
+  "data": {
+    "id": 3,
+    "estado": "ENVIADO",
+    "fechaEnvio": "2026-11-09T15:30:45",
+    "enviadoPor": "admin@kallpa.local",
+    "fechaRegistro": "2026-11-09T15:10:12",
+    "campanaNombre": "Canasta de alimentos"
+  }
+}
+```
+
+**Reglas del módulo:**
+- No hay POST de creación manual: los envíos nacen al confirmar una recepción.
+- Una donación solo puede tener un registro de envío (restricción UNIQUE en `donacion_id`).
+- Enviar un envío que ya está `ENVIADO` devuelve `400`: `{"mensaje": "Solo se pueden enviar registros en estado PENDIENTE", "codigo": "business_error"}`.
+- Enviar/eliminar no cambia el estado de la donación (queda `CONFIRMADO`).
+- Vista web para ADMIN: **Gestión → Envío de Donaciones** (`/envio-donaciones`), con botón Enviar por fila.
+
+---
+
 ## Notas importantes
 
 - **MVC vs REST**: `GET /campanas` sigue devolviendo HTML (vista Thymeleaf). Para obtener solo JSON usa `GET /api/campanas`.
 - **GET por ID**: Disponible para `/api/campanas/{id}`, `/api/donaciones/{id}` y `/api/testimonios/{id}`.
 - **CRUD completo**: Campañas, Donaciones y Testimonios cuentan con GET (lista + por id), POST, PUT y DELETE vía REST API.
-- **Estado de donaciones**: Al crear via API, llegan con estado `PENDIENTE` y se registran automáticamente en `recepcion_donaciones`. Los reportes solo muestran donaciones con estado `CONFIRMADO`.
+- **Estado de donaciones**: Al crear via API, llegan con estado `PENDIENTE` y se registran automáticamente en `recepcion_donaciones`. Al confirmar la recepción se crea además el registro de envío en `envio_donaciones` con estado `PENDIENTE`. Los reportes solo muestran donaciones con estado `CONFIRMADO`.
 - **CSRF**: está desactivado para todas las rutas `/api/**`, así que puedes probar con Thunder Client/Postman usando solo Basic Auth, sin token. Solo el sitio web (formularios Thymeleaf/fetch de vistas) usa token CSRF vía meta tags `_csrf`.
-- **Seguridad**: usuarios normales solo tienen lectura (GET) y gestión de sus propios testimonios; todo lo demás (crear/editar/eliminar campañas, donaciones, recepciones, testimonios ajenos) requiere rol ADMIN.
+- **Seguridad**: usuarios normales solo tienen lectura (GET) y gestión de sus propios testimonios; todo lo demás (crear/editar/eliminar campañas, donaciones, recepciones, envíos, testimonios ajenos) requiere rol ADMIN.

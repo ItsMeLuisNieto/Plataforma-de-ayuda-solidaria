@@ -15,6 +15,7 @@ import pe.utp.proyectofinal.exception.BusinessException;
 import pe.utp.proyectofinal.exception.NotFoundException;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
+import pe.utp.proyectofinal.repository.EnvioDonacionRepository;
 import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 import pe.utp.proyectofinal.repository.UsuarioRepository;
 
@@ -24,15 +25,18 @@ public class CampanaService {
     private final CampanaRepository campanaRepository;
     private final DonacionRepository donacionRepository;
     private final RecepcionDonacionRepository recepcionDonacionRepository;
+    private final EnvioDonacionRepository envioDonacionRepository;
     private final UsuarioRepository usuarioRepository;
 
     public CampanaService(CampanaRepository campanaRepository,
                           DonacionRepository donacionRepository,
                           RecepcionDonacionRepository recepcionDonacionRepository,
+                          EnvioDonacionRepository envioDonacionRepository,
                           UsuarioRepository usuarioRepository) {
         this.campanaRepository = campanaRepository;
         this.donacionRepository = donacionRepository;
         this.recepcionDonacionRepository = recepcionDonacionRepository;
+        this.envioDonacionRepository = envioDonacionRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
@@ -97,6 +101,7 @@ public class CampanaService {
     public void eliminar(Long id) {
         Campana campana = obtenerEntidad(id);
         // Limpiar registros relacionados para evitar fallos por llave foránea
+        envioDonacionRepository.deleteByCampanaId(id);
         recepcionDonacionRepository.deleteByCampanaId(id);
         donacionRepository.deleteByCampanaId(id);
         campanaRepository.delete(campana);
