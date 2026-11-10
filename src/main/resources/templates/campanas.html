@@ -1204,7 +1204,7 @@
 
                 <p class="text-secondary small mb-3">Con tu apoyo varias familias estarán agradecidas.</p>
 
-                <p class="fs-6 text-muted">Selecciona tu método preferido y realiza tu donación solidaria.</p>
+                <p class="fs-6 text-muted">Realiza tu donación solidaria con Yape.</p>
 
               </div>
 
@@ -1218,21 +1218,6 @@
 
                   style="max-width: 410px; background: linear-gradient(135deg, #68b0d7, #1072a8); border-radius: 25px; padding: 25px;">
 
-
-
-
-
-                  <div class="d-flex gap-2 mb-3">
-
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #7b2cbf;"
-
-                      onclick="mostrarYape()">Yape</button>
-
-                    <button type="button" class="btn bg-white fw-bold flex-fill shadow-sm" style="color: #333;"
-
-                      onclick="mostrarTarjeta()">Tarjeta</button>
-
-                  </div>
 
 
 
@@ -1268,65 +1253,6 @@
 
                   </div>
 
-
-
-
-
-                  <div id="contenidoTarjeta" style="display: none;">
-
-                    <h5 class="fw-bold mb-3 text-center">PAGO CON TARJETA</h5>
-
-
-
-                    <div class="mb-2">
-
-                      <label class="form-label small mb-1">Número de tarjeta</label>
-
-                      <input type="text" class="form-control form-control-sm" placeholder="1234 5678 9012 3456">
-
-                    </div>
-
-
-
-                    <div class="mb-2">
-
-                      <label class="form-label small mb-1">Nombre del titular</label>
-
-                      <input type="text" class="form-control form-control-sm" placeholder="Nombre completo">
-
-                    </div>
-
-
-
-                    <div class="row g-2 mb-3">
-
-                      <div class="col-6">
-
-                        <label class="form-label small mb-1">Vencimiento</label>
-
-                        <input type="text" class="form-control form-control-sm" placeholder="MM/AA">
-
-                      </div>
-
-                      <div class="col-6">
-
-                        <label class="form-label small mb-1">CVV</label>
-
-                        <input type="password" class="form-control form-control-sm" placeholder="123">
-
-                      </div>
-
-                    </div>
-
-
-
-                    <button type="button" class="btn btn-light w-100 fw-bold text-dark">
-
-                      Realizar donación
-
-                    </button>
-
-                  </div>
 
 
 
@@ -1685,26 +1611,6 @@
         if (badge) badge.textContent = "Campaña: " + campaign;
 
       });
-
-    }
-
-
-
-    function mostrarYape() {
-
-      document.getElementById("contenidoYape").style.display = "block";
-
-      document.getElementById("contenidoTarjeta").style.display = "none";
-
-    }
-
-
-
-    function mostrarTarjeta() {
-
-      document.getElementById("contenidoYape").style.display = "none";
-
-      document.getElementById("contenidoTarjeta").style.display = "block";
 
     }
 

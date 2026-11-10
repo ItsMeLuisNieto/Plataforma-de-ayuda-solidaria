@@ -33,6 +33,14 @@ public class DataInitializer {
                     "admin@kallpa.local", "Administrador", "ADMIN");
             Usuario usuario = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
                     "usuario@kallpa.local", "Nieto Paz", "USUARIO");
+            Usuario maria = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "maria.quispe@kallpa.local", "María Fernanda Quispe Ramos", "USUARIO");
+            Usuario carlos = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "carlos.huaman@kallpa.local", "Carlos Andrés Huamán López", "USUARIO");
+            Usuario lucia = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "lucia.torres@kallpa.local", "Lucía Alejandra Torres Vargas", "USUARIO");
+            Usuario jorge = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+                    "jorge.ramirez@kallpa.local", "Jorge Luis Ramírez Castillo", "USUARIO");
 
             if (campanaRepository.count() == 0) {
                 campanaRepository.save(crearCampana(admin,
@@ -50,10 +58,14 @@ public class DataInitializer {
             }
 
             if (testimonioRepository.count() == 0) {
-                testimonioRepository.save(crearTestimonio(usuario,
+                testimonioRepository.save(crearTestimonio(maria,
                         "Increíble la transparencia con la que entregan la ayuda humanitaria en cada campaña."));
-                testimonioRepository.save(crearTestimonio(usuario,
+                testimonioRepository.save(crearTestimonio(carlos,
                         "Ser parte de los voluntariados me ha permitido ver el impacto real en las comunidades."));
+                testimonioRepository.save(crearTestimonio(lucia,
+                        "Doné ropa y calzado para los niños de El Agustino y recibí fotos de la entrega. Gracias Kallpa Solidary."));
+                testimonioRepository.save(crearTestimonio(jorge,
+                        "Las canastas de alimentos llegaron a tiempo a las familias de mi barrio. Excelente trabajo del equipo."));
             }
 
             if (donacionRepository.count() == 0) {
