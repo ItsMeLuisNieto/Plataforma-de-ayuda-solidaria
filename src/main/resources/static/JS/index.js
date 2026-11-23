@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /*function cargarCampanas() {
-    fetch("/api/campanas")
+    apiFetch("/api/campanas")
         .then(response => {
             if (!response.ok) {
                 throw new Error("Error al consultar la API");

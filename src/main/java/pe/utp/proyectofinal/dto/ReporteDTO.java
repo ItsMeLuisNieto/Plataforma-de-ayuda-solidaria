@@ -8,9 +8,12 @@ public class ReporteDTO {
     private Integer totalBeneficiariosAtendidos;
     private Integer totalCampanasActivas;
     private Integer totalBienesStock;
+    private Long totalRecepciones;
+    private Long totalEnvios;
 
     // --- Propiedades de la tabla de detalle de transaccion y apoyo ---
     private Long idTransaccion;
+    private String codigoTransaccion;
     private String fecha;
     private String campanaTitulo;
     private String distrito;
@@ -44,11 +47,29 @@ public class ReporteDTO {
 	public void setTotalBienesStock(Integer totalBienesStock) {
 		this.totalBienesStock = totalBienesStock;
 	}
+	public Long getTotalRecepciones() {
+		return totalRecepciones;
+	}
+	public void setTotalRecepciones(Long totalRecepciones) {
+		this.totalRecepciones = totalRecepciones;
+	}
+	public Long getTotalEnvios() {
+		return totalEnvios;
+	}
+	public void setTotalEnvios(Long totalEnvios) {
+		this.totalEnvios = totalEnvios;
+	}
 	public Long getIdTransaccion() {
 		return idTransaccion;
 	}
 	public void setIdTransaccion(Long idTransaccion) {
 		this.idTransaccion = idTransaccion;
+	}
+	public String getCodigoTransaccion() {
+		return codigoTransaccion;
+	}
+	public void setCodigoTransaccion(String codigoTransaccion) {
+		this.codigoTransaccion = codigoTransaccion;
 	}
 	public String getFecha() {
 		return fecha;

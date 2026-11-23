@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarTestimonios() {
     try {
         console.log("Intentando conectar con:", API_URL);
-        const respuesta = await fetch(API_URL)
+        const respuesta = await apiFetch(API_URL)
 
         if (!respuesta.ok) throw new Error("Error al consultar API")
         console.log("Estado de la respuesta HTTP:", respuesta.status);
@@ -110,7 +110,7 @@ async function guardarEdicionTestimonio(event) {
     };
 
     try {
-        const respuesta = await fetch(`${API_URL}/${id}`, {
+        const respuesta = await apiFetch(`${API_URL}/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ async function guardarEdicionTestimonio(event) {
 
 async function obtenerUsuarioActual() {
     try {
-        const respuesta = await fetch(USUARIO_ACTUAL_URL);
+        const respuesta = await apiFetch(USUARIO_ACTUAL_URL);
         if (!respuesta.ok) return null;
         return await respuesta.json();
     } catch (error) {
@@ -172,7 +172,7 @@ async function guardarTestimonio(event) {
     };
 
     try {
-        const respuesta = await fetch(API_URL, {
+        const respuesta = await apiFetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

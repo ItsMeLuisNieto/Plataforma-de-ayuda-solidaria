@@ -92,6 +92,8 @@ public class ReporteExportUtil {
                 {"Total Campañas Activas", kpis.getTotalCampanasActivas() != null ? kpis.getTotalCampanasActivas().toString() : "0"},
                 {"Total Beneficiarios Atendidos", kpis.getTotalBeneficiariosAtendidos() != null ? kpis.getTotalBeneficiariosAtendidos().toString() + " Familias" : "0 Familias"},
                 {"Total Bienes en Stock", kpis.getTotalBienesStock() != null ? kpis.getTotalBienesStock().toString() + " Artículos" : "0 Artículos"},
+                {"Total Recepciones", kpis.getTotalRecepciones() != null ? kpis.getTotalRecepciones().toString() : "0"},
+                {"Total Envíos", kpis.getTotalEnvios() != null ? kpis.getTotalEnvios().toString() : "0"},
                 {"Fecha de Generación", FECHA_FORMATEO.format(new Date())}
             };
             
@@ -133,7 +135,7 @@ public class ReporteExportUtil {
             if (movimientos != null && !movimientos.isEmpty()) {
                 for (ReporteDTO mov : movimientos) {
                     Row row = sheetMovimientos.createRow(rowNumMov++);
-                    row.createCell(0).setCellValue(mov.getIdTransaccion() != null ? "#TRX-" + mov.getIdTransaccion() : "");
+                    row.createCell(0).setCellValue(mov.getCodigoTransaccion() != null ? mov.getCodigoTransaccion() : (mov.getIdTransaccion() != null ? "#TRX-" + mov.getIdTransaccion() : ""));
                     row.createCell(1).setCellValue(mov.getFecha() != null ? mov.getFecha() : "");
                     row.createCell(2).setCellValue(mov.getCampanaTitulo() != null ? mov.getCampanaTitulo() : "");
                     row.createCell(3).setCellValue(mov.getDistrito() != null ? mov.getDistrito() : "");
@@ -211,6 +213,12 @@ public class ReporteExportUtil {
         
         tablaKpis.addCell(crearCelda("Total Bienes en Stock"));
         tablaKpis.addCell(crearCelda(kpis.getTotalBienesStock() != null ? kpis.getTotalBienesStock().toString() + " Artículos" : "0 Artículos"));
+
+        tablaKpis.addCell(crearCelda("Total Recepciones"));
+        tablaKpis.addCell(crearCelda(kpis.getTotalRecepciones() != null ? kpis.getTotalRecepciones().toString() : "0"));
+
+        tablaKpis.addCell(crearCelda("Total Envíos"));
+        tablaKpis.addCell(crearCelda(kpis.getTotalEnvios() != null ? kpis.getTotalEnvios().toString() : "0"));
         
         document.add(tablaKpis);
         
@@ -238,7 +246,7 @@ public class ReporteExportUtil {
             
             // Datos
             for (ReporteDTO mov : movimientos) {
-                tablaMov.addCell(crearCeldaPequena(mov.getIdTransaccion() != null ? "#TRX-" + mov.getIdTransaccion() : ""));
+                tablaMov.addCell(crearCeldaPequena(mov.getCodigoTransaccion() != null ? mov.getCodigoTransaccion() : (mov.getIdTransaccion() != null ? "#TRX-" + mov.getIdTransaccion() : "")));
                 tablaMov.addCell(crearCeldaPequena(mov.getFecha() != null ? mov.getFecha() : ""));
                 tablaMov.addCell(crearCeldaPequena(mov.getCampanaTitulo() != null ? mov.getCampanaTitulo() : ""));
                 tablaMov.addCell(crearCeldaPequena(mov.getDistrito() != null ? mov.getDistrito() : ""));

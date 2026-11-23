@@ -2,6 +2,7 @@ package pe.utp.proyectofinal.config;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,18 +31,26 @@ public class DataInitializer {
                                                   RecepcionDonacionRepository recepcionDonacionRepository,
                                                   EnvioDonacionRepository envioDonacionRepository,
                                                   UsuarioRepository usuarioRepository,
-                                                  PasswordEncoder passwordEncoder) {
+                                                  PasswordEncoder passwordEncoder,
+                                                  @Value("${SEED_PASSWORD:kallpa123}") String passwordSemilla,
+                                                  @Value("${ADMIN_SEED_PASSWORD:admin123}") String adminPasswordSemilla,
+                                                  @Value("${USUARIO_SEED_PASSWORD:usuario123}") String usuarioPasswordSemilla) {
         return args -> {
-            Usuario admin = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+            Usuario admin = obtenerOCrearUsuario(usuarioRepository, passwordEncoder, passwordSemilla,
                     "admin@kallpa.local", "Administrador", "ADMIN");
-            Usuario maria = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+            Usuario maria = obtenerOCrearUsuario(usuarioRepository, passwordEncoder, passwordSemilla,
                     "maria.quispe@kallpa.local", "María Fernanda Quispe Ramos", "USUARIO");
-            Usuario carlos = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+            Usuario carlos = obtenerOCrearUsuario(usuarioRepository, passwordEncoder, passwordSemilla,
                     "carlos.huaman@kallpa.local", "Carlos Andrés Huamán López", "USUARIO");
-            Usuario lucia = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+            Usuario lucia = obtenerOCrearUsuario(usuarioRepository, passwordEncoder, passwordSemilla,
                     "lucia.torres@kallpa.local", "Lucía Alejandra Torres Vargas", "USUARIO");
-            Usuario jorge = obtenerOCrearUsuario(usuarioRepository, passwordEncoder,
+            Usuario jorge = obtenerOCrearUsuario(usuarioRepository, passwordEncoder, passwordSemilla,
                     "jorge.ramirez@kallpa.local", "Jorge Luis Ramírez Castillo", "USUARIO");
+
+            obtenerOCrearUsuario(usuarioRepository, passwordEncoder, adminPasswordSemilla,
+                    "admin123@kallpa.local", "Administrador", "ADMIN");
+            obtenerOCrearUsuario(usuarioRepository, passwordEncoder, usuarioPasswordSemilla,
+                    "usuario123@kallpa.local", "Usuario", "USUARIO");
 
             if (campanaRepository.count() == 0) {
                 campanaRepository.save(crearCampana(admin,
@@ -129,13 +138,15 @@ public class DataInitializer {
 
     private Usuario obtenerOCrearUsuario(UsuarioRepository usuarioRepository,
                                          PasswordEncoder passwordEncoder,
+                                         String passwordSemilla,
                                          String email, String nombre, String rol) {
         return usuarioRepository.findByEmail(email).orElseGet(() -> {
             Usuario usuario = new Usuario();
             usuario.setEmail(email);
             usuario.setNombre(nombre);
-            usuario.setPassword(passwordEncoder.encode("kallpa123"));
+            usuario.setPassword(passwordEncoder.encode(passwordSemilla));
             usuario.setRol(rol);
+            usuario.setActivo(true);
             return usuarioRepository.save(usuario);
         });
     }

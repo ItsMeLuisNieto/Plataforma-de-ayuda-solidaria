@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function cargarEnvios() {
-        fetch('/api/envio-donaciones')
+        apiFetch('/api/envio-donaciones')
             .then(response => {
                 if (!response.ok) throw new Error("Error al cargar envíos");
                 return response.json();
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (action === "enviar") {
             btn.disabled = true;
-            fetch(`/api/envio-donaciones/${id}/enviar`, {
+            apiFetch(`/api/envio-donaciones/${id}/enviar`, {
                 method: "POST",
                 headers: getHeaders()
             })

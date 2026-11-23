@@ -8,11 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.jsonwebtoken.JwtException;
 import pe.utp.proyectofinal.exception.BusinessException;
 import pe.utp.proyectofinal.exception.NotFoundException;
 
@@ -41,11 +44,22 @@ public class ApiExceptionHandler {
                 .body(Map.of("mensaje", ex.getMessage(), "codigo", ex.getCode()));
     }
 
+    @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
+    public ResponseEntity<Map<String, String>> credencialesInvalidas(Exception ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Credenciales inválidas"));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<Map<String, String>> tokenInvalido(JwtException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("mensaje", "Token inválido o expirado"));
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, String>> sinPermisos(AccessDeniedException ex) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(Map.of("mensaje", ex.getMessage() != null ? ex.getMessage()
-                        : "No tienes permisos para realizar esta acción"));
+                .body(Map.of("mensaje", "No tienes permisos para realizar esta acción"));
     }
 
     @ExceptionHandler(Exception.class)

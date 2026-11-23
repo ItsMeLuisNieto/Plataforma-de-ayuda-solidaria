@@ -35,6 +35,9 @@ public class Usuario {
     @Column(nullable = false, length = 20)
     private String rol = "USUARIO";
 
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean activo = true;
+
     @JsonIgnore
     @OneToMany(mappedBy = "usuario")
     private List<Campana> campanas = new ArrayList<>();
@@ -51,6 +54,8 @@ public class Usuario {
     public void setNombre(String nombre) { this.nombre = nombre; }
     public String getRol() { return rol; }
     public void setRol(String rol) { this.rol = rol; }
+    public boolean isActivo() { return activo; }
+    public void setActivo(boolean activo) { this.activo = activo; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
     public List<Campana> getCampanas() { return campanas; }

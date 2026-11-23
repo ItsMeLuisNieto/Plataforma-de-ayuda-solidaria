@@ -3,32 +3,59 @@
 ## Base URL
 Por defecto en entorno local: `http://localhost:8090`
 
+## Variables de entorno
+
+| Variable | Uso | Default |
+|---|---|---|
+| `DB_PASSWORD` | Password de `neondb_owner` en Neon | **obligatoria, sin default** |
+| `JWT_SECRET` | Secreto HMAC-SHA256 en Base64 (mínimo 32 bytes tras decodificar) | valor por defecto solo para desarrollo en `application.properties` |
+| `JWT_EXPIRATION` | Vigencia del token en milisegundos | `900000` (15 min) |
+| `SEED_PASSWORD` | Password de los 5 usuarios semilla originales | `kallpa123` |
+| `ADMIN_SEED_PASSWORD` | Password de `admin123@kallpa.local` | `admin123` |
+| `USUARIO_SEED_PASSWORD` | Password de `usuario123@kallpa.local` | `usuario123` |
+| `CORS_ORIGINS` | Orígenes permitidos para CORS | `http://localhost:8090` |
+
 ## Autenticación / Seguridad
 
-- **Login web**: `POST /login` (form) con `email` y `pass`. Usa Spring Security form login.
-- **API REST**: para los endpoints que requieren autenticación usa **HTTP Basic Auth** (header `Authorization: Basic <base64(email:contraseña)>`). Thunder Client / Postman lo configuran en la pestaña Auth.
+- **Login web**: `POST /login` (form) con `email` y `pass`. Usa Spring Security form login y sesión.
+- **API REST**: usa **JWT** en el header `Authorization: Bearer <token>`.
+  - Obtén el token con `POST /api/auth/login` y body `{"email":"...","password":"..."}`; la respuesta incluye `token`, `email`, `rol` y `expiresIn` (ms).
+  - Registro público: `POST /api/auth/register` con `email`, `nombre`, `password`, `confirmPassword`; el rol siempre queda como `USUARIO`.
+  - El frontend web usa `GET /auth/token` (requiere sesión iniciada) y el helper `static/JS/api.js` agrega el Bearer automáticamente a los `fetch` de la API.
+  - **HTTP Basic Auth ya no está soportado** en `/api/**`.
 
 ### Usuarios de prueba (creados automáticamente por `DataInitializer`)
 
-| Email | Contraseña | Rol |
-|---|---|---|
-| `admin@kallpa.local` | `kallpa123` | ADMIN |
-| `usuario@kallpa.local` | `kallpa123` | USUARIO |
+Los 5 usuarios originales usan `SEED_PASSWORD` (default local: `kallpa123`); las 2 cuentas nuevas usan sus propias variables.
+
+| Email | Nombre | Contraseña | Rol |
+|---|---|---|---|
+| `admin@kallpa.local` | Administrador | `$SEED_PASSWORD` | ADMIN |
+| `maria.quispe@kallpa.local` | María Fernanda Quispe Ramos | `$SEED_PASSWORD` | USUARIO |
+| `carlos.huaman@kallpa.local` | Carlos Andrés Huamán López | `$SEED_PASSWORD` | USUARIO |
+| `lucia.torres@kallpa.local` | Lucía Alejandra Torres Vargas | `$SEED_PASSWORD` | USUARIO |
+| `jorge.ramirez@kallpa.local` | Jorge Luis Ramírez Castillo | `$SEED_PASSWORD` | USUARIO |
+| `admin123@kallpa.local` | Administrador | `$ADMIN_SEED_PASSWORD` | ADMIN |
+| `usuario123@kallpa.local` | Usuario | `$USUARIO_SEED_PASSWORD` | USUARIO |
+
+> No se eliminan los usuarios originales: sus testimonios siguen apuntando a María, Carlos, Lucía y Jorge.
 
 ### Matriz de permisos actual (SecurityConfig)
 
 | Operación | Anónimo | USUARIO (logueado) | ADMIN |
 |---|---|---|---|
-| `GET /api/**` (todos los GET de la API) | ✅ 200 | ✅ 200 | ✅ 200 |
+| `GET /api/campanas/**`, `/api/testimonios/**`, `/api/envio-donaciones/**` | ✅ 200 | ✅ 200 | ✅ 200 |
+| Otros `GET /api/**` (donaciones, recepciones, usuarios) | ❌ 401 | ✅ 200 | ✅ 200 |
 | `POST /api/testimonios` | ❌ 401 | ✅ 201 (se asigna a sí mismo) | ✅ 201 |
 | `PUT /api/testimonios/{id}` | ❌ 401 | ✅ 200 (solo si es el dueño) | ✅ 200 |
 | `DELETE /api/testimonios/{id}` | ❌ 401 | ❌ 403 | ✅ 204 |
 | `POST/PUT/DELETE /api/**` (resto: campañas, donaciones, recepciones) | ❌ 401 | ❌ 403 | ✅ |
 | `POST /campanas/**` (web MVC, crear/eliminar campañas) | ❌ redirect login | ❌ 403 | ✅ |
 
-- **CSRF**: desactivado para `/api/**` (no necesitas token para probar la API con Thunder Client/Postman). En el sitio web (formularios Thymeleaf) sigue activo y el JS lo envía vía meta tags `_csrf`.
+- **CSRF**: desactivado para `/api/**`. En el sitio web (formularios Thymeleaf) sigue activo y el JS lo envía vía meta tags `_csrf`; además `api.js` agrega el Bearer JWT.
 - **Errores en JSON**: las rutas `/api/**` responden `401` y `403` con body JSON `{"mensaje": "..."}` en lugar de redirigir a la vista de login:
-  - Sin sesión: `401` → `{"mensaje": "Debes iniciar sesión para realizar esta acción"}`
+  - Sin token/token inválido: `401` → `{"mensaje": "..."}`
+  - Credenciales inválidas en `/api/auth/login`: `401` → `{"mensaje": "Credenciales inválidas"}`
   - Sin permisos suficientes: `403` → `{"mensaje": "No tienes permisos para realizar esta acción"}`
 
 ---
@@ -85,9 +112,9 @@ GET http://localhost:8090/api/campanas/1
 ```http
 POST http://localhost:8090/api/campanas
 Content-Type: application/json
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth). Sin sesión → `401`; con USUARIO → `403`
+- **Auth**: **ADMIN** (Bearer JWT). Sin sesión → `401`; con USUARIO → `403`
 - **Body**: `CampanaRequest`
 
 | Campo | Tipo | Requerido | Validación |
@@ -119,9 +146,9 @@ Authorization: Basic <admin@kallpa.local:kallpa123>
 ```http
 PUT http://localhost:8090/api/campanas/{id}
 Content-Type: application/json
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth)
+- **Auth**: **ADMIN** (Bearer JWT)
 - **Path param**: `id` (Long)
 - **Body**: `CampanaRequest` (todos los campos)
 - **Respuesta**: `200 OK` - `Campana` actualizada
@@ -145,9 +172,9 @@ Content-Type: application/json
 ### DELETE - Eliminar campaña
 ```http
 DELETE http://localhost:8090/api/campanas/{id}
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth)
+- **Auth**: **ADMIN** (Bearer JWT)
 - **Path param**: `id` (Long)
 - **Respuesta**: `204 NO_CONTENT`
 
@@ -167,8 +194,9 @@ Base: `/api/donaciones` - `DonacionController` (@RestController)
 ### GET - Listar todas las donaciones
 ```http
 GET http://localhost:8090/api/donaciones
+Authorization: Bearer <JWT_USUARIO_O_ADMIN>
 ```
-- **Auth**: Público
+- **Auth**: Autenticado (USUARIO o ADMIN)
 - **Respuesta**: `200 OK` - `List<Donacion>`
 
 **Ejemplo de respuesta:**
@@ -197,8 +225,9 @@ GET http://localhost:8090/api/donaciones
 ### GET - Obtener donación por ID
 ```http
 GET http://localhost:8090/api/donaciones/{id}
+Authorization: Bearer <JWT_USUARIO_O_ADMIN>
 ```
-- **Auth**: Público
+- **Auth**: Autenticado (USUARIO o ADMIN)
 - **Path param**: `id` (Long)
 - **Respuesta**: `200 OK` - `Donacion`
 - **Error**: `404 Not Found` si no existe
@@ -212,9 +241,9 @@ GET http://localhost:8090/api/donaciones/1
 ```http
 POST http://localhost:8090/api/donaciones
 Content-Type: application/json
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth). Sin sesión → `401`; con USUARIO → `403`
+- **Auth**: **ADMIN** (Bearer JWT). Sin sesión → `401`; con USUARIO → `403`
 - **Body**: `DonacionRequest`
 
 | Campo | Tipo | Requerido | Validación |
@@ -264,9 +293,9 @@ Authorization: Basic <admin@kallpa.local:kallpa123>
 ```http
 PUT http://localhost:8090/api/donaciones/{id}
 Content-Type: application/json
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth)
+- **Auth**: **ADMIN** (Bearer JWT)
 - **Path param**: `id` (Long)
 - **Body**: `DonacionRequest`
 - **Respuesta**: `200 OK` - `Donacion` actualizada
@@ -289,9 +318,9 @@ Content-Type: application/json
 ### DELETE - Eliminar donación
 ```http
 DELETE http://localhost:8090/api/donaciones/{id}
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth)
+- **Auth**: **ADMIN** (Bearer JWT)
 - **Path param**: `id` (Long)
 - **Respuesta**: `204 NO_CONTENT`
 
@@ -345,7 +374,7 @@ GET http://localhost:8090/api/testimonios/1
 ```http
 POST http://localhost:8090/api/testimonios
 Content-Type: application/json
-Authorization: Basic <usuario o admin>
+Authorization: Bearer <JWT_USUARIO_O_ADMIN>
 ```
 - **Auth**: Autenticado (USUARIO o ADMIN). Sin sesión → `401`
 - **Body**: `TestimonioRequest`
@@ -380,7 +409,7 @@ Authorization: Basic <usuario o admin>
 ```http
 PUT http://localhost:8090/api/testimonios/{id}
 Content-Type: application/json
-Authorization: Basic <usuario duenio o admin>
+Authorization: Bearer <JWT_DUENIO_O_ADMIN>
 ```
 - **Auth**: Autenticado. USUARIO solo puede editar **sus propios** testimonios; ADMIN puede editar cualquiera
 - **Path param**: `id` (Long)
@@ -401,9 +430,9 @@ Content-Type: application/json
 ### DELETE - Eliminar testimonio
 ```http
 DELETE http://localhost:8090/api/testimonios/{id}
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
-- **Auth**: **ADMIN** (Basic Auth). Con USUARIO → `403`
+- **Auth**: **ADMIN** (Bearer JWT). Con USUARIO → `403`
 - **Path param**: `id` (Long)
 - **Respuesta**: `204 NO_CONTENT`
 
@@ -416,11 +445,11 @@ DELETE http://localhost:8090/api/testimonios/1
 
 ## Endpoints relacionados con recepción de donaciones (adicionales)
 
-Dado que el flujo ahora va por recepción, puedes usar estos endpoints para gestionar la aprobación/rechazo. **Confirmar y rechazar requieren rol ADMIN** (Basic Auth):
+Dado que el flujo ahora va por recepción, puedes usar estos endpoints para gestionar la aprobación/rechazo. **Confirmar y rechazar requieren rol ADMIN** (Bearer JWT):
 
 ```http
-GET http://localhost:8090/api/recepcion-donaciones          # Público
-GET http://localhost:8090/api/recepcion-donaciones/pendientes   # Público
+GET http://localhost:8090/api/recepcion-donaciones          # Autenticado: Bearer JWT
+GET http://localhost:8090/api/recepcion-donaciones/pendientes   # Autenticado: Bearer JWT
 POST http://localhost:8090/api/recepcion-donaciones/{id}/confirmar  # ADMIN
 POST http://localhost:8090/api/recepcion-donaciones/{id}/rechazar   # ADMIN, body opcional {"motivo": "..."}
 ```
@@ -429,7 +458,7 @@ POST http://localhost:8090/api/recepcion-donaciones/{id}/rechazar   # ADMIN, bod
 ```http
 POST http://localhost:8090/api/recepcion-donaciones/5/rechazar
 Content-Type: application/json
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 
 {
   "motivo": "Producto en mal estado"
@@ -440,7 +469,7 @@ Authorization: Basic <admin@kallpa.local:kallpa123>
 
 ## Endpoints de envío de donaciones a campañas
 
-Cuando el ADMIN **confirma una recepción**, se crea automáticamente un registro en `envio_donaciones` con estado `PENDIENTE` apuntando a la campaña de la donación (campaña destino). Luego el ADMIN presiona **Enviar** para despacharlo. **Enviar y eliminar requieren rol ADMIN** (Basic Auth):
+Cuando el ADMIN **confirma una recepción**, se crea automáticamente un registro en `envio_donaciones` con estado `PENDIENTE` apuntando a la campaña de la donación (campaña destino). Luego el ADMIN presiona **Enviar** para despacharlo. **Enviar y eliminar requieren rol ADMIN** (Bearer JWT):
 
 ```http
 GET http://localhost:8090/api/envio-donaciones              # Público: lista todos los envíos
@@ -454,7 +483,7 @@ DELETE http://localhost:8090/api/envio-donaciones/{id}     # ADMIN: elimina el r
 **Ejemplo enviar:**
 ```http
 POST http://localhost:8090/api/envio-donaciones/3/enviar
-Authorization: Basic <admin@kallpa.local:kallpa123>
+Authorization: Bearer <JWT_ADMIN>
 ```
 
 **Respuesta (200):**
@@ -488,5 +517,5 @@ Authorization: Basic <admin@kallpa.local:kallpa123>
 - **GET por ID**: Disponible para `/api/campanas/{id}`, `/api/donaciones/{id}` y `/api/testimonios/{id}`.
 - **CRUD completo**: Campañas, Donaciones y Testimonios cuentan con GET (lista + por id), POST, PUT y DELETE vía REST API.
 - **Estado de donaciones**: Al crear via API, llegan con estado `PENDIENTE` y se registran automáticamente en `recepcion_donaciones`. Al confirmar la recepción se crea además el registro de envío en `envio_donaciones` con estado `PENDIENTE`. Los reportes solo muestran donaciones con estado `CONFIRMADO`.
-- **CSRF**: está desactivado para todas las rutas `/api/**`, así que puedes probar con Thunder Client/Postman usando solo Basic Auth, sin token. Solo el sitio web (formularios Thymeleaf/fetch de vistas) usa token CSRF vía meta tags `_csrf`.
+- **CSRF**: está desactivado para todas las rutas `/api/**`, así que puedes probar con Thunder Client/Postman usando solo el header `Authorization: Bearer <JWT>`, sin token CSRF. Solo el sitio web (formularios Thymeleaf/fetch de vistas) usa token CSRF vía meta tags `_csrf`.
 - **Seguridad**: usuarios normales solo tienen lectura (GET) y gestión de sus propios testimonios; todo lo demás (crear/editar/eliminar campañas, donaciones, recepciones, envíos, testimonios ajenos) requiere rol ADMIN.

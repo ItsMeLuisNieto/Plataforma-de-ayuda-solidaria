@@ -1631,6 +1631,7 @@
   </script>
 
   <script th:src="@{/JS/csrf.js}"></script>
+  <script th:src="@{/JS/api.js}"></script>
 
   <script>
 
@@ -1770,7 +1771,7 @@
 
         try {
 
-          const response = await fetch('/api/donaciones', {
+          const response = await apiFetch('/api/donaciones', {
 
             method: 'POST',
 
@@ -1778,7 +1779,9 @@
 
               'Content-Type': 'application/json',
 
-              ...csrfHeaders()
+              ...csrfHeaders(),
+
+              ...await apiHeaders()
 
             },
 

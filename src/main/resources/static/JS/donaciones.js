@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function cargarRecepciones() {
-        fetch('/api/recepcion-donaciones')
+        apiFetch('/api/recepcion-donaciones')
             .then(response => response.json())
             .then(data => {
                 tbody.innerHTML = "";
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const action = btn.getAttribute("data-action");
 
         if (action === "confirmar") {
-            fetch(`/api/recepcion-donaciones/${id}/confirmar`, {
+            apiFetch(`/api/recepcion-donaciones/${id}/confirmar`, {
                 method: "POST",
                 headers: getHeaders()
             })
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
         btnConfirmarRechazo.addEventListener("click", function () {
             if (!recepcionIdSeleccionado) return;
             const motivo = document.getElementById("motivoRechazo")?.value || "";
-            fetch(`/api/recepcion-donaciones/${recepcionIdSeleccionado}/rechazar`, {
+            apiFetch(`/api/recepcion-donaciones/${recepcionIdSeleccionado}/rechazar`, {
                 method: "POST",
                 headers: getHeaders(),
                 body: JSON.stringify({ motivo: motivo })

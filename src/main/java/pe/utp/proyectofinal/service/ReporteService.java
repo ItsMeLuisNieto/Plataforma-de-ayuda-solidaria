@@ -12,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import pe.utp.proyectofinal.dto.ReporteDTO;
 import pe.utp.proyectofinal.model.Campana;
 import pe.utp.proyectofinal.model.Donacion;
+import pe.utp.proyectofinal.model.EnvioDonacion;
+import pe.utp.proyectofinal.model.RecepcionDonacion;
 import pe.utp.proyectofinal.repository.CampanaRepository;
 import pe.utp.proyectofinal.repository.DonacionRepository;
+import pe.utp.proyectofinal.repository.EnvioDonacionRepository;
+import pe.utp.proyectofinal.repository.RecepcionDonacionRepository;
 
 @Service
 public class ReporteService {
@@ -22,11 +26,17 @@ public class ReporteService {
 
     private final CampanaRepository campanaRepository;
     private final DonacionRepository donacionRepository;
+    private final RecepcionDonacionRepository recepcionDonacionRepository;
+    private final EnvioDonacionRepository envioDonacionRepository;
 
     public ReporteService(CampanaRepository campanaRepository,
-                          DonacionRepository donacionRepository) {
+                          DonacionRepository donacionRepository,
+                          RecepcionDonacionRepository recepcionDonacionRepository,
+                          EnvioDonacionRepository envioDonacionRepository) {
         this.campanaRepository = campanaRepository;
         this.donacionRepository = donacionRepository;
+        this.recepcionDonacionRepository = recepcionDonacionRepository;
+        this.envioDonacionRepository = envioDonacionRepository;
     }
 
     @Transactional(readOnly = true)
@@ -41,6 +51,8 @@ public class ReporteService {
         kpis.setTotalBienesStock(donacionRepository.findByEstado("CONFIRMADO").stream()
                 .mapToInt(Donacion::getCantidad)
                 .sum());
+        kpis.setTotalRecepciones(recepcionDonacionRepository.count());
+        kpis.setTotalEnvios(envioDonacionRepository.count());
         return kpis;
     }
 
@@ -48,23 +60,55 @@ public class ReporteService {
     public List<ReporteDTO> obtenerMovimientos() {
         List<ReporteDTO> movimientos = new ArrayList<>();
 
-        donacionRepository.findByEstado("CONFIRMADO").stream()
-                .map(this::mapearDonacion)
+        recepcionDonacionRepository.findAll().stream()
+                .filter(r -> "CONFIRMADO".equalsIgnoreCase(r.getEstado()))
+                .map(this::mapearRecepcion)
                 .forEach(movimientos::add);
 
-        movimientos.sort(Comparator.comparing(ReporteDTO::getFecha).reversed());
+        envioDonacionRepository.findAll().stream()
+                .filter(e -> "ENVIADO".equalsIgnoreCase(e.getEstado()))
+                .map(this::mapearEnvio)
+                .forEach(movimientos::add);
+
+        movimientos.sort(Comparator.comparing(dto -> dto.getFecha() == null ? "" : dto.getFecha(), Comparator.reverseOrder()));
         return movimientos;
     }
 
-    private ReporteDTO mapearDonacion(Donacion donacion) {
+
+
+    private ReporteDTO mapearRecepcion(RecepcionDonacion recepcion) {
         ReporteDTO dto = new ReporteDTO();
-        dto.setIdTransaccion(donacion.getId());
-        dto.setFecha(donacion.getFechaIngreso() == null ? "" : donacion.getFechaIngreso().format(FORMATO_FECHA));
-        dto.setCampanaTitulo(donacion.getCampana() != null ? (donacion.getCampana().getNombre() != null ? donacion.getCampana().getNombre() : donacion.getCampana().getTitulo()) : donacion.getProducto());
-        dto.setDistrito(donacion.getCampana() != null ? donacion.getCampana().getUbicacion() : "-");
-        dto.setTipoDonacion("Bienes");
-        dto.setValorMonto(donacion.getCantidad() + (donacion.getCantidad() == 1 ? " unidad" : " unidades") + " (" + donacion.getProducto() + ")");
-        dto.setEstado(donacion.getEstado());
+        Donacion donacion = recepcion.getDonacion();
+        dto.setIdTransaccion(recepcion.getId());
+        dto.setCodigoTransaccion("REC-" + recepcion.getId());
+        dto.setFecha(recepcion.getFechaRevision() != null
+                ? recepcion.getFechaRevision().format(FORMATO_FECHA)
+                : (recepcion.getFechaSolicitud() == null ? "" : recepcion.getFechaSolicitud().format(FORMATO_FECHA)));
+        dto.setCampanaTitulo(recepcion.getCampana() != null ? recepcion.getCampana().getNombre() : (donacion != null ? donacion.getProducto() : "-"));
+        dto.setDistrito(recepcion.getCampana() != null ? recepcion.getCampana().getUbicacion() : "-");
+        dto.setTipoDonacion("Recepción");
+        dto.setValorMonto(donacion != null
+                ? donacion.getCantidad() + (donacion.getCantidad() == 1 ? " unidad" : " unidades") + " (" + donacion.getProducto() + ")"
+                : "-");
+        dto.setEstado("RECIBIDO");
+        return dto;
+    }
+
+    private ReporteDTO mapearEnvio(EnvioDonacion envio) {
+        ReporteDTO dto = new ReporteDTO();
+        Donacion donacion = envio.getDonacion();
+        dto.setIdTransaccion(envio.getId());
+        dto.setCodigoTransaccion("ENV-" + envio.getId());
+        dto.setFecha(envio.getFechaEnvio() != null
+                ? envio.getFechaEnvio().format(FORMATO_FECHA)
+                : (envio.getFechaRegistro() == null ? "" : envio.getFechaRegistro().format(FORMATO_FECHA)));
+        dto.setCampanaTitulo(envio.getCampana() != null ? envio.getCampana().getNombre() : (donacion != null ? donacion.getProducto() : "-"));
+        dto.setDistrito(envio.getCampana() != null ? envio.getCampana().getUbicacion() : "-");
+        dto.setTipoDonacion("Envío");
+        dto.setValorMonto(donacion != null
+                ? donacion.getCantidad() + (donacion.getCantidad() == 1 ? " unidad" : " unidades") + " (" + donacion.getProducto() + ")"
+                : "-");
+        dto.setEstado("ENVIADO");
         return dto;
     }
 }
