@@ -1270,29 +1270,37 @@
 
 
 
-                  <div id="contenidoTarjeta" style="display: none;">
+                  <div id="contenidoTarjeta" class="text-center">
 
-                    <h5 class="fw-bold mb-3 text-center">PAGO CON TARJETA</h5>
+                    <div class="mb-3">
 
+                      <small class="fw-bold d-block text-white-50">PAGA CON Plin</small>
 
+                      <h2 class="fw-bold mb-1">929 612 926</h2>
 
-                    <div class="mb-2">
-
-                      <label class="form-label small mb-1">Número de tarjeta</label>
-
-                      <input type="text" class="form-control form-control-sm" placeholder="1234 5678 9012 3456">
+                      <p class="fw-semibold mb-0">Grupo Kallpa Solidary</p>
 
                     </div>
 
 
 
-                    <div class="mb-2">
+                    <div class="bg-white rounded-4 p-3 mx-auto shadow-sm" style="width: 200px;">
 
-                      <label class="form-label small mb-1">Nombre del titular</label>
-
-                      <input type="text" class="form-control form-control-sm" placeholder="Nombre completo">
+                      <img th:src="@{/assets/Plin.png}" alt="QR Plin" class="img-fluid">
 
                     </div>
+
+
+
+                    <button type="button" class="btn btn-outline-light w-100 mt-3 fw-bold" style="border-radius: 10px;"
+
+                      onclick="copiarNumero()">
+
+                      <i class="fas fa-copy me-2"></i>Copiar número
+
+                    </button>
+
+                  </div>
 
 
 
